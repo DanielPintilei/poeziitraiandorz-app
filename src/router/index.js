@@ -3,14 +3,14 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
-import Hello from 'components/Hello'
+import Poezie from 'components/Poezie'
 
 export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Hello',
-      component: Hello
+      name: 'Poezie',
+      component: Poezie
     }
   ]
 })

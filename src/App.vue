@@ -1,10 +1,10 @@
 <template>
   <div id="app" class="app" :style="{color: themeColor, backgroundColor: themeBackgroundColor}">
-    <sidebar-left v-show="sidebarLeftShow"></sidebar-left>
-    <div class="main">
+    <sidebar-left v-show="sidebarLeftShow" :themeIconColor="themeIconColor"></sidebar-left>
+    <main class="main">
       <navbar :themeIconColor="themeIconColor"></navbar>
       <router-view></router-view>
-    </div>
+    </main>
     <sidebar-right v-show="sidebarRightShow"></sidebar-right>
   </div>
 </template>

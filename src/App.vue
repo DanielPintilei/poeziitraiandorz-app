@@ -5,7 +5,7 @@
       <navbar :themeIconColor="themeIconColor"></navbar>
       <router-view></router-view>
     </main>
-    <sidebar-right v-show="sidebarRightShow"></sidebar-right>
+    <sidebar-right v-show="sidebarRightShow" :themeIconColor="themeIconColor"></sidebar-right>
   </div>
 </template>
 
@@ -63,5 +63,10 @@ body {
 }
 .main {
   flex-grow: 1;
+  transition: all 2s;
+}
+.icon-themed:hover {
+  cursor: pointer;
+  opacity: 0.7;
 }
 </style>

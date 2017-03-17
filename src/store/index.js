@@ -10,7 +10,8 @@ export const store = new Vuex.Store({
     sidebarRightToggled: true,
     themeColor: '#dcbf8c',
     themeBackgroundColor: '#232323',
-    themeIconColor: '#777'
+    themeIconColor: '#777',
+    selectedFile: ''
   },
   getters: {
     getSidebarLeftToggled: state => {
@@ -18,6 +19,9 @@ export const store = new Vuex.Store({
     },
     getSidebarRightToggled: state => {
       return state.sidebarRightToggled
+    },
+    getSelectedFile: state => {
+      return state.selectedFile
     }
   },
   mutations: {
@@ -26,6 +30,9 @@ export const store = new Vuex.Store({
     },
     toggleSidebarRight (state) {
       state.sidebarRightToggled = !state.sidebarRightToggled
+    },
+    setSelectedSidebarFile (state) {
+      state.selectedFile = ''
     }
   }
 })

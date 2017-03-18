@@ -6,11 +6,26 @@ Vue.use(Vuex)
 // export default new Vuex.Store({
 export const store = new Vuex.Store({
   state: {
-    sidebarLeftToggled: true,
-    sidebarRightToggled: true,
-    themeColor: '#dcbf8c',
-    themeBackgroundColor: '#232323',
-    themeIconColor: '#777',
+    sidebarLeftToggled: false,
+    sidebarRightToggled: false,
+    themes: [
+      {
+        color: '#dcbf8c',
+        backgroundColor: '#232323',
+        iconColor: '#fff'
+      },
+      {
+        color: 'aqua',
+        backgroundColor: '#fff',
+        iconColor: '#ccc'
+      },
+      {
+        color: 'pink',
+        backgroundColor: 'mediumseagreen',
+        iconColor: 'red'
+      }
+    ],
+    currentTheme: 0,
     selectedFile: ''
   },
   getters: {
@@ -22,6 +37,15 @@ export const store = new Vuex.Store({
     },
     getSelectedFile: state => {
       return state.selectedFile
+    },
+    getThemes: state => {
+      return state.themes
+    },
+    getCurrentTheme: state => {
+      return state.themes[state.currentTheme]
+    },
+    getCurrentThemeIndex: state => {
+      return state.currentTheme
     }
   },
   mutations: {
@@ -33,6 +57,9 @@ export const store = new Vuex.Store({
     },
     setSelectedSidebarFile (state) {
       state.selectedFile = ''
+    },
+    setSelectedTheme (state, n) {
+      state.currentTheme = n
     }
   }
 })

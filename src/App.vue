@@ -1,11 +1,11 @@
 <template>
-  <div id="app" class="app" :style="{color: themeColor, backgroundColor: themeBackgroundColor}">
-    <sidebar-left v-show="sidebarLeftShow" :themeIconColor="themeIconColor"></sidebar-left>
+  <div id="app" class="app" :style="{color: currentTheme.color, backgroundColor: currentTheme.backgroundColor}">
+    <sidebar-left v-show="sidebarLeftShow" :themeIconColor="currentTheme.iconColor"></sidebar-left>
     <main class="main">
-      <navbar :themeIconColor="themeIconColor"></navbar>
+      <navbar :themeIconColor="currentTheme.iconColor"></navbar>
       <router-view></router-view>
     </main>
-    <sidebar-right v-show="sidebarRightShow" :themeIconColor="themeIconColor"></sidebar-right>
+    <sidebar-right v-show="sidebarRightShow" :themeIconColor="currentTheme.iconColor"></sidebar-right>
   </div>
 </template>
 
@@ -26,9 +26,6 @@ export default {
   },
   data () {
     return {
-      themeColor: store.state.themeColor,
-      themeBackgroundColor: store.state.themeBackgroundColor,
-      themeIconColor: store.state.themeIconColor
     }
   },
   computed: {
@@ -37,10 +34,12 @@ export default {
     },
     sidebarRightShow () {
       return store.getters.getSidebarRightToggled
+    },
+    currentTheme () {
+      return store.getters.getCurrentTheme
     }
   },
   methods: {
-
   }
 }
 </script>
@@ -59,7 +58,7 @@ body {
   display: flex;
   width: 100vw;
   height: 100vh;
-  border: 10px solid currentColor;
+  // border: 10px solid currentColor;
 }
 .main {
   flex-grow: 1;

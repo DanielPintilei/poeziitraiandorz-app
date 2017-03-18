@@ -3,35 +3,22 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-const themes = [
-  {
-    themeColor: '#dcbf8c',
-    textColor: '#000',
-    logoColor: '#dcbf8c',
-    navbarColor: '#fff',
-    borderColor: '#dcbf8c',
-    backgroundColor: '#fff',
-    iconColor: '#000',
-    iconColor2: '#ccc'
-  },
-  {
-    themeColor: '#707070',
-    textColor: '#FFECB3',
-    logoColor: '#fff',
-    navbarColor: '#303030',
-    borderColor: '#707070',
-    backgroundColor: '#303030',
-    iconColor: '#fff',
-    iconColor2: '#ccc'
-  }
-]
-
-// export default new Vuex.Store({
 export const store = new Vuex.Store({
   state: {
     sidebarLeftToggled: true,
     sidebarRightToggled: true,
-    themes,
+    themes: [
+      {
+        themeColor: '',
+        textColor: '',
+        logoColor: '',
+        navbarColor: '',
+        borderColor: '',
+        backgroundColor: '',
+        iconColor: '',
+        iconColor2: ''
+      }
+    ],
     currentTheme: 0,
     selectedFile: ''
   },
@@ -64,6 +51,9 @@ export const store = new Vuex.Store({
     },
     setSelectedSidebarFile (state) {
       state.selectedFile = ''
+    },
+    setLoadedThemes (state, themesRef) {
+      state.themes = themesRef
     },
     setSelectedTheme (state, n) {
       state.currentTheme = n

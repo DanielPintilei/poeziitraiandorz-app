@@ -10,14 +10,29 @@
 </template>
 
 <script>
+import Firebase from 'firebase'
+
 import { store } from './store/index'
 
 import Navbar from './components/Navbar'
 import SidebarLeft from './components/SidebarLeft'
 import SidebarRight from './components/SidebarRight'
 
+let app = Firebase.initializeApp({databaseURL: 'https://poeziitraiandorz.firebaseio.com'})
+let db = app.database()
+let themesRef = db.ref('themes')
+
 export default {
   name: 'app',
+  firebase: {
+    themesRef
+  },
+  mounted () {
+    let setThemesOnLoad = () => store.commit('setLoadedThemes', this.themesRef)
+    setTimeout(() => {
+      setThemesOnLoad()
+    }, 1000)
+  },
   store,
   components: {
     Navbar,

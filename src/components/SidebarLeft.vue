@@ -1,62 +1,30 @@
 <template>
-  <aside class="sidebar-left">
+  <aside class="sidebar-left" :style="{borderColor: currentTheme.borderColor}">
     <ul class="tree">
       <li class="folder">
-        <icon-folder :folderOpen="folderOpen" :themeIconColor="themeIconColor"></icon-folder>
+        <icon-folder :folderOpen="folderOpen" :themeIconColor="currentTheme.iconColor2"></icon-folder>
         <span>folder 1923</span>
       </li>
-      <li>
-        <ul class="branch">
+      <li class="branch">
+        <ul class="files">
           <li @click="handleFolderClick" class="folder">
-            <icon-folder :folderOpen="folderOpen" :themeIconColor="themeIconColor"></icon-folder>
+            <icon-folder :folderOpen="folderOpen" :themeIconColor="currentTheme.iconColor2"></icon-folder>
             <span>Caiet 1</span>
           </li>
-          <li>
-            <ul v-if="true" class="branch">
+          <li class="branch">
+            <ul v-if="true" class="files">
               <li>
-                <icon-file :themeIconColor="themeIconColor"></icon-file>
+                <icon-file :themeIconColor="currentTheme.iconColor2"></icon-file>
                 <span>a</span>
-              </li>
-              <li>
-                <icon-file :themeIconColor="themeIconColor"></icon-file>
-                <span>b</span>
-              </li>
-              <li>
-                <icon-file :themeIconColor="themeIconColor"></icon-file>
-                <span>c</span>
-              </li>
-              <li>
-                <icon-file :themeIconColor="themeIconColor"></icon-file>
-                <span>a</span>
-              </li>
-              <li>
-                <icon-file :themeIconColor="themeIconColor"></icon-file>
-                <span>b</span>
-              </li>
-              <li>
-                <icon-file :themeIconColor="themeIconColor"></icon-file>
-                <span>c</span>
-              </li>
-              <li>
-                <icon-file :themeIconColor="themeIconColor"></icon-file>
-                <span>a</span>
-              </li>
-              <li>
-                <icon-file :themeIconColor="themeIconColor"></icon-file>
-                <span>b</span>
-              </li>
-              <li>
-                <icon-file :themeIconColor="themeIconColor"></icon-file>
-                <span>c</span>
               </li>
             </ul>
           </li>
         </ul>
       </li>
-      <li>
-        <ul class="branch">
+      <li class="branch">
+        <ul class="files">
           <li class="folder">
-            <icon-folder :folderOpen="folderOpen" :themeIconColor="themeIconColor"></icon-folder>
+            <icon-folder :folderOpen="folderOpen" :themeIconColor="currentTheme.iconColor2"></icon-folder>
             <span>b234</span>
           </li>
         </ul>
@@ -78,13 +46,15 @@ export default {
     IconFolder,
     IconFile
   },
-  props: ['themeIconColor'],
   data () {
     return {
       folderOpen: false
     }
   },
   computed: {
+    currentTheme () {
+      return store.getters.getCurrentTheme
+    },
     selectedSidebarFile () {
       return store.getters.getSelectedFile
     }
@@ -108,14 +78,13 @@ export default {
 .sidebar-left {
   flex-shrink: 0;
   flex-basis: 300px;
-  border-right: 1px solid currentColor;
+  border-right: 1px solid;
   overflow: auto;
   padding-right: 20px;
 }
 .sidebar-left::-webkit-scrollbar {
 	width: 6px;
 	background-color: transparent;
-  // opacity: 0.5;
 }
 .sidebar-left::-webkit-scrollbar-track {
 	background-color: hsla(0, 0%, 50%, 0.2);
@@ -133,13 +102,13 @@ li {
   align-items: center;
   cursor: pointer;
 }
-.folder {
-  // margin-left: 20px;
-}
 .tree {
-  // padding-left: 30px;
 }
 .branch {
+}
+.folder {
+}
+.files {
   padding-left: 20px;
 }
 </style>

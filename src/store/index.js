@@ -3,28 +3,35 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
+const themes = [
+  {
+    themeColor: '#dcbf8c',
+    textColor: '#000',
+    logoColor: '#dcbf8c',
+    navbarColor: '#fff',
+    borderColor: '#dcbf8c',
+    backgroundColor: '#fff',
+    iconColor: '#000',
+    iconColor2: '#ccc'
+  },
+  {
+    themeColor: '#707070',
+    textColor: '#FFECB3',
+    logoColor: '#fff',
+    navbarColor: '#303030',
+    borderColor: '#707070',
+    backgroundColor: '#303030',
+    iconColor: '#fff',
+    iconColor2: '#ccc'
+  }
+]
+
 // export default new Vuex.Store({
 export const store = new Vuex.Store({
   state: {
-    sidebarLeftToggled: false,
-    sidebarRightToggled: false,
-    themes: [
-      {
-        color: '#dcbf8c',
-        backgroundColor: '#232323',
-        iconColor: '#fff'
-      },
-      {
-        color: 'aqua',
-        backgroundColor: '#fff',
-        iconColor: '#ccc'
-      },
-      {
-        color: 'pink',
-        backgroundColor: 'mediumseagreen',
-        iconColor: 'red'
-      }
-    ],
+    sidebarLeftToggled: true,
+    sidebarRightToggled: true,
+    themes,
     currentTheme: 0,
     selectedFile: ''
   },

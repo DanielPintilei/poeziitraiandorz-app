@@ -1,11 +1,11 @@
 <template>
-  <div id="app" class="app" :style="{color: currentTheme.color, backgroundColor: currentTheme.backgroundColor}">
-    <sidebar-left v-show="sidebarLeftShow" :themeIconColor="currentTheme.iconColor"></sidebar-left>
+  <div id="app" class="app" :style="{color: currentTheme.textColor, backgroundColor: currentTheme.backgroundColor, borderColor: currentTheme.borderColor}">
+    <sidebar-left v-show="sidebarLeftShow"></sidebar-left>
     <main class="main">
-      <navbar :themeIconColor="currentTheme.iconColor"></navbar>
+      <navbar></navbar>
       <router-view></router-view>
     </main>
-    <sidebar-right v-show="sidebarRightShow" :themeIconColor="currentTheme.iconColor"></sidebar-right>
+    <sidebar-right v-show="sidebarRightShow" :themeIconColor="currentTheme.iconColor2"></sidebar-right>
   </div>
 </template>
 
@@ -58,11 +58,10 @@ body {
   display: flex;
   width: 100vw;
   height: 100vh;
-  // border: 10px solid currentColor;
+  border: 10px solid;
 }
 .main {
   flex-grow: 1;
-  transition: all 2s;
 }
 .icon-themed:hover {
   cursor: pointer;

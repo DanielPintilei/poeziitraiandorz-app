@@ -1,7 +1,7 @@
 <template>
   <div class="theme-picker">
-    <div v-for="(theme, index) in themes" @click="setSelectedTheme(index)" :style="{backgroundColor: theme.color}" class="swatch">
-      <svg v-if="index === currentThemeIndex" class="swatch-check" fill="#fff" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+    <div v-for="(theme, index) in themes" @click="setSelectedTheme(index)" :style="{backgroundColor: theme.themeColor}" class="swatch">
+      <svg v-if="index === currentThemeIndex" fill="#fff" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
         <path d="M0 0h24v24H0z" fill="none"/>
         <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
       </svg>
@@ -37,9 +37,9 @@ export default {
 
 <style scoped>
 .theme-picker {
-  width: 120px;
   display: flex;
   flex-wrap: wrap;
+  width: 120px;
   position: absolute;
   top: 100%;
   right: 100%;
@@ -47,6 +47,7 @@ export default {
   background-color: #fff;
   box-shadow: 4px 2px 6px 0px hsla(0, 0%, 0%, 0.1);
   border-radius: 4px;
+  z-index: 1;
 }
 .swatch {
   display: flex;
@@ -56,9 +57,6 @@ export default {
   height: 30px;
   margin: 3px;
   border-radius: 50%;
-  background-color: pink;
   cursor: pointer;
-}
-.swatch-check {
 }
 </style>

@@ -1,14 +1,14 @@
 <template>
-  <aside class="sidebar-left" :style="{borderColor: theme.borderColor}">
+  <aside class="sidebar-left" :style="{backgroundColor: theme.backgroundColor2, borderColor: theme.borderColor}">
     <ul class="tree">
       <li class="folder">
-        <icon-folder :folderOpen="folderOpen" :theme="theme.iconColor2"></icon-folder>
+        <icon-folder :folderOpen="folderOpen" :theme="theme"></icon-folder>
         <span>folder 1923</span>
       </li>
       <li class="branch">
         <ul class="files">
           <li @click="handleFolderClick" class="folder">
-            <icon-folder :folderOpen="folderOpen" :theme="theme.iconColor2"></icon-folder>
+            <icon-folder :folderOpen="folderOpen" :theme="theme"></icon-folder>
             <span>Caiet 1</span>
           </li>
           <li class="branch">
@@ -23,7 +23,7 @@
       <li class="branch">
         <ul class="files">
           <li class="folder">
-            <icon-folder :folderOpen="folderOpen" :theme="theme.iconColor2"></icon-folder>
+            <icon-folder :folderOpen="folderOpen" :theme="theme"></icon-folder>
             <span>b234</span>
           </li>
         </ul>

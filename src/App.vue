@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="app" :class="{loading: loading}" :style="{color: currentTheme.textColor, backgroundColor: currentTheme.backgroundColor, borderColor: currentTheme.borderColor}">
+  <div id="app" class="app" :style="{color: currentTheme.textColor, backgroundColor: currentTheme.backgroundColor, borderColor: currentTheme.borderColor}">
     <sidebar-left :theme="currentTheme" v-show="sidebarLeftShow"></sidebar-left>
     <main class="main">
       <navbar :theme="currentTheme" :themes="themes"></navbar>
@@ -30,7 +30,6 @@ export default {
   // mounted: function () {
   //   db.ref('themes').once('value', snapshot => {
   //     this.themes = this.themesRef
-  //     this.loading = false
   //   })
   // },
   store,
@@ -41,27 +40,36 @@ export default {
   },
   data () {
     return {
-      loading: true,
       themes: [
         {
-          'backgroundColor': '#fff',
-          'borderColor': '#dcbf8c',
-          'iconColor': '#000',
-          'iconColor2': '#ccc',
-          'logoColor': '#dcbf8c',
-          'navbarColor': '#fff',
-          'textColor': '#000',
-          'themeColor': '#dcbf8c'
+          themeColor: '#dcbf8c',
+          textColor: '#000',
+          borderColor: '#dcbf8c',
+          backgroundColor: '#fff',
+          backgroundColor2: '#fff',
+          navbarColor: '#fff',
+          logoColor: '#dcbf8c',
+          iconColor: '#000'
         },
         {
-          'backgroundColor': '#303030',
-          'borderColor': '#707070',
-          'iconColor': '#fff',
-          'iconColor2': '#ccc',
-          'logoColor': '#fff',
-          'navbarColor': '#303030',
-          'textColor': '#FFECB3',
-          'themeColor': '#707070'
+          themeColor: '#424242',
+          textColor: '#fff',
+          borderColor: '#dcbf8c',
+          backgroundColor: '#424242',
+          backgroundColor2: '#424242',
+          navbarColor: '#424242',
+          logoColor: '#fff',
+          iconColor: '#fff'
+        },
+        {
+          themeColor: '#FDD835',
+          textColor: '#fff',
+          borderColor: '#FBC02D',
+          backgroundColor: '#FFEB3B',
+          backgroundColor2: '#FDD835',
+          navbarColor: '#424242',
+          logoColor: '#fff',
+          iconColor: '#fff'
         }
       ]
     }
@@ -97,9 +105,6 @@ body {
   width: 100vw;
   height: 100vh;
   border: 7px solid;
-}
-.loading {
-  // opacity: 0;
 }
 .main {
   flex-grow: 1;

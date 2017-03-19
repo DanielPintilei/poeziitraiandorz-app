@@ -5,9 +5,9 @@ Vue.use(Vuex)
 
 export const store = new Vuex.Store({
   state: {
-    sidebarLeftToggled: true,
-    sidebarRightToggled: true,
-    currentTheme: 0,
+    sidebarLeftToggled: false,
+    sidebarRightToggled: false,
+    currentTheme: 1,
     selectedFile: ''
   },
   getters: {

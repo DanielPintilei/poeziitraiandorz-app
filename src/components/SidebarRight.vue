@@ -1,5 +1,5 @@
 <template>
-  <aside class="sidebar-right" :style="{borderColor: currentTheme.borderColor}">
+  <aside class="sidebar-right" :style="{borderColor: theme.borderColor}">
 
   </aside>
 </template>
@@ -10,6 +10,7 @@ import { store } from '../store/index'
 export default {
   name: 'sidebar-right',
   store,
+  props: ['theme'],
   methods: {
   },
   data () {
@@ -17,9 +18,6 @@ export default {
     }
   },
   computed: {
-    currentTheme () {
-      return store.getters.getCurrentTheme
-    }
   }
 }
 </script>

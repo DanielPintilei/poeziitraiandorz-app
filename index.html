@@ -7,7 +7,23 @@
     <meta name="author" content="Daniel Pintilei">
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
-  <body>
-    <div id="app"></div>
+  <body style="margin: 0; height: 100vh; display: flex; align-items: center; justify-content: center;">
+    <div id="app">
+      <svg width="200" height="3" viewBox="0 0 200 3" xmlns="http://www.w3.org/2000/svg">
+        <line class="loader" x1="0" y1="1.5" x2="200" y2="1.5" stroke-width="3" stroke="#dcbf8c" />
+        <style>
+          @keyframes loader {
+            to {
+              stroke-dashoffset: -200;
+            }
+          }
+          .loader {
+            stroke-dasharray: 200;
+            stroke-dashoffset: 200;
+            animation: loader 2s infinite ease-in;
+          }
+        </style>
+      </svg>
+    </div>
   </body>
 </html>

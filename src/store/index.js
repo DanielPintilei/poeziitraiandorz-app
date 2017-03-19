@@ -7,18 +7,6 @@ export const store = new Vuex.Store({
   state: {
     sidebarLeftToggled: true,
     sidebarRightToggled: true,
-    themes: [
-      {
-        themeColor: '',
-        textColor: '',
-        logoColor: '',
-        navbarColor: '',
-        borderColor: '',
-        backgroundColor: '',
-        iconColor: '',
-        iconColor2: ''
-      }
-    ],
     currentTheme: 0,
     selectedFile: ''
   },
@@ -36,9 +24,6 @@ export const store = new Vuex.Store({
       return state.themes
     },
     getCurrentTheme: state => {
-      return state.themes[state.currentTheme]
-    },
-    getCurrentThemeIndex: state => {
       return state.currentTheme
     }
   },
@@ -51,9 +36,6 @@ export const store = new Vuex.Store({
     },
     setSelectedSidebarFile (state) {
       state.selectedFile = ''
-    },
-    setLoadedThemes (state, themesRef) {
-      state.themes = themesRef
     },
     setSelectedTheme (state, n) {
       state.currentTheme = n

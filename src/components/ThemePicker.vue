@@ -1,7 +1,7 @@
 <template>
   <div class="theme-picker">
     <div v-for="(theme, index) in themes" @click="setSelectedTheme(index)" :style="{backgroundColor: theme.themeColor}" class="swatch">
-      <svg v-if="index === currentThemeIndex" fill="#fff" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+      <svg v-if="index === currentTheme" fill="#fff" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
         <path d="M0 0h24v24H0z" fill="none"/>
         <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
       </svg>
@@ -15,16 +15,14 @@ import { store } from '../store/index'
 export default {
   name: 'theme-picker',
   store,
+  props: ['themes'],
   data () {
     return {
     }
   },
   computed: {
-    themes () {
-      return store.getters.getThemes
-    },
-    currentThemeIndex () {
-      return store.getters.getCurrentThemeIndex
+    currentTheme () {
+      return store.getters.getCurrentTheme
     }
   },
   methods: {

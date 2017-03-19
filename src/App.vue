@@ -1,16 +1,16 @@
 <template>
-  <div id="app" class="app" :style="{color: currentTheme.textColor, backgroundColor: currentTheme.backgroundColor, borderColor: currentTheme.borderColor}">
-    <sidebar-left v-show="sidebarLeftShow"></sidebar-left>
+  <div id="app" class="app" :class="{loading: loading}" :style="{color: currentTheme.textColor, backgroundColor: currentTheme.backgroundColor, borderColor: currentTheme.borderColor}">
+    <sidebar-left :theme="currentTheme" v-show="sidebarLeftShow"></sidebar-left>
     <main class="main">
-      <navbar></navbar>
+      <navbar :theme="currentTheme" :themes="themes"></navbar>
       <router-view></router-view>
     </main>
-    <sidebar-right v-show="sidebarRightShow" :themeIconColor="currentTheme.iconColor2"></sidebar-right>
+    <sidebar-right :theme="currentTheme" v-show="sidebarRightShow"></sidebar-right>
   </div>
 </template>
 
 <script>
-import Firebase from 'firebase'
+// import Firebase from 'firebase'
 
 import { store } from './store/index'
 
@@ -18,21 +18,21 @@ import Navbar from './components/Navbar'
 import SidebarLeft from './components/SidebarLeft'
 import SidebarRight from './components/SidebarRight'
 
-let app = Firebase.initializeApp({databaseURL: 'https://poeziitraiandorz.firebaseio.com'})
-let db = app.database()
-let themesRef = db.ref('themes')
+// let app = Firebase.initializeApp({databaseURL: 'https://poeziitraiandorz.firebaseio.com'})
+// let db = app.database()
+// let themesRef = db.ref('themes')
 
 export default {
   name: 'app',
-  firebase: {
-    themesRef
-  },
-  mounted () {
-    let setThemesOnLoad = () => store.commit('setLoadedThemes', this.themesRef)
-    setTimeout(() => {
-      setThemesOnLoad()
-    }, 1000)
-  },
+  // firebase: {
+  //   themesRef
+  // },
+  // mounted: function () {
+  //   db.ref('themes').once('value', snapshot => {
+  //     this.themes = this.themesRef
+  //     this.loading = false
+  //   })
+  // },
   store,
   components: {
     Navbar,
@@ -41,6 +41,29 @@ export default {
   },
   data () {
     return {
+      loading: true,
+      themes: [
+        {
+          'backgroundColor': '#fff',
+          'borderColor': '#dcbf8c',
+          'iconColor': '#000',
+          'iconColor2': '#ccc',
+          'logoColor': '#dcbf8c',
+          'navbarColor': '#fff',
+          'textColor': '#000',
+          'themeColor': '#dcbf8c'
+        },
+        {
+          'backgroundColor': '#303030',
+          'borderColor': '#707070',
+          'iconColor': '#fff',
+          'iconColor2': '#ccc',
+          'logoColor': '#fff',
+          'navbarColor': '#303030',
+          'textColor': '#FFECB3',
+          'themeColor': '#707070'
+        }
+      ]
     }
   },
   computed: {
@@ -51,7 +74,7 @@ export default {
       return store.getters.getSidebarRightToggled
     },
     currentTheme () {
-      return store.getters.getCurrentTheme
+      return this.themes[store.getters.getCurrentTheme]
     }
   },
   methods: {
@@ -73,7 +96,10 @@ body {
   display: flex;
   width: 100vw;
   height: 100vh;
-  border: 10px solid;
+  border: 7px solid;
+}
+.loading {
+  // opacity: 0;
 }
 .main {
   flex-grow: 1;

@@ -1,20 +1,19 @@
 <template>
-  <aside class="sidebar-left" :style="{borderColor: currentTheme.borderColor}">
+  <aside class="sidebar-left" :style="{borderColor: theme.borderColor}">
     <ul class="tree">
       <li class="folder">
-        <icon-folder :folderOpen="folderOpen" :themeIconColor="currentTheme.iconColor2"></icon-folder>
+        <icon-folder :folderOpen="folderOpen" :theme="theme.iconColor2"></icon-folder>
         <span>folder 1923</span>
       </li>
       <li class="branch">
         <ul class="files">
           <li @click="handleFolderClick" class="folder">
-            <icon-folder :folderOpen="folderOpen" :themeIconColor="currentTheme.iconColor2"></icon-folder>
+            <icon-folder :folderOpen="folderOpen" :theme="theme.iconColor2"></icon-folder>
             <span>Caiet 1</span>
           </li>
           <li class="branch">
             <ul v-if="true" class="files">
               <li>
-                <icon-file :themeIconColor="currentTheme.iconColor2"></icon-file>
                 <span>a</span>
               </li>
             </ul>
@@ -24,7 +23,7 @@
       <li class="branch">
         <ul class="files">
           <li class="folder">
-            <icon-folder :folderOpen="folderOpen" :themeIconColor="currentTheme.iconColor2"></icon-folder>
+            <icon-folder :folderOpen="folderOpen" :theme="theme.iconColor2"></icon-folder>
             <span>b234</span>
           </li>
         </ul>
@@ -37,14 +36,13 @@
 import { store } from '../store/index'
 
 import IconFolder from './IconFolder'
-import IconFile from './IconFile'
 
 export default {
   name: 'sidebar-left',
   store,
+  props: ['theme'],
   components: {
-    IconFolder,
-    IconFile
+    IconFolder
   },
   data () {
     return {
@@ -52,9 +50,6 @@ export default {
     }
   },
   computed: {
-    currentTheme () {
-      return store.getters.getCurrentTheme
-    },
     selectedSidebarFile () {
       return store.getters.getSelectedFile
     }

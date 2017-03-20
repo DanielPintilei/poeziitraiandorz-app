@@ -1,10 +1,12 @@
 <template>
   <div class="theme-picker">
-    <div v-for="(theme, index) in themes" @click="setSelectedTheme(index)" :style="{backgroundColor: theme.themeColor}" class="swatch">
-      <svg v-if="index === currentTheme" fill="#fff" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-        <path d="M0 0h24v24H0z" fill="none"/>
-        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
-      </svg>
+    <div v-for="(theme, index) in themes" @click="setSelectedTheme(index)" :style="{backgroundColor: theme.backgroundColor}" class="swatch">
+      <div class="swatch-inner" :style="{backgroundColor: theme.themeColor}">
+        <svg v-if="index === currentTheme" fill="#fff" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 0h24v24H0z" fill="none"/>
+          <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+        </svg>
+      </div>
     </div>
   </div>
 </template>
@@ -37,7 +39,7 @@ export default {
 .theme-picker {
   display: flex;
   flex-wrap: wrap;
-  width: 120px;
+  width: 148px;
   position: absolute;
   top: 100%;
   right: 100%;
@@ -51,10 +53,17 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   margin: 3px;
   border-radius: 50%;
+  border: 1px solid hsla(0, 0%, 0%, 0.1);
   cursor: pointer;
+}
+.swatch-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
 }
 </style>

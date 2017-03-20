@@ -1,11 +1,11 @@
 <template>
   <div id="app" class="app" :style="{color: currentTheme.textColor, backgroundColor: currentTheme.backgroundColor, borderColor: currentTheme.borderColor}">
-    <sidebar-left :theme="currentTheme" v-show="sidebarLeftShow"></sidebar-left>
+    <sidebar-left :theme="currentTheme" v-if="sidebarLeftShow"></sidebar-left>
     <main class="main">
       <navbar :theme="currentTheme" :themes="themes"></navbar>
       <router-view></router-view>
     </main>
-    <sidebar-right :theme="currentTheme" v-show="sidebarRightShow"></sidebar-right>
+    <sidebar-right :theme="currentTheme" v-if="sidebarRightShow"></sidebar-right>
   </div>
 </template>
 
@@ -42,7 +42,7 @@ export default {
     return {
       themes: [
         {
-          themeColor: '#dcbf8c',
+          accentColor: '#dcbf8c',
           textColor: '#000',
           borderColor: '#dcbf8c',
           backgroundColor: '#fff',
@@ -52,7 +52,7 @@ export default {
           iconColor: '#000'
         },
         {
-          themeColor: '#424242',
+          accentColor: '#424242',
           textColor: '#fff',
           borderColor: '#dcbf8c',
           backgroundColor: '#424242',
@@ -62,7 +62,7 @@ export default {
           iconColor: '#fff'
         },
         {
-          themeColor: '#FDD835',
+          accentColor: '#FDD835',
           textColor: '#fff',
           borderColor: '#FBC02D',
           backgroundColor: '#FFEB3B',
@@ -70,6 +70,17 @@ export default {
           navbarColor: '#424242',
           logoColor: '#fff',
           iconColor: '#fff'
+        },
+        {
+          accentColor: '#1A237E',
+          textColor: '#000',
+          borderColor: '#303F9F',
+          borderColor2: '#ccc',
+          backgroundColor: '#3F51B5',
+          backgroundColor2: '#303F9F',
+          navbarColor: '#fff',
+          logoColor: '#000',
+          iconColor: '#000'
         }
       ]
     }

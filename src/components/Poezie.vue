@@ -15,9 +15,6 @@ export default {
   name: 'poezie',
   data () {
     return {
-      // titlu: 'Slăvit să fie Domnul!',
-      titlu: '',
-      strofe: []
     }
   }
 }

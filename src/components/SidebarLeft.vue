@@ -28,7 +28,8 @@
         <li class="branch">
           <ul class="files">
             <li @click="handleFolderClick" class="folder">
-              <span>Caiet 1</span>
+              <router-link to="/foo">Caiet1</router-link>
+              <!--<span>Caiet 1</span>-->
             </li>
             <li class="branch">
               <ul v-if="true" class="files">
@@ -53,8 +54,6 @@
 
 <script>
 import { store } from '../store/index'
-
-// import IconFolder from './IconFolder'
 
 export default {
   name: 'sidebar-left',

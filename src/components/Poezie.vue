@@ -6,7 +6,6 @@
     <p v-else>
       Rezultatele pentru: {{ currentSearch }}
     </p> -->
-    <!--{{ adresa }}-->
     {{ titlu }}
     <div v-for="strofa in strofe">
       {{ strofa }}
@@ -17,7 +16,7 @@
 <script>
 export default {
   name: 'poezie',
-  props: ['adresa', 'titlu', 'strofe'],
+  props: ['titlu', 'strofe'],
   data () {
     return {
     }

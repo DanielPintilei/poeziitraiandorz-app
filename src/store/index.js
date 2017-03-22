@@ -9,7 +9,7 @@ export const store = new Vuex.Store({
     sidebarRightToggled: false,
     currentTheme: 1,
     selectedCaiet: '',
-    selectedPoezie: '',
+    selectedPoezie: 1,
     lastRoute: '/'
   },
   getters: {

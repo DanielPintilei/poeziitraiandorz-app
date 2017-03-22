@@ -1,9 +1,9 @@
 <template>
   <div id="app" class="app" :style="{color: currentTheme.textColor, backgroundColor: currentTheme.backgroundColor, borderColor: currentTheme.borderColor}">
-    <sidebar-left :poeziiRef="poeziiRef" :theme="currentTheme" v-if="sidebarLeftShow"></sidebar-left>
+    <sidebar-left :caieteRef="caieteRef" :theme="currentTheme" v-if="sidebarLeftShow"></sidebar-left>
     <main class="main">
       <navbar :theme="currentTheme" :themes="themes"></navbar>
-      <router-view class="main-router-view"></router-view>
+      <router-view :caieteRef="caieteRef" class="main-router-view"></router-view>
     </main>
     <sidebar-right :theme="currentTheme" v-if="sidebarRightShow"></sidebar-right>
   </div>
@@ -20,12 +20,12 @@ import SidebarRight from './components/SidebarRight'
 
 let app = Firebase.initializeApp({databaseURL: 'https://poeziitraiandorz.firebaseio.com'})
 let db = app.database()
-let poeziiRef = db.ref('poezii')
+let caieteRef = db.ref('caiete')
 
 export default {
   name: 'app',
   firebase: {
-    poeziiRef
+    caieteRef
   },
   // mounted: function () {
   //   db.ref('themes').once('value', snapshot => {
@@ -132,6 +132,7 @@ body {
   opacity: 0.7;
 }
 a {
-  color: pink;
+  color: lightgray;
+  display: block;
 }
 </style>

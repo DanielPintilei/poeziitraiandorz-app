@@ -8,9 +8,9 @@
       <span>Cuprins</span>
     </div>
     <div class="sidebar-left-content" :style="{backgroundColor: theme.backgroundColor2, borderColor: theme.borderColor}">
-      <div v-for="caiet in poeziiRef" class="caiete">
-        <span @click="setSelectedCaiet(caiet['.key'])" class="caiet-titlu">
-          <svg :fill="theme.iconColor" :class="{toggled: caiet['.key'] === selectedCaiet }" class="icon-arrow-right" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+      <div v-for="caiet in caieteRef" class="caiete">
+        <span @click="setSelectedCaiet(caiet.titlu)" class="caiet-titlu">
+          <svg :fill="theme.iconColor" :class="{toggled: caiet.titlu === selectedCaiet }" class="icon-arrow-right" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
             <path d="M7 10l5 5 5-5z"/>
             <path d="M0 0h24v24H0z" fill="none"/>
           </svg>
@@ -18,12 +18,12 @@
             <path d="M0 0h24v24H0z" fill="none"/>
             <path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/>
           </svg>
-          {{caiet['.key']}}
+          {{caiet.titlu}}
         </span>
-        <div v-for="poezie in caiet['.value']">
+        <div v-for="poezie in caiet.poezii">
           <router-link :to="{ name: 'Poezie', params: {adresa: poezie.titlu.replace(/\s+/g, '-').toLowerCase(), titlu: poezie.titlu, strofe:poezie.strofe}}">
-            <span @click="setSelectedPoezie(poezie.titlu)" :class="{selected: poezie.titlu === selectedPoezie}">
-              {{poezie.titlu}}
+            <span @click="setSelectedPoezie(poezie.nr)" :class="{selected: poezie.nr === selectedPoezie}" class="link-poezie">
+              {{poezie.nr}} {{poezie.titlu}}
             </span>
           </router-link>
         </div>
@@ -38,10 +38,9 @@ import { store } from '../store/index'
 export default {
   name: 'sidebar-left',
   store,
-  props: ['theme', 'poeziiRef'],
+  props: ['theme', 'caieteRef'],
   data () {
     return {
-      folderOpen: false
     }
   },
   computed: {
@@ -92,18 +91,17 @@ export default {
 }
 .sidebar-left-content {
   flex-grow: 1;
-  padding-right: 20px;
   border-right: 1px solid;
   overflow: auto;
 }
-.sidebar-left::-webkit-scrollbar {
-	width: 6px;
+.sidebar-left-content::-webkit-scrollbar {
+	width: 8px;
 	background-color: transparent;
 }
-.sidebar-left::-webkit-scrollbar-track {
+.sidebar-left-content::-webkit-scrollbar-track {
 	background-color: hsla(0, 0%, 50%, 0.2);
 }
-.sidebar-left::-webkit-scrollbar-thumb {
+.sidebar-left-content::-webkit-scrollbar-thumb {
 	background-color: hsla(0, 0%, 50%, 0.5);;
   border-radius: 4px;
 }
@@ -119,7 +117,17 @@ export default {
 .icon-arrow-right.toggled {
   transform: rotate(0deg);
 }
+.link-poezie {
+  display: block;
+  padding-right: 20px;
+}
+.link-poezie:hover {
+  background-color: hsla(0, 0%, 50%, 0.2);
+}
 .selected {
+  background-color: hsla(0, 0%, 50%, 0.5);
+}
+.selected:hover {
   background-color: hsla(0, 0%, 50%, 0.5);
 }
 </style>

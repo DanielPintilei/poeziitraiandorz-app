@@ -8,7 +8,8 @@ export const store = new Vuex.Store({
     sidebarLeftToggled: true,
     sidebarRightToggled: false,
     currentTheme: 1,
-    selectedFile: '',
+    selectedCaiet: '',
+    selectedPoezie: '',
     lastRoute: '/'
   },
   getters: {
@@ -18,8 +19,11 @@ export const store = new Vuex.Store({
     getSidebarRightToggled: state => {
       return state.sidebarRightToggled
     },
-    getSelectedFile: state => {
-      return state.selectedFile
+    getSelectedCaiet: state => {
+      return state.selectedCaiet
+    },
+    getSelectedPoezie: state => {
+      return state.selectedPoezie
     },
     getThemes: state => {
       return state.themes
@@ -38,8 +42,11 @@ export const store = new Vuex.Store({
     toggleSidebarRight (state) {
       state.sidebarRightToggled = !state.sidebarRightToggled
     },
-    setSelectedSidebarFile (state) {
-      state.selectedFile = ''
+    setSelectedCaiet (state, n) {
+      state.selectedCaiet = n
+    },
+    setSelectedPoezie (state, n) {
+      state.selectedPoezie = n
     },
     setSelectedTheme (state, n) {
       state.currentTheme = n

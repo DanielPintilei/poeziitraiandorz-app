@@ -1,6 +1,6 @@
 <template>
   <div class="landing">
-    Landing.vue
+    Landing
   </div>
 </template>
 

@@ -9,30 +9,25 @@
     </div>
     <div class="sidebar-left-content" :style="{backgroundColor: theme.backgroundColor2, borderColor: theme.borderColor}">
       <div v-for="caiet in poeziiRef" class="caiete">
-        <span @click="handleFolderClick" class="caiet-titlu">
-          <svg :fill="theme.iconColor" :class="{toggled: folderOpen}" class="icon-arrow-right" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+        <span @click="setSelectedCaiet(caiet['.key'])" class="caiet-titlu">
+          <svg :fill="theme.iconColor" :class="{toggled: caiet['.key'] === selectedCaiet }" class="icon-arrow-right" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
             <path d="M7 10l5 5 5-5z"/>
             <path d="M0 0h24v24H0z" fill="none"/>
+          </svg>
+          <svg class="icon-folder" :fill="theme.iconColor" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/>
           </svg>
           {{caiet['.key']}}
         </span>
         <div v-for="poezie in caiet['.value']">
-          <router-link :to="{ name: 'Poezie', params: { ruta: poezie.titlu, strofe:poezie.strofe}}">{{poezie.titlu}}</router-link>
+          <router-link :to="{ name: 'Poezie', params: {adresa: poezie.titlu.replace(/\s+/g, '-').toLowerCase(), titlu: poezie.titlu, strofe:poezie.strofe}}">
+            <span @click="setSelectedPoezie(poezie.titlu)" :class="{selected: poezie.titlu === selectedPoezie}">
+              {{poezie.titlu}}
+            </span>
+          </router-link>
         </div>
       </div>
-      <!-- <icon-folder :folderOpen="folderOpen"  :theme="theme"></icon-folder>
-      <svg :fill="theme.iconColor" :class="{toggled: folderOpen}" class="icon-arrow-right" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-        <path d="M7 10l5 5 5-5z"/>
-        <path d="M0 0h24v24H0z" fill="none"/>
-      </svg>
-      <svg v-if="!folderOpen" class="icon-folder" :fill="theme.iconColor" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-        <path d="M17 3H7c-1.1 0-1.99.9-1.99 2L5 21l7-3 7 3V5c0-1.1-.9-2-2-2zm0 15l-5-2.18L7 18V5h10v13z"/>
-        <path d="M0 0h24v24H0z" fill="none"/>
-      </svg>
-      <svg v-if="folderOpen" class="icon-folder-open" :fill="theme.iconColor" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-        <path d="M17 3H7c-1.1 0-1.99.9-1.99 2L5 21l7-3 7 3V5c0-1.1-.9-2-2-2z"/>
-        <path d="M0 0h24v24H0z" fill="none"/>
-      </svg>-->
     </div>
   </aside>
 </template>
@@ -50,23 +45,29 @@ export default {
     }
   },
   computed: {
-    selectedSidebarFile () {
-      return store.getters.getSelectedFile
+    selectedCaiet () {
+      return store.getters.getSelectedCaiet
+    },
+    selectedPoezie () {
+      return store.getters.getSelectedPoezie
     }
   },
   methods: {
-    setSelectedSidebarFile () {
-      store.commit('setSelectedSidebarFile')
+    setSelectedCaiet (n) {
+      store.commit('setSelectedCaiet', n)
     },
-    toggleFolder () {
-      this.folderOpen = !this.folderOpen
-    },
-    toggleCaret () {
-    },
-    handleFolderClick () {
-      this.setSelectedSidebarFile()
-      this.toggleFolder()
+    setSelectedPoezie (n) {
+      store.commit('setSelectedPoezie', n)
     }
+    // toggleCaret () {
+    // },
+    // toggleCaiet () {
+    //   this.folderOpen = !this.folderOpen
+    // }
+    // handleCaietClick () {
+    //   this.setSelectedPoezie()
+    //   this.toggleFolder()
+    // }
   }
 }
 </script>
@@ -117,5 +118,8 @@ export default {
 }
 .icon-arrow-right.toggled {
   transform: rotate(0deg);
+}
+.selected {
+  background-color: hsla(0, 0%, 50%, 0.5);
 }
 </style>

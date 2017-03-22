@@ -1,14 +1,13 @@
 <template>
   <div class="poezie">
-    <!--<h1>{{ titlu }}</h1>-->
     <!-- <p v-if="currentSearch == null">
       Cauta in poezii
     </p>
     <p v-else>
       Rezultatele pentru: {{ currentSearch }}
     </p> -->
-    Poezie ID ruta titlu: {{ $route.params.ruta }}
-<br>
+    <!--{{ adresa }}-->
+    {{ titlu }}
     <div v-for="strofa in strofe">
       {{ strofa }}
     </div>
@@ -18,11 +17,15 @@
 <script>
 export default {
   name: 'poezie',
-  props: ['strofe'],
+  props: ['adresa', 'titlu', 'strofe'],
   data () {
     return {
     }
   }
+  // mounted: function () {
+  //   setTimeout(() => {
+  //   }, 3000)
+  // }
 }
 </script>
 

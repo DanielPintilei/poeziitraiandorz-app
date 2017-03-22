@@ -5,10 +5,11 @@ Vue.use(Vuex)
 
 export const store = new Vuex.Store({
   state: {
-    sidebarLeftToggled: false,
+    sidebarLeftToggled: true,
     sidebarRightToggled: false,
-    currentTheme: 3,
-    selectedFile: ''
+    currentTheme: 1,
+    selectedFile: '',
+    lastRoute: '/'
   },
   getters: {
     getSidebarLeftToggled: state => {
@@ -25,6 +26,9 @@ export const store = new Vuex.Store({
     },
     getCurrentTheme: state => {
       return state.currentTheme
+    },
+    getLastRoute: state => {
+      return state.lastRoute
     }
   },
   mutations: {

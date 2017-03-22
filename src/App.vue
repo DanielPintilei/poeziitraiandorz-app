@@ -1,16 +1,16 @@
 <template>
   <div id="app" class="app" :style="{color: currentTheme.textColor, backgroundColor: currentTheme.backgroundColor, borderColor: currentTheme.borderColor}">
-    <sidebar-left :theme="currentTheme" v-if="sidebarLeftShow"></sidebar-left>
+    <sidebar-left :poeziiRef="poeziiRef" :theme="currentTheme" v-if="sidebarLeftShow"></sidebar-left>
     <main class="main">
       <navbar :theme="currentTheme" :themes="themes"></navbar>
-      <router-view></router-view>
+      <router-view class="main-router-view"></router-view>
     </main>
     <sidebar-right :theme="currentTheme" v-if="sidebarRightShow"></sidebar-right>
   </div>
 </template>
 
 <script>
-// import Firebase from 'firebase'
+import Firebase from 'firebase'
 
 import { store } from './store/index'
 
@@ -18,15 +18,15 @@ import Navbar from './components/Navbar'
 import SidebarLeft from './components/SidebarLeft'
 import SidebarRight from './components/SidebarRight'
 
-// let app = Firebase.initializeApp({databaseURL: 'https://poeziitraiandorz.firebaseio.com'})
-// let db = app.database()
-// let themesRef = db.ref('themes')
+let app = Firebase.initializeApp({databaseURL: 'https://poeziitraiandorz.firebaseio.com'})
+let db = app.database()
+let poeziiRef = db.ref('poezii')
 
 export default {
   name: 'app',
-  // firebase: {
-  //   themesRef
-  // },
+  firebase: {
+    poeziiRef
+  },
   // mounted: function () {
   //   db.ref('themes').once('value', snapshot => {
   //     this.themes = this.themesRef
@@ -55,6 +55,7 @@ export default {
           accentColor: '#424242',
           textColor: '#fff',
           borderColor: '#dcbf8c',
+          borderColor2: '#dcbf8c',
           backgroundColor: '#424242',
           backgroundColor2: '#424242',
           navbarColor: '#424242',
@@ -119,9 +120,18 @@ body {
 }
 .main {
   flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+.main-router-view {
+  flex-grow: 1;
+  /*background-color: aqua;*/
 }
 .icon-themed:hover {
   cursor: pointer;
   opacity: 0.7;
+}
+a {
+  color: pink;
 }
 </style>

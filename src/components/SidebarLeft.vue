@@ -24,13 +24,13 @@
         backgroundColor: theme.backgroundColor2,
         borderColor: theme.borderColor2
       }">
-      <div v-for="caiet in caieteRef" class="caiet">
-        <span
-          @click="setSelectedCaiet(caiet.titlu)"
+      <div v-for="(caiet, index) in caieteRef" class="caiet">
+        <input type="checkbox" :id="`caiet${index}`" :value="index" v-model="selectedCaiete" class="caiet-input">
+        <label
+          :for="`caiet${index}`"
           class="caiet-titlu">
           <svg
             :fill="theme.iconColor"
-            :class="{toggled: caiet.titlu === selectedCaiet }"
             class="icon-arrow-right"
             width="24"
             height="24"
@@ -48,25 +48,27 @@
             <path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/>
           </svg>
           {{caiet.titlu}}
-        </span>
-        <router-link
-          v-for="poezie in caiet.poezii"
-          :to="{
-            name: 'Poezie',
-            params: {
-              adresa: `${poezie.nr}-${poezie.titlu.replace(/\s+/g, '-').toLowerCase()}`,
-              titlu: poezie.titlu,
-              strofe:poezie.strofe
-            }
-          }">
-          <span
-            @click="setSelectedPoezie(poezie.nr)"
-            :class="{selected: poezie.nr === selectedPoezie}"
-            class="link-poezie">
-            <span>{{poezie.nr}}</span>
-            <span>{{poezie.titlu}}</span>
-          </span>
-        </router-link>
+        </label>
+        <div class="links-wrapper">
+          <router-link
+            v-for="poezie in caiet.poezii"
+            :to="{
+              name: 'Poezie',
+              params: {
+                adresa: `${poezie.nr}-${poezie.titlu.replace(/\s+/g, '-').toLowerCase()}`,
+                titlu: poezie.titlu,
+                strofe:poezie.strofe
+              }
+            }">
+            <span
+              @click="setSelectedPoezie(poezie.nr)"
+              :class="{selected: poezie.nr === selectedPoezie}"
+              class="link-poezie">
+              <span>{{poezie.nr}}</span>
+              <span>{{poezie.titlu}}</span>
+            </span>
+          </router-link>
+        </div>
       </div>
     </div>
   </aside>
@@ -81,32 +83,23 @@ export default {
   props: ['theme', 'caieteRef'],
   data () {
     return {
+      selectedCaiete: store.state.selectedCaiete
     }
   },
   computed: {
-    selectedCaiet () {
-      return store.getters.getSelectedCaiet
-    },
     selectedPoezie () {
       return store.getters.getSelectedPoezie
     }
   },
   methods: {
-    setSelectedCaiet (n) {
-      store.commit('setSelectedCaiet', n)
-    },
-    setSelectedPoezie (n) {
-      store.commit('setSelectedPoezie', n)
+    setSelectedPoezie (poezie) {
+      store.commit('setSelectedPoezie', poezie)
     }
-    // toggleCaret () {
-    // },
-    // toggleCaiet () {
-    //   this.folderOpen = !this.folderOpen
-    // }
-    // handleCaietClick () {
-    //   this.setSelectedPoezie()
-    //   this.toggleFolder()
-    // }
+  },
+  watch: {
+    selectedCaiete () {
+      store.commit('setSelectedCaiete', this.selectedCaiete)
+    }
   }
 }
 </script>
@@ -122,10 +115,10 @@ export default {
 @media (max-width: 900px) {
   .sidebar-left {
     width: 250px;
-    position: fixed;
-    top: 7px;
-    bottom: 7px;
-    left: 7px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
     z-index: 1
   }
 }
@@ -160,6 +153,12 @@ export default {
 }
 .caiet {
 }
+.caiet-input {
+  display: none;
+}
+.caiet-input:not(:checked) + .caiet-titlu + .links-wrapper {
+  display: none;
+}
 .caiet a {
   text-decoration: none;
   line-height: 1.6;
@@ -167,15 +166,19 @@ export default {
 .caiet-titlu {
   display: flex;
   padding: 10px 12px 8px;
-  /*line-height: 1.8;*/
-  /*align-items: center;*/
+  cursor: pointer;
+  align-items: center; /*pt mobile*/
+  line-height: 100%; /*pt mobile*/
+}
+.caiet-titlu:hover {
+  background-color: hsla(0, 0%, 50%, 0.2);
 }
 .icon-arrow-right {
   width: 22px;
   margin-right: -7px;
   transform: rotate(-90deg);
 }
-.icon-arrow-right.toggled {
+.caiet-input:checked + .caiet-titlu .icon-arrow-right {
   transform: rotate(0deg);
 }
 .icon-folder {

@@ -33,5 +33,6 @@ export default {
   /*flex-grow: 1;
   padding: 40px 15px;
   overflow-y: auto;*/
+  padding: 40px;
 }
 </style>

@@ -16,5 +16,6 @@ export default {
 
 <style scoped>
 .landing {
+  padding: 40px;
 }
 </style>

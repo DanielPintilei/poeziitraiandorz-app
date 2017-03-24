@@ -127,6 +127,7 @@ body {
   margin: 0;
 }
 .app {
+  position: relative;
   display: flex;
   width: 100vw;
   height: 100vh;

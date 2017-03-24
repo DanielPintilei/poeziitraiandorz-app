@@ -15,19 +15,21 @@
         class="search-input"
         placeholder="Caută">
     </div>
-    <div class="sidebar-right__filters">
-      <!--<input type="checkbox" id="checkbox" v-model="checked">
-      <label for="checkbox">{{ checked }}</label>-->
+    <div class="sidebar-right-inner">
+      <div class="sidebar-right__filters">
+        <!--<input type="checkbox" id="checkbox" v-model="checked">
+        <label for="checkbox">{{ checked }}</label>-->
 
-      <!--<input type="radio" id="one" value="One" v-model="picked">
-      <label for="one">One</label>
-      <br>
-      <input type="radio" id="two" value="Two" v-model="picked">
-      <label for="two">Two</label>
-      <br>
-      <span>Picked: {{ picked }}</span>-->
+        <!--<input type="radio" id="one" value="One" v-model="picked">
+        <label for="one">One</label>
+        <br>
+        <input type="radio" id="two" value="Two" v-model="picked">
+        <label for="two">Two</label>
+        <br>
+        <span>Picked: {{ picked }}</span>-->
 
 
+      </div>
     </div>
   </aside>
 </template>
@@ -53,13 +55,16 @@ export default {
 <style scoped>
 .sidebar-right {
   flex-shrink: 0;
-  flex-basis: 300px;
+  width: 300px;
   border-left: 1px solid;
+  overflow: hidden;
+  will-change: width;
 }
 .sidebar-right-search {
   flex-shrink: 0;
   display: flex;
   align-items: center;
+  width: 300px;
   height: 64px;
   padding-left: 20px;
   padding-right: 20px;

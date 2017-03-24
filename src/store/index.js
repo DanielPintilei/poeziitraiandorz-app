@@ -5,7 +5,7 @@ Vue.use(Vuex)
 
 export const store = new Vuex.Store({
   state: {
-    sidebarLeftToggled: true,
+    sidebarLeftToggled: false,
     sidebarRightToggled: false,
     currentTheme: 1,
     selectedCaiete: [],

@@ -6,9 +6,13 @@
     <p v-else>
       Rezultatele pentru: {{ currentSearch }}
     </p> -->
-    {{ titlu }}
+    <h1>
+      {{ titlu }}
+    </h1>
     <div v-for="strofa in strofe">
-      {{ strofa }}
+      <p>
+        {{ strofa }}
+      </p>
     </div>
   </div>
 </template>

@@ -7,19 +7,23 @@
       backgroundColor: currentTheme.backgroundColor,
       borderColor: currentTheme.borderColor
     }">
-    <sidebar-left
-      :caieteRef="caieteRef"
-      :theme="currentTheme"
-      v-if="sidebarLeftShow">
-    </sidebar-left>
+    <transition name="slide-left">
+      <sidebar-left
+        :caieteRef="caieteRef"
+        :theme="currentTheme"
+        v-if="sidebarLeftShow">
+      </sidebar-left>
+    </transition>
     <main class="main">
       <navbar :theme="currentTheme" :themes="themes"></navbar>
       <router-view :caieteRef="caieteRef" class="main-router-view"></router-view>
     </main>
-    <sidebar-right
-      :theme="currentTheme"
-      v-if="sidebarRightShow">
-    </sidebar-right>
+    <transition name="slide-right">
+      <sidebar-right
+        :theme="currentTheme"
+        v-if="sidebarRightShow">
+      </sidebar-right>
+    </transition>
   </div>
 </template>
 
@@ -146,8 +150,103 @@ body {
   cursor: pointer;
   opacity: 0.7;
 }
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-weight: normal;
+}
+p {
+  font-family: 'Libre Baskerville', serif;
+}
 a {
   color: lightgray;
   display: block;
+}
+.slide-left-enter-active {
+  animation: width-left-in 0.5s ease-in-out;
+}
+.slide-left-enter-active .sidebar-left-inner {
+  animation: slide-left-in 0.5s ease-in-out;
+}
+.slide-left-leave-active {
+  animation: width-left-out 0.5s ease-in-out;
+}
+.slide-left-leave-active .sidebar-left-inner {
+  animation: slide-left-out 0.5s ease-in-out;
+}
+@keyframes width-left-in {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 300px;
+  }
+}
+@keyframes width-left-out {
+  0% {
+    width: 300px;
+  }
+  100% {
+    width: 0;
+  }
+}
+@keyframes slide-left-in {
+  0% {
+    transform: translateX(-300px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+@keyframes slide-left-out {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-300px);
+  }
+}
+.slide-right-enter-active {
+  animation: width-right-in 0.5s ease-in-out;
+}
+.slide-right-enter-active .sidebar-right-inner {
+  animation: slide-right-in 0.5s ease-in-out;
+}
+.slide-right-leave-active {
+  animation: width-right-out 0.5s ease-in-out;
+}
+.slide-right-leave-active .sidebar-right-inner {
+  animation: slide-right-out 0.5s ease-in-out;
+}
+@keyframes width-right-in {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 300px;
+  }
+}
+@keyframes width-right-out {
+  0% {
+    width: 300px;
+  }
+  100% {
+    width: 0;
+  }
+}
+@keyframes slide-right-in {
+  0% {
+    transform: translateX(300px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+@keyframes slide-right-out {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(300px);
+  }
 }
 </style>

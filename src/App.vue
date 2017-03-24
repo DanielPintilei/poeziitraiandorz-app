@@ -1,11 +1,25 @@
 <template>
-  <div id="app" class="app" :style="{color: currentTheme.textColor, backgroundColor: currentTheme.backgroundColor, borderColor: currentTheme.borderColor}">
-    <sidebar-left :caieteRef="caieteRef" :theme="currentTheme" v-if="sidebarLeftShow"></sidebar-left>
+  <div
+    id="app"
+    class="app"
+    :style="{
+      color: currentTheme.textColor,
+      backgroundColor: currentTheme.backgroundColor,
+      borderColor: currentTheme.borderColor
+    }">
+    <sidebar-left
+      :caieteRef="caieteRef"
+      :theme="currentTheme"
+      v-if="sidebarLeftShow">
+    </sidebar-left>
     <main class="main">
       <navbar :theme="currentTheme" :themes="themes"></navbar>
       <router-view :caieteRef="caieteRef" class="main-router-view"></router-view>
     </main>
-    <sidebar-right :theme="currentTheme" v-if="sidebarRightShow"></sidebar-right>
+    <sidebar-right
+      :theme="currentTheme"
+      v-if="sidebarRightShow">
+    </sidebar-right>
   </div>
 </template>
 
@@ -55,7 +69,7 @@ export default {
           accentColor: '#424242',
           textColor: '#fff',
           borderColor: '#dcbf8c',
-          borderColor2: '#dcbf8c',
+          borderColor2: '#675d4c',
           backgroundColor: '#424242',
           backgroundColor2: '#424242',
           navbarColor: '#424242',

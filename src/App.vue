@@ -10,20 +10,20 @@
     <div
       @click="closeSidebars"
       v-if="sidebarLeftShow || sidebarRightShow"
-      class="slider-backdrop">
+      class="sidebar-backdrop">
     </div>
-    <transition name="slide-left">
+    <transition name="sidebar-slide-left">
       <sidebar-left
         :caieteRef="caieteRef"
         :theme="currentTheme"
         v-if="sidebarLeftShow">
       </sidebar-left>
     </transition>
-    <main class="main">
+    <main class="app__main">
       <navbar :theme="currentTheme" :themes="themes"></navbar>
-      <router-view :caieteRef="caieteRef" class="main-router-view"></router-view>
+      <router-view :caieteRef="caieteRef" class="app__main-view"></router-view>
     </main>
-    <transition name="slide-right">
+    <transition name="sidebar-slide-right">
       <sidebar-right
         :theme="currentTheme"
         v-if="sidebarRightShow">
@@ -128,148 +128,88 @@ export default {
 }
 </script>
 
-<style>
-* {
-  box-sizing: border-box;
-}
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  margin: 0;
-}
-.app {
-  position: relative;
-  display: flex;
-  width: 100vw;
-  height: 100vh;
-  border: 7px solid;
-}
-.slider-backdrop {
-  display: none;
-}
-@media (max-width: 900px) {
-  .slider-backdrop {
-    display: block;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background-color: hsla(0, 0%, 0%, 0.5);
-    z-index: 1;
-  }
-}
-.main {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-}
-.main-router-view {
-  flex-grow: 1;
-  /*background-color: aqua;*/
-}
-.icon-themed:hover {
-  cursor: pointer;
-  opacity: 0.7;
-}
-h1 {
-  font-family: 'Playfair Display', serif;
-  font-weight: normal;
-}
-p {
-  font-family: 'Libre Baskerville', serif;
-}
-a {
-  color: lightgray;
-  display: block;
-}
-.slide-left-enter-active {
-  animation: width-left-in 0.4s ease-in-out;
-}
-/*.slide-left-enter-active .sidebar-left-inner {
-  animation: slide-left-in 0.4s ease-in-out;
-}*/
-.slide-left-leave-active {
-  animation: width-left-out 0.4s ease-in-out;
-}
-/*.slide-left-leave-active .sidebar-left-inner {
-  animation: slide-left-out 0.4s ease-in-out;
-}*/
-@keyframes width-left-in {
-  0% {
-    width: 0;
-  }
-  100% {
-    width: 300px;
-  }
-}
-@keyframes width-left-out {
-  0% {
-    width: 300px;
-  }
-  100% {
-    width: 0;
-  }
-}
-/*@keyframes slide-left-in {
-  0% {
-    transform: translateX(-300px);
-  }
-  100% {
-    transform: translateX(0);
-  }
-}
-@keyframes slide-left-out {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-300px);
-  }
-}*/
-.slide-right-enter-active {
-  animation: width-right-in 0.4s ease-in-out;
-}
-/*.slide-right-enter-active .sidebar-right-inner {
-  animation: slide-right-in 0.4s ease-in-out;
-}*/
-.slide-right-leave-active {
-  animation: width-right-out 0.4s ease-in-out;
-}
-/*.slide-right-leave-active .sidebar-right-inner {
-  animation: slide-right-out 0.4s ease-in-out;
-}*/
-@keyframes width-right-in {
-  0% {
-    width: 0;
-  }
-  100% {
-    width: 300px;
-  }
-}
-@keyframes width-right-out {
-  0% {
-    width: 300px;
-  }
-  100% {
-    width: 0;
-  }
-}
-/*@keyframes slide-right-in {
-  0% {
-    transform: translateX(300px);
-  }
-  100% {
-    transform: translateX(0);
-  }
-}
-@keyframes slide-right-out {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(300px);
-  }
-}*/
+<style lang="stylus">
+@import "variables"
+
+*
+  box-sizing border-box
+
+body
+  font-family -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif
+  -webkit-font-smoothing antialiased
+  -moz-osx-font-smoothing grayscale
+  margin 0
+
+.app
+  position relative
+  display flex
+  width 100vw
+  height 100vh
+  border 7px solid
+
+.sidebar-backdrop
+  display none
+  @media (max-width $breakpointMobile)
+    display block
+    position absolute
+    top 0
+    right 0
+    bottom 0
+    left 0
+    background-color $backdropColor
+    z-index 1
+
+.app__main
+  flex-grow 1
+  display flex
+  flex-direction column
+
+.app__main-view
+  flex-grow 1
+
+.icon:hover
+  cursor pointer
+  opacity $iconHoverOpacity
+
+h1
+  font-family 'Playfair Display', serif
+  font-weight normal
+
+p
+  font-family 'Libre Baskerville', serif
+
+a
+  color currentColor
+  display block
+
+.sidebar-slide-left-enter-active
+  animation width-left-in $sidebarDuration $sidebarTiming
+.sidebar-slide-left-leave-active
+  animation width-left-out $sidebarDuration $sidebarTiming
+@keyframes width-left-in
+  0%
+    width 0
+  100%
+    width $sidebarLeftWidth
+@keyframes width-left-out
+  0%
+    width $sidebarLeftWidth
+  100%
+    width 0
+
+.sidebar-slide-right-enter-active
+  animation width-right-in $sidebarDuration $sidebarTiming
+.sidebar-slide-right-leave-active
+  animation width-right-out $sidebarDuration $sidebarTiming
+@keyframes width-right-in
+  0%
+    width 0
+  100%
+    width $sidebarRighttWidth
+@keyframes width-right-out
+  0%
+    width $sidebarRightWidth
+  100%
+    width 0
+
 </style>

@@ -32,11 +32,9 @@ export default {
 }
 </script>
 
-<style scoped>
-.poezie {
-  /*flex-grow: 1;
-  padding: 40px 15px;
-  overflow-y: auto;*/
-  padding: 40px;
-}
+<style scoped lang="stylus">
+
+.poezie
+  padding 40px
+
 </style>

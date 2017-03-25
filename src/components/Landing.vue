@@ -14,8 +14,9 @@ export default {
 }
 </script>
 
-<style scoped>
-.landing {
-  padding: 40px;
-}
+<style scoped lang="stylus">
+
+.landing
+  padding 40px
+
 </style>

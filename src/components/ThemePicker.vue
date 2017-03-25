@@ -5,8 +5,13 @@
       @click="setSelectedTheme(index)"
       :style="{backgroundColor: theme.backgroundColor}"
       class="swatch">
-      <div class="swatch-inner" :style="{backgroundColor: theme.themeColor}">
-        <svg v-if="index === currentTheme" fill="#fff" height="24" viewBox="0 0 24 24" width="24">
+      <div
+        class="swatch__inner"
+        :style="{backgroundColor: theme.themeColor}">
+        <svg
+          v-if="index === currentTheme"
+          fill="#fff"
+          height="24" viewBox="0 0 24 24" width="24">
           <path d="M0 0h24v24H0z" fill="none"/>
           <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
         </svg>
@@ -39,35 +44,36 @@ export default {
 }
 </script>
 
-<style scoped>
-.theme-picker {
-  display: flex;
-  flex-wrap: wrap;
-  width: 148px;
-  position: absolute;
-  top: 100%;
-  right: 100%;
-  padding: 5px;
-  background-color: #fff;
-  box-shadow: 4px 2px 6px 0px hsla(0, 0%, 0%, 0.1);
-  border-radius: 4px;
-  z-index: 1;
-}
-.swatch {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  margin: 3px;
-  border-radius: 50%;
-  border: 1px solid hsla(0, 0%, 0%, 0.1);
-  cursor: pointer;
-}
-.swatch-inner {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-}
+<style scoped lang="stylus">
+
+.theme-picker
+  display flex
+  flex-wrap wrap
+  width 148px
+  position absolute
+  top 100%
+  right 100%
+  padding 5px
+  background-color #fff
+  box-shadow 4px 2px 6px 0px hsla(0, 0%, 0%, 0.1)
+  border-radius 4px
+  z-index 2
+
+.swatch
+  display flex
+  align-items center
+  justify-content center
+  width 40px
+  height 40px
+  margin 3px
+  border-radius 50%
+  border 1px solid hsla(0, 0%, 0%, 0.1)
+  cursor pointer
+
+.swatch__inner
+  display flex
+  align-items center
+  justify-content center
+  border-radius 50%
+
 </style>

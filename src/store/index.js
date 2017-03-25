@@ -42,6 +42,10 @@ export const store = new Vuex.Store({
     toggleSidebarRight (state) {
       state.sidebarRightToggled = !state.sidebarRightToggled
     },
+    closeSidebars (state) {
+      state.sidebarRightToggled = false
+      state.sidebarLeftToggled = false
+    },
     setSelectedCaiete (state, n) {
       state.selectedCaiete = n
     },

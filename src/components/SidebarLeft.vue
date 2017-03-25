@@ -114,6 +114,7 @@ export default {
   width: 300px;
   overflow: hidden;
   will-change: width;
+  z-index: 2;
 }
 @media (max-width: 900px) {
   .sidebar-left {
@@ -122,7 +123,7 @@ export default {
     top: 0;
     bottom: 0;
     left: 0;
-    z-index: 1
+    z-index: 2;
   }
 }
 .sidebar-left-inner {
@@ -134,7 +135,6 @@ export default {
   flex-shrink: 0;
   display: flex;
   align-items: center;
-  width: 300px;
   height: 64px;
   padding-left: 20px;
   border-right: 1px solid;

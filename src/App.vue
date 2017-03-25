@@ -7,6 +7,11 @@
       backgroundColor: currentTheme.backgroundColor,
       borderColor: currentTheme.borderColor
     }">
+    <div
+      @click="closeSidebars"
+      v-if="sidebarLeftShow || sidebarRightShow"
+      class="slider-backdrop">
+    </div>
     <transition name="slide-left">
       <sidebar-left
         :caieteRef="caieteRef"
@@ -116,6 +121,9 @@ export default {
     }
   },
   methods: {
+    closeSidebars () {
+      store.commit('closeSidebars')
+    }
   }
 }
 </script>
@@ -136,6 +144,21 @@ body {
   width: 100vw;
   height: 100vh;
   border: 7px solid;
+}
+.slider-backdrop {
+  display: none;
+}
+@media (max-width: 900px) {
+  .slider-backdrop {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: hsla(0, 0%, 0%, 0.5);
+    z-index: 1;
+  }
 }
 .main {
   flex-grow: 1;
@@ -162,17 +185,17 @@ a {
   display: block;
 }
 .slide-left-enter-active {
-  animation: width-left-in 0.5s ease-in-out;
+  animation: width-left-in 0.4s ease-in-out;
 }
-.slide-left-enter-active .sidebar-left-inner {
-  animation: slide-left-in 0.5s ease-in-out;
-}
+/*.slide-left-enter-active .sidebar-left-inner {
+  animation: slide-left-in 0.4s ease-in-out;
+}*/
 .slide-left-leave-active {
-  animation: width-left-out 0.5s ease-in-out;
+  animation: width-left-out 0.4s ease-in-out;
 }
-.slide-left-leave-active .sidebar-left-inner {
-  animation: slide-left-out 0.5s ease-in-out;
-}
+/*.slide-left-leave-active .sidebar-left-inner {
+  animation: slide-left-out 0.4s ease-in-out;
+}*/
 @keyframes width-left-in {
   0% {
     width: 0;
@@ -189,7 +212,7 @@ a {
     width: 0;
   }
 }
-@keyframes slide-left-in {
+/*@keyframes slide-left-in {
   0% {
     transform: translateX(-300px);
   }
@@ -204,19 +227,19 @@ a {
   100% {
     transform: translateX(-300px);
   }
-}
+}*/
 .slide-right-enter-active {
-  animation: width-right-in 0.5s ease-in-out;
+  animation: width-right-in 0.4s ease-in-out;
 }
-.slide-right-enter-active .sidebar-right-inner {
-  animation: slide-right-in 0.5s ease-in-out;
-}
+/*.slide-right-enter-active .sidebar-right-inner {
+  animation: slide-right-in 0.4s ease-in-out;
+}*/
 .slide-right-leave-active {
-  animation: width-right-out 0.5s ease-in-out;
+  animation: width-right-out 0.4s ease-in-out;
 }
-.slide-right-leave-active .sidebar-right-inner {
-  animation: slide-right-out 0.5s ease-in-out;
-}
+/*.slide-right-leave-active .sidebar-right-inner {
+  animation: slide-right-out 0.4s ease-in-out;
+}*/
 @keyframes width-right-in {
   0% {
     width: 0;
@@ -233,7 +256,7 @@ a {
     width: 0;
   }
 }
-@keyframes slide-right-in {
+/*@keyframes slide-right-in {
   0% {
     transform: translateX(300px);
   }
@@ -248,5 +271,5 @@ a {
   100% {
     transform: translateX(300px);
   }
-}
+}*/
 </style>

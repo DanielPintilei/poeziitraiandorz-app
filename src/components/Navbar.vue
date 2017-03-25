@@ -1,5 +1,5 @@
 <template>
-  <div
+  <header
     class="navbar"
     :style="{
       backgroundColor: theme.navbarColor,
@@ -79,7 +79,7 @@
         <path d="M0 0h24v24H0z" fill="none"/>
       </svg>
     </div>
-  </div>
+  </header>
 </template>
 
 <script>

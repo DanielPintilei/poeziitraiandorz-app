@@ -176,6 +176,7 @@ export default {
 
 .sidebar-left__title
   display flex
+  align-items center
 
 .icon-cuprins
   margin-right 7px

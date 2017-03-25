@@ -1,5 +1,5 @@
 <template>
-  <div class="poezie">
+  <article class="poezie">
     <!-- <p v-if="currentSearch == null">
       Cauta in poezii
     </p>
@@ -14,7 +14,7 @@
         {{ strofa }}
       </p>
     </div>
-  </div>
+  </article>
 </template>
 
 <script>

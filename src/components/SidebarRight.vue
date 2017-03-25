@@ -1,10 +1,11 @@
 <template>
-  <aside class="sidebar-right" :style="{borderColor: theme.borderColor2}">
+  <aside class="sidebar-right">
     <div class="sidebar-right__inner">
       <div
         class="search"
         :style="{
-          borderColor: theme.borderColor,
+          borderLeftColor: theme.borderColor2,
+          borderBottomColor: theme.borderColor,
           backgroundColor: theme.navbarColor
         }">
         <svg
@@ -19,7 +20,12 @@
           class="search__input"
           placeholder="Caută">
       </div>
-      <div class="sidebar-right__filters">
+      <div
+        class="sidebar-right__filters"
+        :style="{
+          backgroundColor: theme.backgroundColor2,
+          borderColor: theme.borderColor2
+        }">
         <!--<input type="checkbox" id="checkbox" v-model="checked">
         <label for="checkbox">{{ checked }}</label>-->
 
@@ -61,12 +67,18 @@ export default {
   display flex
   flex-direction column
   width $sidebarRightWidth
-  border-left 1px solid
   overflow hidden
   will-change width
   z-index 2
+  @media (max-width $breakpointMobile)
+    position absolute
+    top 0
+    bottom 0
+    right 0
+    z-index 2
 
 .sidebar-right__inner
+  flex-grow 1
   display flex
   flex-direction column
   width $sidebarRightWidth
@@ -78,6 +90,7 @@ export default {
   height $navbarHeight
   padding-left 20px
   padding-right 20px
+  border-left 1px solid
   border-bottom 1px solid
 
 .search__icon
@@ -92,5 +105,12 @@ export default {
   background-color transparent
   border none
   outline none
+
+.sidebar-right__filters
+  flex-grow: 1
+  padding-top 4px
+  padding-bottom 12px
+  border-left 1px solid
+  overflow auto
 
 </style>

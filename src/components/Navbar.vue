@@ -21,12 +21,12 @@
         :fill="theme.iconColor"
         class="icon icon-list"
         width="24" height="24" viewBox="0 0 24 24">
-        <path d="M17 3H7c-1.1 0-1.99.9-1.99 2L5 21l7-3 7 3V5c0-1.1-.9-2-2-2zm0 15l-5-2.18L7 18V5h10v13z"/>
-        <path d="M0 0h24v24H0z" fill="none"/>
+        <path d="M4 10.5c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5 1.5-.67 1.5-1.5-.67-1.5-1.5-1.5zm0-6c-.83 0-1.5.67-1.5 1.5S3.17 7.5 4 7.5 5.5 6.83 5.5 6 4.83 4.5 4 4.5zm0 12c-.83 0-1.5.68-1.5 1.5s.68 1.5 1.5 1.5 1.5-.68 1.5-1.5-.67-1.5-1.5-1.5zM7 19h14v-2H7v2zm0-6h14v-2H7v2zm0-8v2h14V5H7z"/>
+        <path d="M0 0h24v24H0V0z" fill="none"/>
       </svg>
       <svg
         :fill="theme.iconColor"
-        class="icon"
+        class="icon icon-menu"
         width="24" height="24" viewBox="0 0 24 24">
         <path d="M0 0h24v24H0z" fill="none"/>
         <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
@@ -153,6 +153,9 @@ $iconsGroupWidth = 100px
 .icon-list
   margin-left 20px
 
+.icon-menu
+  margin-left 10px
+
 .logo
   display flex
 
@@ -170,7 +173,7 @@ $iconsGroupWidth = 100px
   margin-right 20px
 
 .icon-picker
-  margin-right 10px
+  margin-right 20px
   &.toggled
     opacity $iconHoverOpacity
 

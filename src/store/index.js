@@ -10,6 +10,8 @@ export const store = new Vuex.Store({
     currentTheme: 1,
     selectedCaiete: [],
     selectedPoezie: 1,
+    sortCuprinsAZ: false,
+    sortCuprinsAZInvert: false,
     lastRoute: '/'
   },
   getters: {
@@ -51,6 +53,12 @@ export const store = new Vuex.Store({
     },
     setSelectedPoezie (state, n) {
       state.selectedPoezie = n
+    },
+    setSortCuprinsAZ (state, n) {
+      state.sortCuprinsAZ = n
+    },
+    setSortCuprinsAZInvert (state, n) {
+      state.sortCuprinsAZInvert = n
     },
     setSelectedTheme (state, n) {
       state.currentTheme = n

@@ -7,10 +7,11 @@
       class="swatch">
       <div
         class="swatch__inner"
-        :style="{backgroundColor: theme.themeColor}">
+        :style="{backgroundColor: theme.accentColor}">
         <svg
           v-if="index === currentTheme"
-          fill="#fff"
+          :fill="theme.backgroundColor"
+          class="swatch__check"
           height="24" viewBox="0 0 24 24" width="24">
           <path d="M0 0h24v24H0z" fill="none"/>
           <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
@@ -58,7 +59,7 @@ export default {
   box-shadow 4px 2px 6px 0px hsla(0, 0%, 0%, 0.1)
   border-radius 4px
   transform-origin top right
-  z-index 2
+  z-index 11
 
 .swatch
   display flex
@@ -70,11 +71,25 @@ export default {
   border-radius 50%
   border 1px solid hsla(0, 0%, 0%, 0.1)
   cursor pointer
+  &:active
+    transform scale(0.9)
 
 .swatch__inner
   display flex
   align-items center
   justify-content center
+  width 20px
+  height 20px
   border-radius 50%
+
+.swatch__check
+  width 18px
+  height 18px
+  animation swatch-check 0.2s forwards
+@keyframes swatch-check
+  from
+    transform scale(0)
+  to
+    transform scale(1)
 
 </style>

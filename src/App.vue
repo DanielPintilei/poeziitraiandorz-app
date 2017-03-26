@@ -10,7 +10,8 @@
     <div
       @click="closeSidebars"
       v-if="sidebarLeftShow || sidebarRightShow"
-      class="sidebar-backdrop">
+      :style="{ backgroundColor: currentTheme.backdropColor }"
+      class="backdrop backdrop--sidebar">
     </div>
     <transition name="sidebar-slide-left">
       <sidebar-left
@@ -70,17 +71,19 @@ export default {
           borderColor: '#dcbf8c',
           backgroundColor: '#fff',
           backgroundColor2: '#fff',
+          backdropColor: '#fff',
           navbarColor: '#fff',
           logoColor: '#dcbf8c',
           iconColor: '#000'
         },
         {
-          accentColor: '#424242',
+          accentColor: '#dcbf8c',
           textColor: '#fff',
           borderColor: '#dcbf8c',
           borderColor2: '#675d4c',
           backgroundColor: '#424242',
           backgroundColor2: '#424242',
+          backdropColor: '#212121',
           navbarColor: '#424242',
           logoColor: '#fff',
           iconColor: '#fff'
@@ -91,6 +94,7 @@ export default {
           borderColor: '#FBC02D',
           backgroundColor: '#FFEB3B',
           backgroundColor2: '#FDD835',
+          backdropColor: '#FDD835',
           navbarColor: '#424242',
           logoColor: '#fff',
           iconColor: '#fff'
@@ -102,6 +106,7 @@ export default {
           borderColor2: '#ccc',
           backgroundColor: '#3F51B5',
           backgroundColor2: '#303F9F',
+          backdropColor: '#303F9F',
           navbarColor: '#fff',
           logoColor: '#000',
           iconColor: '#000'
@@ -148,17 +153,19 @@ body
   border 7px solid
   overflow hidden
 
-.sidebar-backdrop
-  display none
-  @media (max-width $breakpointMobile)
-    display block
-    position absolute
-    top 0
-    right 0
-    bottom 0
-    left 0
-    background-color $backdropColor
-    z-index 1
+.backdrop
+  position absolute
+  top 0
+  right 0
+  bottom 0
+  left 0
+  opacity 0.8
+  z-index 10
+
+.backdrop--sidebar
+  background-color $backdropColor
+  @media (min-width $breakpointMobile + 1px)
+    display none
 
 .app__main
   flex-grow 1
@@ -168,9 +175,13 @@ body
 .app__main-view
   flex-grow 1
 
-.icon:hover
+.icon
   cursor pointer
-  opacity $iconHoverOpacity
+  opacity $iconOpacity
+  &:active
+    transform scale(0.9)
+  &:hover
+    opacity 1
 
 h1
   font-family 'Playfair Display', serif

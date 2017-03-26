@@ -8,6 +8,10 @@
           borderBottomColor: theme.borderColor,
           backgroundColor: theme.navbarColor
         }">
+        <input
+          type="text"
+          class="search-box__input"
+          placeholder="Caută">
         <svg
           :fill="theme.iconColor"
           class="search-box__icon"
@@ -15,10 +19,6 @@
           <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
           <path d="M0 0h24v24H0z" fill="none"/>
         </svg>
-        <input
-          type="text"
-          class="search-box__input"
-          placeholder="Caută">
       </div>
       <div
         class="sidebar-right__filters"
@@ -75,7 +75,7 @@ export default {
     top 0
     bottom 0
     right 0
-    z-index 2
+    z-index 11
 
 .sidebar-right__inner
   flex-grow 1
@@ -93,18 +93,24 @@ export default {
   border-left 1px solid
   border-bottom 1px solid
 
-.search-box__icon
-  opacity $iconHoverOpacity
-
 .search-box__input
+  order 1
   flex-grow 1
-  padding-left 12px
+  margin-left 12px
   align-self stretch
   font-size 15px
   color #fff
   background-color transparent
   border none
   outline none
+  text-decoration none
+  &:focus
+  &:active
+    & + .search-box__icon
+      opacity 1
+
+.search-box__icon
+  opacity $iconOpacity
 
 .sidebar-right__filters
   flex-grow: 1

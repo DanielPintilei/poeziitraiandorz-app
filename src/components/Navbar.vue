@@ -44,24 +44,26 @@
       <div
         @click="closeThemePicker"
         v-if="themePickerToggled"
-        class="picker-backdrop">
+        class="backdrop backdrop--picker">
       </div>
-      <transition name="theme-picker">
-        <theme-picker
-          :themes="themes"
-          v-if="themePickerToggled">
-        </theme-picker>
-      </transition>
-      <svg
-        @click="toggleThemePicker"
-        :fill="theme.iconColor"
-        :class="{toggled: themePickerToggled}"
-        class="icon icon-picker"
-        width="24" height="24" viewBox="0 0 24 24">
-        <path d="M0 0h24v24H0z" fill="none"/>
-        <path d="M16.56 8.94L7.62 0 6.21 1.41l2.38 2.38-5.15 5.15c-.59.59-.59 1.54 0 2.12l5.5 5.5c.29.29.68.44 1.06.44s.77-.15 1.06-.44l5.5-5.5c.59-.58.59-1.53 0-2.12zM5.21 10L10 5.21 14.79 10H5.21zM19 11.5s-2 2.17-2 3.5c0 1.1.9 2 2 2s2-.9 2-2c0-1.33-2-3.5-2-3.5z"/>
-        <path :fill="theme.themeColor" d="M0 20h24v4H0z" fill-opacity="0.7"/>
-      </svg>
+      <div class="icon-picker-wrapper">
+        <svg
+          @click="toggleThemePicker"
+          :fill="theme.iconColor"
+          :class="{toggled: themePickerToggled}"
+          class="icon icon-picker"
+          width="24" height="24" viewBox="0 0 24 24">
+          <path d="M0 0h24v24H0z" fill="none"/>
+          <path d="M16.56 8.94L7.62 0 6.21 1.41l2.38 2.38-5.15 5.15c-.59.59-.59 1.54 0 2.12l5.5 5.5c.29.29.68.44 1.06.44s.77-.15 1.06-.44l5.5-5.5c.59-.58.59-1.53 0-2.12zM5.21 10L10 5.21 14.79 10H5.21zM19 11.5s-2 2.17-2 3.5c0 1.1.9 2 2 2s2-.9 2-2c0-1.33-2-3.5-2-3.5z"/>
+          <path :fill="theme.themeColor" d="M0 20h24v4H0z" fill-opacity="0.7"/>
+        </svg>
+        <transition name="theme-picker">
+          <theme-picker
+            :themes="themes"
+            v-if="themePickerToggled">
+          </theme-picker>
+        </transition>
+      </div>
       <div
         :class="{toggled: sidebarRightToggled}"
         class="navbar__icons-toggle">
@@ -135,13 +137,8 @@ export default {
 
 $iconsGroupWidth = 100px
 
-.picker-backdrop
+.backdrop--picker
   position fixed
-  top 0
-  right 0
-  bottom 0
-  left 0
-  z-index 1
 
 .navbar
   flex-shrink 0
@@ -170,20 +167,23 @@ $iconsGroupWidth = 100px
   cursor pointer
 
 .navbar__icons-right
-  position relative
   height 24px
   width $iconsGroupWidth
   text-align right
 
+.icon-picker-wrapper
+  position relative
+  display inline-block
+
 .icon-picker
   margin-right 20px
   &.toggled
-    opacity $iconHoverOpacity
+    opacity 1
 
 .theme-picker-enter-active
-  transition transform $sidebarDuration $sidebarTiming
+  transition transform $pickerDuration $sidebarTiming
 .theme-picker-leave-active
-  transition transform $sidebarDuration $sidebarTiming
+  transition transform $pickerDuration $sidebarTiming
 .theme-picker-enter
 .theme-picker-leave-to
   transform scale(0)
@@ -191,7 +191,7 @@ $iconsGroupWidth = 100px
 .navbar__icons-toggle
   display inline-block
   width 44px
-  transition width 0.1s
+  transition width 0.2s linear
   &.toggled
     width 24px
 

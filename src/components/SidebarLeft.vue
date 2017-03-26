@@ -20,6 +20,7 @@
         </div>
         <div class="sort-cuprins">
           <input
+            v-model="sortCuprinsAZ"
             type="checkbox"
             id="checkboxSortCuprins"
             class="sort-cuprins__checkbox">
@@ -28,25 +29,29 @@
             class="sort-cuprins__label sort-cuprins__label--check">
             <svg
               :fill="theme.iconColor"
-              class="icon-sort-cuprins"
+              class="icon icon-sort-cuprins"
               height="24" viewBox="0 0 24 24" width="24">
               <path d="M0 0h24v24H0V0zm0 0h24v24H0V0zm.75.75h22.5v22.5H.75z" fill="none"/>
               <path d="M14.94 4.66h-4.72l2.36-2.36zm-4.69 14.71h4.66l-2.33 2.33zM6.1 6.27L1.6 17.73h1.84l.92-2.45h5.11l.92 2.45h1.84L7.74 6.27H6.1zm-1.13 7.37l1.94-5.18 1.94 5.18H4.97zm10.76 2.5h6.12v1.59h-8.53v-1.29l5.92-8.56h-5.88v-1.6h8.3v1.26l-5.93 8.6z"/>
             </svg>
           </label>
           <input
+            v-model="sortCuprinsAZInvert"
             type="checkbox"
             id="checkboxDirectionCuprins"
             class="sort-cuprins__checkbox">
           <label
+            v-if="$store.state.sortCuprinsAZ"
             for="checkboxDirectionCuprins"
             class="sort-cuprins__label">
             <svg
               :fill="theme.iconColor"
               class="icon-sort-cuprins"
-              height="24" viewBox="0 0 24 24" width="24">
-              <path d="M16 17.01V10h-2v7.01h-3L15 21l4-3.99h-3zM9 3L5 6.99h3V14h2V6.99h3L9 3z"/>
-              <path d="M0 0h24v24H0z" fill="none"/>
+              :class="{'down': sortCuprinsAZInvert}"
+              width="24" viewBox="0 0 24 24" height="24">
+              <path d="M 16,17.01 V 10 h -2 v 7.01 h -3 l 4,3.99 4,-3.99 z" />
+              <path class="path-sort-cuprins" d="M 9,3 5,6.99 H 8 V 14 h 2 V 6.99 h 3 z" />
+              <path d="M0 0h24v24H0z" fill="none" />
             </svg>
           </label>
         </div>
@@ -96,7 +101,7 @@
               }">
               <span
                 @click="setSelectedPoezie(poezie.nr)"
-                :class="{selected: poezie.nr === selectedPoezie}"
+                :class="{selected: poezie.nr === $store.state.selectedPoezie}"
                 class="poezie">
                 <span>{{poezie.nr}}</span>
                 <span>{{poezie.titlu}}</span>
@@ -118,14 +123,13 @@ export default {
   props: ['theme', 'caieteRef'],
   data () {
     return {
-      selectedCaiete: store.state.selectedCaiete
+      selectedCaiete: store.state.selectedCaiete,
+      sortCuprinsAZ: store.state.sortCuprinsAZ,
+      sortCuprinsAZInvert: store.state.sortCuprinsAZInvert
     }
   },
-  computed: {
-    selectedPoezie () {
-      return store.getters.getSelectedPoezie
-    }
-  },
+  // computed: {
+  // },
   methods: {
     setSelectedPoezie (poezie) {
       store.commit('setSelectedPoezie', poezie)
@@ -134,6 +138,12 @@ export default {
   watch: {
     selectedCaiete () {
       store.commit('setSelectedCaiete', this.selectedCaiete)
+    },
+    sortCuprinsAZ () {
+      store.commit('setSortCuprinsAZ', this.sortCuprinsAZ)
+    },
+    sortCuprinsAZInvert () {
+      store.commit('setSortCuprinsAZInvert', this.sortCuprinsAZInvert)
     }
   }
 }
@@ -155,7 +165,7 @@ export default {
     top 0
     bottom 0
     left 0
-    z-index 2
+    z-index 11
 
 .sidebar-left__inner
   flex-grow 1
@@ -180,7 +190,6 @@ export default {
 
 .icon-cuprins
   margin-right 7px
-  opacity $iconHoverOpacity
 
 $iconSortHeight = 24px
 .sort-cuprins
@@ -190,8 +199,6 @@ $iconSortHeight = 24px
   display none
   &:checked + .sort-cuprins__label--check .icon-sort-cuprins
     opacity 1
-  &:not(:checked) + .sort-cuprins__label--check + .sort-cuprins__checkbox + .sort-cuprins__label
-    display none
 
 .sort-cuprins__label
   height $iconSortHeight
@@ -199,7 +206,15 @@ $iconSortHeight = 24px
   cursor pointer
 
 .icon-sort-cuprins
-  opacity $iconHoverOpacity
+  &:active
+    transform scale(0.9)
+  &.down
+    transform rotate(180deg)
+    &:active
+      transform scale(0.9)
+
+.path-sort-cuprins
+  opacity $iconOpacity
 
 .sidebar-left__cuprins
   flex-grow 1
@@ -225,8 +240,12 @@ $iconSortHeight = 24px
   display none
   &:not(:checked) + .caiet__titlu + .poezii
     display none
-  &:checked + .caiet__titlu .icon-arrow
-    transform rotate(-45deg)
+  &:checked + .caiet__titlu
+    & .icon-arrow
+      transform rotate(-45deg)
+      opacity 1
+    & .icon-caiet
+      opacity 1
 
 .caiet__titlu
   display flex
@@ -234,17 +253,24 @@ $iconSortHeight = 24px
   align-items center
   line-height 100%
   cursor pointer
+  &:active .icon-caiet
+    transform scale(0.9)
   &:hover
     background-color $poezieHoverBackground
+    .icon-arrow
+    .icon-caiet
+      opacity 1
 
 .icon-arrow
   width 22px
   margin-right -7px
   transform rotate(-90deg)
+  opacity $iconOpacity
 
 .icon-caiet
   margin-left 6px
   margin-right 4px
+  opacity $iconOpacity
 
 .poezie
   display flex

@@ -16,7 +16,7 @@
       <sidebar-left
         :caieteRef="caieteRef"
         :theme="currentTheme"
-        v-if="sidebarLeftShow">
+        v-show="sidebarLeftShow">
       </sidebar-left>
     </transition>
     <main class="app__main">
@@ -26,7 +26,7 @@
     <transition name="sidebar-slide-right">
       <sidebar-right
         :theme="currentTheme"
-        v-if="sidebarRightShow">
+        v-show="sidebarRightShow">
       </sidebar-right>
     </transition>
   </div>
@@ -146,6 +146,7 @@ body
   width 100vw
   height 100vh
   border 7px solid
+  overflow hidden
 
 .sidebar-backdrop
   display none

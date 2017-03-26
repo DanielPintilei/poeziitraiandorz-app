@@ -2,7 +2,7 @@
   <aside class="sidebar-right">
     <div class="sidebar-right__inner">
       <div
-        class="search"
+        class="search-box"
         :style="{
           borderLeftColor: theme.borderColor2,
           borderBottomColor: theme.borderColor,
@@ -10,14 +10,14 @@
         }">
         <svg
           :fill="theme.iconColor"
-          class="search__icon"
+          class="search-box__icon"
           height="24" viewBox="0 0 24 24" width="24">
           <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
           <path d="M0 0h24v24H0z" fill="none"/>
         </svg>
         <input
           type="text"
-          class="search__input"
+          class="search-box__input"
           placeholder="Caută">
       </div>
       <div
@@ -83,7 +83,7 @@ export default {
   flex-direction column
   width $sidebarRightWidth
 
-.search
+.search-box
   flex-shrink 0
   display flex
   align-items center
@@ -93,10 +93,10 @@ export default {
   border-left 1px solid
   border-bottom 1px solid
 
-.search__icon
+.search-box__icon
   opacity $iconHoverOpacity
 
-.search__input
+.search-box__input
   flex-grow 1
   padding-left 12px
   align-self stretch

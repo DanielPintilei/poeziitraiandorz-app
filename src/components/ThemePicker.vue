@@ -57,6 +57,7 @@ export default {
   background-color #fff
   box-shadow 4px 2px 6px 0px hsla(0, 0%, 0%, 0.1)
   border-radius 4px
+  transform-origin top right
   z-index 2
 
 .swatch

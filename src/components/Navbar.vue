@@ -41,15 +41,17 @@
       </svg>
     </router-link>
     <div class="navbar__icons-right">
-      <theme-picker
-        :themes="themes"
-        v-if="themePickerToggled">
-      </theme-picker>
       <div
         @click="closeThemePicker"
         v-if="themePickerToggled"
         class="picker-backdrop">
       </div>
+      <transition name="theme-picker">
+        <theme-picker
+          :themes="themes"
+          v-if="themePickerToggled">
+        </theme-picker>
+      </transition>
       <svg
         @click="toggleThemePicker"
         :fill="theme.iconColor"
@@ -60,24 +62,28 @@
         <path d="M16.56 8.94L7.62 0 6.21 1.41l2.38 2.38-5.15 5.15c-.59.59-.59 1.54 0 2.12l5.5 5.5c.29.29.68.44 1.06.44s.77-.15 1.06-.44l5.5-5.5c.59-.58.59-1.53 0-2.12zM5.21 10L10 5.21 14.79 10H5.21zM19 11.5s-2 2.17-2 3.5c0 1.1.9 2 2 2s2-.9 2-2c0-1.33-2-3.5-2-3.5z"/>
         <path :fill="theme.themeColor" d="M0 20h24v4H0z" fill-opacity="0.7"/>
       </svg>
-      <svg
-        @click="sidebarRightToggle"
-        v-show="sidebarRightToggled"
-        :fill="theme.iconColor"
-        class="icon"
-        width="24" height="24" viewBox="0 0 24 24">
-        <path d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"/>
-        <path d="M0-.25h24v24H0z" fill="none"/>
-      </svg>
-      <svg
-        @click="sidebarRightToggle"
-        v-show="!sidebarRightToggled"
-        :fill="theme.iconColor"
-        class="icon icon-search"
-        width="24" height="24" viewBox="0 0 24 24">
-        <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-        <path d="M0 0h24v24H0z" fill="none"/>
-      </svg>
+      <div
+        :class="{toggled: sidebarRightToggled}"
+        class="navbar__icons-toggle">
+        <svg
+          @click="sidebarRightToggle"
+          v-show="sidebarRightToggled"
+          :fill="theme.iconColor"
+          class="icon"
+          width="24" height="24" viewBox="0 0 24 24">
+          <path d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"/>
+          <path d="M0-.25h24v24H0z" fill="none"/>
+        </svg>
+        <svg
+          @click="sidebarRightToggle"
+          v-show="!sidebarRightToggled"
+          :fill="theme.iconColor"
+          class="icon icon-search"
+          width="24" height="24" viewBox="0 0 24 24">
+          <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+          <path d="M0 0h24v24H0z" fill="none"/>
+        </svg>
+      </div>
     </div>
   </header>
 </template>
@@ -169,12 +175,27 @@ $iconsGroupWidth = 100px
   width $iconsGroupWidth
   text-align right
 
-.icon-search
-  margin-right 20px
-
 .icon-picker
   margin-right 20px
   &.toggled
     opacity $iconHoverOpacity
+
+.theme-picker-enter-active
+  transition transform $sidebarDuration $sidebarTiming
+.theme-picker-leave-active
+  transition transform $sidebarDuration $sidebarTiming
+.theme-picker-enter
+.theme-picker-leave-to
+  transform scale(0)
+
+.navbar__icons-toggle
+  display inline-block
+  width 44px
+  transition width 0.1s
+  &.toggled
+    width 24px
+
+.icon-search
+  margin-right 20px
 
 </style>

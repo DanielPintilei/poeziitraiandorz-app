@@ -155,6 +155,8 @@ $iconsGroupWidth = 100px
 
 .icon-list
   margin-left 20px
+  @media (max-width $breakpointMobile)
+    margin-left 13px
 
 .icon-menu
   margin-left 10px
@@ -177,6 +179,8 @@ $iconsGroupWidth = 100px
 
 .icon-picker
   margin-right 20px
+  @media (max-width $breakpointMobile)
+    margin-right 0
   &.toggled
     opacity 1
 
@@ -197,5 +201,7 @@ $iconsGroupWidth = 100px
 
 .icon-search
   margin-right 20px
+  @media (max-width $breakpointMobile)
+    margin-left 13px
 
 </style>

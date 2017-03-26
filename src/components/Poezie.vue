@@ -1,18 +1,20 @@
 <template>
   <article class="poezie">
-    <!-- <p v-if="currentSearch == null">
-      Cauta in poezii
-    </p>
-    <p v-else>
-      Rezultatele pentru: {{ currentSearch }}
-    </p> -->
-    <h1>
-      {{ titlu }}
-    </h1>
-    <div v-for="strofa in strofe">
-      <p>
-        {{ strofa }}
+    <div class="poezie__main">
+      <!-- <p v-if="currentSearch == null">
+        Cauta in poezii
       </p>
+      <p v-else>
+        Rezultatele pentru: {{ currentSearch }}
+      </p> -->
+      <h1>
+        {{ titlu }}
+      </h1>
+      <div v-for="strofa in strofe">
+        <p>
+          {{ strofa }}
+        </p>
+      </div>
     </div>
   </article>
 </template>
@@ -35,6 +37,14 @@ export default {
 <style scoped lang="stylus">
 
 .poezie
+  display flex
+  flex-direction column
+  align-items center
   padding 40px
+  overflow auto
+
+.poezie__main
+  flex-grow 1
+  flex-shrink 0
 
 </style>

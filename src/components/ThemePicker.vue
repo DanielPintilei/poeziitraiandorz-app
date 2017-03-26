@@ -78,8 +78,8 @@ export default {
   display flex
   align-items center
   justify-content center
-  width 20px
-  height 20px
+  width 22px
+  height 22px
   border-radius 50%
 
 .swatch__check

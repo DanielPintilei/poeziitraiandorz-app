@@ -68,6 +68,7 @@ export default {
         {
           accentColor: '#dcbf8c',
           textColor: '#000',
+          textColor2: '#000',
           borderColor: '#dcbf8c',
           backgroundColor: '#fff',
           backgroundColor2: '#fff',
@@ -79,6 +80,7 @@ export default {
         {
           accentColor: '#dcbf8c',
           textColor: '#fff',
+          textColor2: '#dedede',
           borderColor: '#dcbf8c',
           borderColor2: '#675d4c',
           backgroundColor: '#424242',
@@ -91,6 +93,7 @@ export default {
         {
           accentColor: '#FDD835',
           textColor: '#fff',
+          textColor2: '#fff',
           borderColor: '#FBC02D',
           backgroundColor: '#FFEB3B',
           backgroundColor2: '#FDD835',
@@ -102,6 +105,7 @@ export default {
         {
           accentColor: '#1A237E',
           textColor: '#000',
+          textColor2: '#000',
           borderColor: '#303F9F',
           borderColor2: '#ccc',
           backgroundColor: '#3F51B5',
@@ -145,6 +149,15 @@ body
   -moz-osx-font-smoothing grayscale
   margin 0
 
+::-webkit-scrollbar
+  width: 8px
+  background-color transparent
+::-webkit-scrollbar-track
+  background-color $scrollbarTrackBackground
+::-webkit-scrollbar-thumb
+  background-color $scrollbarThumbBackground
+  border-radius 4px
+
 .app
   position relative
   display flex
@@ -163,7 +176,6 @@ body
   z-index 10
 
 .backdrop--sidebar
-  background-color $backdropColor
   @media (min-width $breakpointMobile + 1px)
     display none
 

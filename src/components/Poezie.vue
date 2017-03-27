@@ -1,5 +1,6 @@
 <template>
-  <article class="poezie">
+  <article
+    class="poezie">
     <div
       :style="{fontSize: defaultFontSize}"
       class="poezie__main">

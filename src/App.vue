@@ -20,7 +20,9 @@
         v-show="sidebarLeftShow">
       </sidebar-left>
     </transition>
-    <main class="app__main">
+    <main
+      :style="{ backgroundColor: currentTheme.backgroundColor2 }"
+      class="app__main">
       <navbar :theme="currentTheme" :themes="themes"></navbar>
       <router-view
         :theme="currentTheme"
@@ -87,10 +89,10 @@ export default {
           textColor2: '#dedede',
           borderColor: '#dcbf8c',
           borderColor2: '#675d4c',
-          backgroundColor: '#424242',
-          backgroundColor2: '#424242',
+          backgroundColor: '#212121',
+          backgroundColor2: '#292929',
           backdropColor: '#212121',
-          navbarColor: '#424242',
+          navbarColor: '#212121',
           logoColor: '#fff',
           iconColor: '#fff'
         },
@@ -209,7 +211,7 @@ h1
   font-weight normal
 
 pre
-  margin 0 0 2em
+  margin 0 0 1.6em
   font-family 'Libre Baskerville', serif
   font-size 1em
   white-space pre-wrap

@@ -155,7 +155,7 @@ $iconsGroupWidth = 100px
 
 .icon-list
   margin-left 20px
-  @media (max-width $breakpointMobile)
+  @media (max-width $breakpointMobileDown)
     margin-left 13px
 
 .icon-menu
@@ -179,7 +179,7 @@ $iconsGroupWidth = 100px
 
 .icon-picker
   margin-right 20px
-  @media (max-width $breakpointMobile)
+  @media (max-width $breakpointMobileDown)
     margin-right 0
   &.toggled
     opacity 1
@@ -195,13 +195,14 @@ $iconsGroupWidth = 100px
 .navbar__icons-toggle
   display inline-block
   width 44px
-  transition width 0.2s linear
+  @media (min-width $breakpointMobile)
+    transition width 0.2s linear
   &.toggled
     width 24px
 
 .icon-search
   margin-right 20px
-  @media (max-width $breakpointMobile)
+  @media (max-width $breakpointMobileDown)
     margin-left 13px
 
 </style>

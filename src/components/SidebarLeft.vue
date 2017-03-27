@@ -160,14 +160,16 @@ export default {
   flex-direction column
   width $sidebarLeftWidth
   overflow hidden
-  will-change width
-  z-index 2
-  @media (max-width $breakpointMobile)
+  z-index 5
+  @media (max-width $breakpointMobileDown)
     position absolute
     top 0
     bottom 0
     left 0
-    z-index 11
+    z-index 20
+    will-change transform
+  @media (min-width $breakpointMobile)
+    will-change width
 
 .sidebar-left__inner
   flex-grow 1

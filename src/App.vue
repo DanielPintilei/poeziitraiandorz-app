@@ -183,7 +183,7 @@ body
   z-index 10
 
 .backdrop--sidebar
-  @media (min-width $breakpointMobile + 1px)
+  @media (min-width $breakpointMobile)
     display none
 
 .app__main
@@ -220,9 +220,15 @@ a
   -webkit-text-decoration-skip objects
 
 .sidebar-slide-left-enter-active
-  animation width-left-in $sidebarDuration $sidebarTiming
+  @media (max-width $breakpointMobileDown)
+    animation slide-left-in $sidebarDuration $sidebarTiming
+  @media (min-width $breakpointMobile)
+    animation width-left-in $sidebarDuration $sidebarTiming
 .sidebar-slide-left-leave-active
-  animation width-left-out $sidebarDuration $sidebarTiming
+  @media (max-width $breakpointMobileDown)
+    animation slide-left-out $sidebarDuration $sidebarTiming
+  @media (min-width $breakpointMobile)
+    animation width-left-out $sidebarDuration $sidebarTiming
 @keyframes width-left-in
   0%
     width 0
@@ -233,20 +239,46 @@ a
     width $sidebarLeftWidth
   100%
     width 0
+@keyframes slide-left-in
+  0%
+    transform translateX(- $sidebarLeftWidth)
+  100%
+    transform translateX(0)
+@keyframes slide-left-out
+  0%
+    transform translateX(0)
+  100%
+    transform translateX(- $sidebarLeftWidth)
 
 .sidebar-slide-right-enter-active
-  animation width-right-in $sidebarDuration $sidebarTiming
+  @media (max-width $breakpointMobileDown)
+    animation slide-right-in $sidebarDuration $sidebarTiming
+  @media (min-width $breakpointMobile)
+    animation width-right-in $sidebarDuration $sidebarTiming
 .sidebar-slide-right-leave-active
-  animation width-right-out $sidebarDuration $sidebarTiming
+  @media (max-width $breakpointMobileDown)
+    animation slide-right-out $sidebarDuration $sidebarTiming
+  @media (min-width $breakpointMobile)
+    animation width-right-out $sidebarDuration $sidebarTiming
 @keyframes width-right-in
   0%
     width 0
   100%
-    width $sidebarRighttWidth
+    width $sidebarRightWidth
 @keyframes width-right-out
   0%
     width $sidebarRightWidth
   100%
     width 0
+@keyframes slide-right-in
+  0%
+    transform translateX($sidebarRightWidth)
+  100%
+    transform translateX(0)
+@keyframes slide-right-out
+  0%
+    transform translateX(0)
+  100%
+    transform translateX($sidebarRightWidth)
 
 </style>

@@ -68,14 +68,16 @@ export default {
   flex-direction column
   width $sidebarRightWidth
   overflow hidden
-  will-change width
-  z-index 2
-  @media (max-width $breakpointMobile)
+  z-index 5
+  @media (max-width $breakpointMobileDown)
     position absolute
     top 0
     bottom 0
     right 0
-    z-index 11
+    z-index 20
+    will-change transform
+  @media (min-width $breakpointMobile)
+    will-change width
 
 .sidebar-right__inner
   flex-grow 1
@@ -103,6 +105,7 @@ export default {
   background-color transparent
   border none
   outline none
+  text-decoration none
   overflow visible
   -webkit-appearance textfield
   outline-offset -2px

@@ -9,7 +9,7 @@
           backgroundColor: theme.navbarColor
         }">
         <input
-          type="text"
+          type="search"
           class="search-box__input"
           placeholder="Caută">
         <svg
@@ -103,7 +103,13 @@ export default {
   background-color transparent
   border none
   outline none
-  text-decoration none
+  overflow visible
+  -webkit-appearance textfield
+  outline-offset -2px
+  &::-webkit-search-cancel-button
+  &::-webkit-search-decoration
+    -webkit-appearance none
+
   &:focus
   &:active
     & + .search-box__icon

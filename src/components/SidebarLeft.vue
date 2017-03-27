@@ -104,7 +104,7 @@
               <span
                 @click="setSelectedPoezie(poezie.nr)"
                 :class="{selected: poezie.nr === $store.state.selectedPoezie}"
-                class="poezie">
+                class="link">
                 <span>{{poezie.nr}}</span>
                 <span>{{poezie.titlu}}</span>
               </span>
@@ -190,7 +190,8 @@ export default {
   display flex
   align-items center
 
-// .sidebar-left__title-text
+.sidebar-left__title-text
+  cursor default
 
 .icon-cuprins
   margin-right 7px
@@ -252,7 +253,7 @@ $iconSortHeight = 24px
   &:active .icon-caiet
     transform scale(0.9)
   &:hover
-    background-color $poezieHoverBackground
+    background-color $linkHoverBackground
     .icon-arrow
     .icon-caiet
       opacity 1
@@ -268,21 +269,21 @@ $iconSortHeight = 24px
   margin-right 4px
   opacity $iconOpacity
 
-.poezie
+.link
   display flex
   padding-right 20px
   padding-left 18px
   &:hover
-    background-color $poezieHoverBackground
+    background-color $linkHoverBackground
   & span:first-child
     flex-shrink 0
     width 40px
     opacity 0.3
 
 .selected
-  background-color $poezieSelectedBackground
+  background-color $linkSelectedBackground
   &:hover
-    background-color $poezieSelectedBackground
+    background-color $linkSelectedBackground
   & span:first-child
     opacity 0.5
 

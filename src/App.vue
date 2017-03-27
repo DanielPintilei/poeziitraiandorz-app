@@ -22,7 +22,11 @@
     </transition>
     <main class="app__main">
       <navbar :theme="currentTheme" :themes="themes"></navbar>
-      <router-view :caieteRef="caieteRef" class="app__main-view"></router-view>
+      <router-view
+        :theme="currentTheme"
+        :caieteRef="caieteRef"
+        class="app__main-view">
+      </router-view>
     </main>
     <transition name="sidebar-slide-right">
       <sidebar-right
@@ -147,7 +151,10 @@ body
   font-family -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif
   -webkit-font-smoothing antialiased
   -moz-osx-font-smoothing grayscale
+  -ms-text-size-adjust 100%
+  -webkit-text-size-adjust 100%
   margin 0
+  user-select none
 
 ::-webkit-scrollbar
   width: 8px
@@ -196,15 +203,21 @@ body
     opacity 1
 
 h1
+  margin 0 0 1em
   font-family 'Playfair Display', serif
+  font-size 2em
   font-weight normal
 
-p
+pre
+  margin 0 0 2em
   font-family 'Libre Baskerville', serif
+  font-size 1em
+  white-space pre-wrap
 
 a
   color currentColor
   display block
+  -webkit-text-decoration-skip objects
 
 .sidebar-slide-left-enter-active
   animation width-left-in $sidebarDuration $sidebarTiming

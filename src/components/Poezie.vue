@@ -1,20 +1,10 @@
 <template>
   <article class="poezie">
-    <div class="poezie__main">
-      <!-- <p v-if="currentSearch == null">
-        Cauta in poezii
-      </p>
-      <p v-else>
-        Rezultatele pentru: {{ currentSearch }}
-      </p> -->
-      <h1>
-        {{ titlu }}
-      </h1>
-      <div v-for="strofa in strofe">
-        <p>
-          {{ strofa }}
-        </p>
-      </div>
+    <div
+      :style="{fontSize: defaultFontSize}"
+      class="poezie__main">
+      <h1>{{ titlu }}</h1>
+      <pre v-for="strofa in strofe">{{ strofa }}<br></pre>
     </div>
   </article>
 </template>
@@ -25,6 +15,7 @@ export default {
   props: ['titlu', 'strofe'],
   data () {
     return {
+      defaultFontSize: '1rem'
     }
   }
   // mounted: function () {
@@ -46,5 +37,6 @@ export default {
 .poezie__main
   flex-grow 1
   flex-shrink 0
+  user-select auto
 
 </style>

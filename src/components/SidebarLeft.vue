@@ -64,7 +64,10 @@
           backgroundColor: theme.backgroundColor2,
           borderColor: theme.borderColor2
         }">
-        <div v-for="(caiet, index) in caieteRef" class="caiet">
+        <div
+          v-if="!sortCuprinsAZ"
+          v-for="(caiet, index) in caieteRef"
+          class="caiet">
           <input
             type="checkbox"
             :id="`caiet${index}`"
@@ -96,7 +99,7 @@
               :to="{
                 name: 'Poezie',
                 params: {
-                  adresa: `${poezie.nr}-${poezie.titlu.replace(/\s+/g, '-')}`,
+                  adresa: `${poezie.nr}-${poezie.titlu.replace(/\s+/g, '-').replace(/[^\w-]+/g,'')}`,
                   titlu: poezie.titlu,
                   strofe:poezie.strofe
                 }
@@ -110,6 +113,11 @@
               </span>
             </router-link>
           </div>
+        </div>
+        <div
+          v-if="sortCuprinsAZ"
+          v-for="poezie in poeziiSortate"
+          class="cuprinsAZ">
         </div>
       </div>
     </div>
@@ -127,7 +135,8 @@ export default {
     return {
       selectedCaiete: store.state.selectedCaiete,
       sortCuprinsAZ: store.state.sortCuprinsAZ,
-      sortCuprinsAZInvert: store.state.sortCuprinsAZInvert
+      sortCuprinsAZInvert: store.state.sortCuprinsAZInvert,
+      poeziiSortate: []
     }
   },
   // computed: {

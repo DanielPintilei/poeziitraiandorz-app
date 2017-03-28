@@ -5,7 +5,7 @@
       :style="{fontSize: defaultFontSize}"
       class="poezie__main">
       <h1>{{ titlu }}</h1>
-      <pre v-for="strofa in strofe">{{ strofa }}<br></pre>
+      <pre>{{ strofe }}<br></pre>
     </div>
   </article>
 </template>
@@ -19,10 +19,6 @@ export default {
       defaultFontSize: '1rem'
     }
   }
-  // mounted: function () {
-  //   setTimeout(() => {
-  //   }, 3000)
-  // }
 }
 </script>
 
@@ -32,7 +28,7 @@ export default {
   display flex
   flex-direction column
   align-items center
-  padding 40px
+  padding 100px 60px
   overflow auto
 
 .poezie__main

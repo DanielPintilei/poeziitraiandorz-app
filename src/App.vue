@@ -160,12 +160,9 @@ body
 
 ::-webkit-scrollbar
   width: 8px
-  background-color transparent
-::-webkit-scrollbar-track
   background-color $scrollbarTrackBackground
 ::-webkit-scrollbar-thumb
   background-color $scrollbarThumbBackground
-  border-radius 4px
 
 .app
   position relative
@@ -205,16 +202,23 @@ body
     opacity 1
 
 h1
-  margin 0 0 1em
+  max-width: 600px
+  // margin 0 0 1em
+  margin 0 0 2em
   font-family 'Playfair Display', serif
-  font-size 2em
+  // font-size 2em
+  font-size 1.9em
   font-weight normal
+  line-height: 1.3;
 
 pre
   margin 0 0 1.6em
   font-family 'Libre Baskerville', serif
   font-size 1em
+  line-height: 1.45
   white-space pre-wrap
+  columns 2
+  column-gap 3em
 
 a
   color currentColor

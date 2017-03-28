@@ -105,7 +105,6 @@ export default {
   background-color transparent
   border none
   outline none
-  text-decoration none
   overflow visible
   -webkit-appearance textfield
   outline-offset -2px

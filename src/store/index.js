@@ -9,10 +9,10 @@ export const store = new Vuex.Store({
     sidebarRightToggled: false,
     currentTheme: 1,
     selectedCaiete: [],
-    selectedPoezie: null,
+    // selectedPoezie: null,
     sortCuprinsAZ: false,
-    sortCuprinsAZInvert: false,
-    lastRoute: '/'
+    sortCuprinsAZInvert: false
+    // lastRoute: '/'
   },
   getters: {
     getSidebarLeftToggled: state => {
@@ -24,18 +24,18 @@ export const store = new Vuex.Store({
     getSelectedCaiete: state => {
       return state.selectedCaiete
     },
-    getSelectedPoezie: state => {
-      return state.selectedPoezie
-    },
+    // getSelectedPoezie: state => {
+    //   return state.selectedPoezie
+    // },
     getThemes: state => {
       return state.themes
     },
     getCurrentTheme: state => {
       return state.currentTheme
-    },
-    getLastRoute: state => {
-      return state.lastRoute
     }
+    // getLastRoute: state => {
+    //   return state.lastRoute
+    // }
   },
   mutations: {
     toggleSidebarLeft (state) {

@@ -47,7 +47,7 @@ import { store } from '../store/index'
 export default {
   name: 'sidebar-right',
   store,
-  props: ['theme'],
+  props: ['theme', 'caieteRef'],
   methods: {
   },
   data () {

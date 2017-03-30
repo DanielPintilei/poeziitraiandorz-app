@@ -81,7 +81,7 @@
               :fill="theme.iconColor"
               class="icon-arrow"
               width="24" height="24" viewBox="0 0 24 24">
-              <path d="M7 10l5 5 5-5z"/>
+              <path d="m 9.5,17.5 5,-5 -5,-5 z"/>
               <path d="M0 0h24v24H0z" fill="none"/>
             </svg>
             <svg
@@ -99,15 +99,15 @@
               :to="{
                 name: 'Poezie',
                 params: {
-                  adresa: `${poezie.nr}-${poezie.titlu.replace(/\s+/g, '-').replace(/[^\w-]+/g,'')}`,
+                  adresa: `${poezie.nr}-${poezie.titlu.replace(/\s+/g, '-').replace(/[ăâ]+/g,'a').replace(/[ĂÂ]+/g,'A').replace(/[î]+/g,'i').replace(/[Î]+/g,'I').replace(/[ș]+/g,'s').replace(/[Ș]+/g,'S').replace(/[ț]+/g,'t').replace(/[Ț]+/g,'T').replace(/[^\w-]+/g,'')}`,
+                  nr: poezie.nr,
                   titlu: poezie.titlu,
-                  strofe:poezie.strofe
+                  strofe: poezie.strofe
                 }
               }">
               <span
                 @click="setSelectedPoezie(poezie.nr)"
-                :class="{selected: poezie.nr === $store.state.selectedPoezie}"
-                class="link">
+                class="link-span">
                 <span>{{poezie.nr}}</span>
                 <span>{{poezie.titlu}}</span>
               </span>
@@ -139,8 +139,6 @@ export default {
       poeziiSortate: []
     }
   },
-  // computed: {
-  // },
   methods: {
     setSelectedPoezie (poezie) {
       store.commit('setSelectedPoezie', poezie)
@@ -250,7 +248,7 @@ $iconSortHeight = 24px
     display none
   &:checked + .caiet__titlu
     & .icon-arrow
-      transform rotate(-45deg)
+      transform rotate(45deg)
       opacity 1
     & .icon-caiet
       opacity 1
@@ -272,7 +270,6 @@ $iconSortHeight = 24px
 .icon-arrow
   width 22px
   margin-right -7px
-  transform rotate(-90deg)
   opacity $iconOpacity
 
 .icon-caiet
@@ -280,7 +277,7 @@ $iconSortHeight = 24px
   margin-right 4px
   opacity $iconOpacity
 
-.link
+.link-span
   display flex
   padding-right 20px
   padding-left 18px
@@ -290,12 +287,11 @@ $iconSortHeight = 24px
     flex-shrink 0
     width 40px
     opacity 0.3
-
-.selected
-  background-color $linkSelectedBackground
-  &:hover
+  .router-link-active &
     background-color $linkSelectedBackground
-  & span:first-child
-    opacity 0.5
+    &:hover
+      background-color $linkSelectedBackground
+    & span:first-child
+      opacity 0.5
 
 </style>

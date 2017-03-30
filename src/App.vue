@@ -33,6 +33,7 @@
     <transition name="sidebar-slide-right">
       <sidebar-right
         :theme="currentTheme"
+        :caieteRef="caieteRef"
         v-show="sidebarRightShow">
       </sidebar-right>
     </transition>
@@ -57,11 +58,6 @@ export default {
   firebase: {
     caieteRef
   },
-  // mounted: function () {
-  //   db.ref('themes').once('value', snapshot => {
-  //     this.themes = this.themesRef
-  //   })
-  // },
   store,
   components: {
     Navbar,
@@ -149,6 +145,11 @@ export default {
 *
   box-sizing border-box
 
+a
+  color currentColor
+  display block
+  -webkit-text-decoration-skip objects
+
 body
   font-family -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif
   -webkit-font-smoothing antialiased
@@ -169,7 +170,7 @@ body
   display flex
   width 100vw
   height 100vh
-  border 7px solid
+  border 3px solid
   overflow hidden
 
 .backdrop
@@ -200,30 +201,6 @@ body
     transform scale(0.9)
   &:hover
     opacity 1
-
-h1
-  max-width: 600px
-  // margin 0 0 1em
-  margin 0 0 2em
-  font-family 'Playfair Display', serif
-  // font-size 2em
-  font-size 1.9em
-  font-weight normal
-  line-height: 1.3;
-
-pre
-  margin 0 0 1.6em
-  font-family 'Libre Baskerville', serif
-  font-size 1em
-  line-height: 1.45
-  white-space pre-wrap
-  columns 2
-  column-gap 3em
-
-a
-  color currentColor
-  display block
-  -webkit-text-decoration-skip objects
 
 .sidebar-slide-left-enter-active
   @media (max-width $breakpointMobileDown)

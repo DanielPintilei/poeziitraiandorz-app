@@ -11,8 +11,10 @@ export const store = new Vuex.Store({
     selectedCaiete: [],
     // selectedPoezie: null,
     sortCuprinsAZ: false,
-    sortCuprinsAZInvert: false
+    sortCuprinsAZInvert: false,
     // lastRoute: '/'
+    defaultFontSize: 1,
+    lastFontSize: 1
   },
   getters: {
     getSidebarLeftToggled: state => {

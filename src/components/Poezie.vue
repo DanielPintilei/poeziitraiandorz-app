@@ -6,13 +6,14 @@
       :style="{fontSize: fontSize}"
       class="poezie__main">
       <!--<h1 class="poezie__titlu">{{ nr }} nr simplu</h1>-->
-      <h1 class="poezie__titlu">{{ currentNr }}</h1>
+      <!--<h1 class="poezie__titlu">{{ currentNr }}</h1>-->
       <!--<h1 class="poezie__titlu">{{ $route.params.adresa }}</h1>-->
       <h1 class="poezie__titlu">{{ titlu }}</h1>
       <pre class="poezie__strofe">{{ strofe }}<br></pre>
-      <span class="url-span" id="currentURL">{{ currentURL }}</span>
+      <br>
+      <span class="poezie__url" id="currentURL">{{ currentURL }}</span>
     </div>
-    <div class="poezie__share">
+    <div class="poezie__share" :style="{backgroundColor: theme.backgroundColor}">
       <svg
         @click="copyPoezie"
         class="icon icon-copy"
@@ -30,7 +31,7 @@
         <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/>
       </svg>
     </div>
-    <div class="poezie__zoom">
+    <div class="poezie__zoom" :style="{backgroundColor: theme.backgroundColor}">
       <transition name="slide-zoom-3">
         <svg
           @click="zoomReset"
@@ -150,8 +151,10 @@ export default {
   display flex
   flex-direction column
   align-items center
-  padding 50px 30px
+  padding 35px 25px
   overflow auto
+  @media (min-width $breakpointMobileSmall + 1px)
+    padding 50px 30px
   @media (min-width 900px)
     padding 100px 60px
 
@@ -164,10 +167,12 @@ export default {
   max-width 600px
   margin 0 0 1em
   font-family 'Playfair Display', serif
-  font-size 1.9em
+  font-size 1.875em
   font-weight normal
   line-height 1.3;
-  @media (min-width 900px)
+  @media (max-width $breakpointMobileSmall)
+    font-size 1.5em
+  @media (min-width $breakpointMobile + 1px)
     margin 0 0 2em
 
 .poezie__strofe
@@ -176,11 +181,13 @@ export default {
   font-size 1em
   line-height 1.45
   white-space pre-wrap
-  @media (min-width 900px)
+  @media (max-width $breakpointMobileSmall)
+    font-size 0.938em
+  @media (min-width $breakpointMobile + 1px)
     columns 2
     column-gap 3em
 
-.url-span
+.poezie__url
   display block
   height 0
   opacity 0
@@ -190,6 +197,12 @@ export default {
   position absolute
   bottom $poezieButtonGroupBottom
   overflow hidden
+  @media (max-width $breakpointMobileSmall)
+    bottom 0
+    width 50%
+    padding 10px 10px 5px
+  @media (min-width $breakpointMobileSmall + 1px)
+    background-color transparent !important
 
 .icon-share-toggle
 .icon-zoom-toggle
@@ -198,17 +211,30 @@ export default {
 
 .poezie__share
   left $poezieButtonGroupSide
+  @media (max-width $breakpointMobileSmall)
+    left 0
 
 .icon-copy
-  display block
-  margin-top 10px
+  display inline-block
+  @media (max-width $breakpointMobileSmall)
+    margin-right 10px
+  @media (min-width $breakpointMobileSmall + 1px)
+    display block
+    margin-top 10px
 
 .poezie__zoom
   right $poezieButtonGroupSide
+  @media (max-width $breakpointMobileSmall)
+    right 0
+    text-align right
 
 .icon-zoom
-  display block
-  margin-bottom 10px
+  display inline-block
+  @media (max-width $breakpointMobileSmall)
+    margin-right 10px
+  @media (min-width $breakpointMobileSmall + 1px)
+    display block
+    margin-bottom 10px
 
 $slideZoomDuration = 0.2s
 $slideZoomDelay2 = 0.1s
@@ -249,5 +275,6 @@ $slideZoomDelay1 = 0.05s
     transform translateX(0)
   to
     transform translateX(24px)
+    opacity 0
 
 </style>

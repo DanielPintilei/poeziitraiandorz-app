@@ -69,14 +69,14 @@ export default {
   width $sidebarRightWidth
   overflow hidden
   z-index 5
-  @media (max-width $breakpointMobileDown)
+  @media (max-width $breakpointMobile)
     position absolute
     top 0
     bottom 0
     right 0
     z-index 20
     will-change transform
-  @media (min-width $breakpointMobile)
+  @media (min-width $breakpointMobile + 1px)
     will-change width
 
 .sidebar-right__inner

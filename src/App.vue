@@ -7,12 +7,14 @@
       backgroundColor: currentTheme.backgroundColor,
       borderColor: currentTheme.borderColor
     }">
-    <div
-      @click="closeSidebars"
-      v-if="sidebarLeftShow || sidebarRightShow"
-      :style="{ backgroundColor: currentTheme.backdropColor }"
-      class="backdrop backdrop--sidebar">
-    </div>
+    <transition name="backdrop">
+      <div
+        @click="closeSidebars"
+        v-if="sidebarLeftShow || sidebarRightShow"
+        :style="{ backgroundColor: currentTheme.backdropColor }"
+        class="backdrop backdrop--sidebar">
+      </div>
+    </transition>
     <transition name="sidebar-slide-left">
       <sidebar-left
         :caieteRef="caieteRef"
@@ -183,9 +185,21 @@ body
   left 0
   opacity 0.8
   z-index 10
+.backdrop-enter-active
+  animation backdrop-in 0.4s
+.backdrop-leave-active
+  animation backdrop-out 0.4s
+@keyframes backdrop-in
+  from
+    opacity 0
+  to
+    opacity 0.8
+@keyframes backdrop-out
+  to
+    opacity 0
 
 .backdrop--sidebar
-  @media (min-width $breakpointMobile)
+  @media (min-width $breakpointMobile + 1px)
     display none
 
 .app__main
@@ -206,14 +220,14 @@ body
     opacity 1
 
 .sidebar-slide-left-enter-active
-  @media (max-width $breakpointMobileDown)
+  @media (max-width $breakpointMobile)
     animation slide-left-in $sidebarDuration $sidebarTiming
-  @media (min-width $breakpointMobile)
+  @media (min-width $breakpointMobile + 1px)
     animation width-left-in $sidebarDuration $sidebarTiming
 .sidebar-slide-left-leave-active
-  @media (max-width $breakpointMobileDown)
+  @media (max-width $breakpointMobile)
     animation slide-left-out $sidebarDuration $sidebarTiming
-  @media (min-width $breakpointMobile)
+  @media (min-width $breakpointMobile + 1px)
     animation width-left-out $sidebarDuration $sidebarTiming
 @keyframes width-left-in
   from
@@ -237,14 +251,14 @@ body
     transform translateX(- $sidebarLeftWidth)
 
 .sidebar-slide-right-enter-active
-  @media (max-width $breakpointMobileDown)
+  @media (max-width $breakpointMobile)
     animation slide-right-in $sidebarDuration $sidebarTiming
-  @media (min-width $breakpointMobile)
+  @media (min-width $breakpointMobile + 1px)
     animation width-right-in $sidebarDuration $sidebarTiming
 .sidebar-slide-right-leave-active
-  @media (max-width $breakpointMobileDown)
+  @media (max-width $breakpointMobile)
     animation slide-right-out $sidebarDuration $sidebarTiming
-  @media (min-width $breakpointMobile)
+  @media (min-width $breakpointMobile + 1px)
     animation width-right-out $sidebarDuration $sidebarTiming
 @keyframes width-right-in
   from

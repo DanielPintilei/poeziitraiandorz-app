@@ -1,8 +1,7 @@
 <template>
   <article
     class="poezie">
-    <!--<transition name="poezie">-->
-    <transition :name="transitionName" mode="out-in">
+    <transition :name="poezieTransitionName" mode="out-in">
       <div
         :key="$route.params.nr"
         id="poezie"
@@ -117,8 +116,11 @@ export default {
       defaultFontSize: store.state.lastFontSize,
       zoomMenuOpen: false,
       shareMenuOpen: false,
-      transitionName: ''
+      poezieTransitionName: ''
     }
+  },
+  created () {
+    window.addEventListener('keyup', this.keyboardNavPoezie)
   },
   computed: {
     fontSize () {
@@ -133,11 +135,18 @@ export default {
   },
   methods: {
     prevPoezie () {
-      // this.router.push()
-      // router.go(-1)
+      console.log('prev')
     },
     nextPoezie () {
-      // router.push()
+      console.log('next')
+    },
+    keyboardNavPoezie (e) {
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        // this.router.push()
+        this.prevPoezie()
+      } else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        this.nextPoezie()
+      }
     },
     toggleZoomMenu () {
       this.zoomMenuOpen = !this.zoomMenuOpen
@@ -179,7 +188,7 @@ export default {
     '$route' (to, from) {
       const toDepth = to.params.nr
       const fromDepth = from.params.nr
-      this.transitionName = toDepth < fromDepth ? 'slide-right' : 'slide-left'
+      this.poezieTransitionName = toDepth < fromDepth ? 'slide-right-poezie' : 'slide-left-poezie'
     }
   }
 }
@@ -204,37 +213,38 @@ export default {
   flex-grow 1
   flex-shrink 0
   user-select auto
+  will-change transform
 
-.slide-left-enter-active
-  animation slide-left-in 0.3s ease-in-out
-.slide-left-leave-active
-  animation slide-left-out 0.3s ease-in-out
-@keyframes slide-left-in
+.slide-left-poezie-enter-active
+  animation slide-left-poezie-in 0.3s ease-in-out
+.slide-left-poezie-leave-active
+  animation slide-left-poezie-out 0.3s ease-in-out
+@keyframes slide-left-poezie-in
   from
     transform translateX(100%)
     opacity 0
   to
     transform translateX(0)
     opacity 1
-@keyframes slide-left-out
+@keyframes slide-left-poezie-out
   from
     transform translateX(0)
   to
     transform translateX(-100%)
     opacity 0
 
-.slide-right-enter-active
-  animation slide-right-in 0.3s ease-in-out
-.slide-right-leave-active
-  animation slide-right-out 0.3s ease-in-out
-@keyframes slide-right-in
+.slide-right-poezie-enter-active
+  animation slide-right-poezie-in 0.3s ease-in-out
+.slide-right-poezie-leave-active
+  animation slide-right-poezie-out 0.3s ease-in-out
+@keyframes slide-right-poezie-in
   from
     transform translateX(-100%)
     opacity 0
   to
     transform translateX(0)
     opacity 1
-@keyframes slide-right-out
+@keyframes slide-right-poezie-out
   from
     transform translateX(0)
   to
@@ -268,6 +278,7 @@ export default {
 $iconPrevNextSide = 20px
 .button-prev
 .button-next
+  height 24px
   opacity 0.5
   @media (max-width $breakpointMobileSmall)
     display flex

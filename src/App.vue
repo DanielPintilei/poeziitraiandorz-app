@@ -42,6 +42,7 @@
 
 <script>
 import Firebase from 'firebase'
+// import Poezii from './poezii.json'
 
 import { store } from './store/index'
 
@@ -66,6 +67,7 @@ export default {
   },
   data () {
     return {
+      // caieteRef: Poezii.caiete,
       themes: [
         {
           accentColor: '#dcbf8c',
@@ -214,24 +216,24 @@ body
   @media (min-width $breakpointMobile)
     animation width-left-out $sidebarDuration $sidebarTiming
 @keyframes width-left-in
-  0%
+  from
     width 0
-  100%
+  to
     width $sidebarLeftWidth
 @keyframes width-left-out
-  0%
+  from
     width $sidebarLeftWidth
-  100%
+  to
     width 0
 @keyframes slide-left-in
-  0%
+  from
     transform translateX(- $sidebarLeftWidth)
-  100%
+  to
     transform translateX(0)
 @keyframes slide-left-out
-  0%
+  from
     transform translateX(0)
-  100%
+  to
     transform translateX(- $sidebarLeftWidth)
 
 .sidebar-slide-right-enter-active
@@ -245,24 +247,24 @@ body
   @media (min-width $breakpointMobile)
     animation width-right-out $sidebarDuration $sidebarTiming
 @keyframes width-right-in
-  0%
+  from
     width 0
-  100%
+  to
     width $sidebarRightWidth
 @keyframes width-right-out
-  0%
+  from
     width $sidebarRightWidth
-  100%
+  to
     width 0
 @keyframes slide-right-in
-  0%
+  from
     transform translateX($sidebarRightWidth)
-  100%
+  to
     transform translateX(0)
 @keyframes slide-right-out
-  0%
+  from
     transform translateX(0)
-  100%
+  to
     transform translateX($sidebarRightWidth)
 
 </style>

@@ -7,12 +7,7 @@ import Landing from 'components/Landing'
 import Poezie from 'components/Poezie'
 
 export default new Router({
-  // mode: 'history',
   routes: [
-    // {
-    //   path: '*',
-    //   component: Landing
-    // },
     {
       path: '/',
       component: Landing

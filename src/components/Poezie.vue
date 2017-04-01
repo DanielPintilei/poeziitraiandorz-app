@@ -1,17 +1,42 @@
 <template>
   <article
     class="poezie">
+    <transition name="poezie">
+      <div
+        :key="$route.params.nr"
+        id="poezie"
+        :style="{fontSize: fontSize}"
+        class="poezie__main">
+        <!--<h1 class="poezie__titlu">{{ nr }} nr simplu</h1>-->
+        <!--<h1 class="poezie__titlu">{{ currentNr }}</h1>-->
+        <!--<h1 class="poezie__titlu">{{ $route.params.adresa }}</h1>-->
+        <h1 class="poezie__titlu">{{ titlu }}</h1>
+        <pre class="poezie__strofe">{{ strofe }}<br></pre>
+        <br>
+        <span class="poezie__url" id="currentURL">{{ currentURL }}</span>
+      </div>
+    </transition>
     <div
-      id="poezie"
-      :style="{fontSize: fontSize}"
-      class="poezie__main">
-      <!--<h1 class="poezie__titlu">{{ nr }} nr simplu</h1>-->
-      <!--<h1 class="poezie__titlu">{{ currentNr }}</h1>-->
-      <!--<h1 class="poezie__titlu">{{ $route.params.adresa }}</h1>-->
-      <h1 class="poezie__titlu">{{ titlu }}</h1>
-      <pre class="poezie__strofe">{{ strofe }}<br></pre>
-      <br>
-      <span class="poezie__url" id="currentURL">{{ currentURL }}</span>
+      @click="prevPoezie"
+      class="button-prev">
+      <svg
+        class="icon"
+        :fill="theme.iconColor"
+        height="24" viewBox="0 0 24 24" width="24">
+        <path d="M0 0h24v24H0z" fill="none"/>
+        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+      </svg>
+    </div>
+    <div
+      @click="nextPoezie"
+      class="button-next">
+      <svg
+        class="icon"
+        :fill="theme.iconColor"
+        height="24" viewBox="0 0 24 24" width="24">
+        <path d="M0 0h24v24H0z" fill="none"/>
+        <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
+      </svg>
     </div>
     <div class="poezie__share" :style="{backgroundColor: theme.backgroundColor}">
       <svg
@@ -105,6 +130,13 @@ export default {
     }
   },
   methods: {
+    prevPoezie () {
+      // this.router.push()
+      // router.go(-1)
+    },
+    nextPoezie () {
+      // router.push()
+    },
     toggleZoomMenu () {
       this.zoomMenuOpen = !this.zoomMenuOpen
     },
@@ -151,7 +183,7 @@ export default {
   display flex
   flex-direction column
   align-items center
-  padding 35px 25px
+  padding 35px 25px 60px
   overflow auto
   @media (min-width $breakpointMobileSmall + 1px)
     padding 50px 30px
@@ -162,6 +194,15 @@ export default {
   flex-grow 1
   flex-shrink 0
   user-select auto
+
+.poezie-enter-active
+.poezie-leave-active
+  transition opacity 0.2s
+.poezie-enter-active
+  transition-delay 0.2s
+.poezie-enter
+.poezie-leave-to
+  opacity 0
 
 .poezie__titlu
   max-width 600px
@@ -186,6 +227,25 @@ export default {
   @media (min-width $breakpointMobile + 1px)
     columns 2
     column-gap 3em
+
+$iconPrevNextSide = 20px
+.button-prev
+.button-next
+  opacity 0.5
+  @media (max-width $breakpointMobileSmall)
+    display flex
+  @media (min-width $breakpointMobileSmall + 1px)
+    position absolute
+    top 50%
+    transform translateY(-50%)
+.button-prev
+  left $iconPrevNextSide
+  @media (max-width $breakpointMobileSmall)
+    transform translateY(-27px) translateX(-30px)
+.button-next
+  right $iconPrevNextSide
+  @media (max-width $breakpointMobileSmall)
+    transform translateY(-27px) translateX(30px)
 
 .poezie__url
   display block

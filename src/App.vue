@@ -73,18 +73,6 @@ export default {
       themes: [
         {
           accentColor: '#dcbf8c',
-          textColor: '#000',
-          textColor2: '#000',
-          borderColor: '#dcbf8c',
-          backgroundColor: '#fff',
-          backgroundColor2: '#fff',
-          backdropColor: '#fff',
-          navbarColor: '#fff',
-          logoColor: '#dcbf8c',
-          iconColor: '#000'
-        },
-        {
-          accentColor: '#dcbf8c',
           textColor: '#fff',
           textColor2: '#dedede',
           borderColor: '#dcbf8c',
@@ -95,6 +83,18 @@ export default {
           navbarColor: '#212121',
           logoColor: '#fff',
           iconColor: '#fff'
+        },
+        {
+          accentColor: '#dcbf8c',
+          textColor: '#000',
+          textColor2: '#000',
+          borderColor: '#dcbf8c',
+          backgroundColor: '#fff',
+          backgroundColor2: '#fff',
+          backdropColor: '#fff',
+          navbarColor: '#fff',
+          logoColor: '#dcbf8c',
+          iconColor: '#000'
         },
         {
           accentColor: '#FDD835',

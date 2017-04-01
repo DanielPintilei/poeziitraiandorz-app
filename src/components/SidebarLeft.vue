@@ -18,7 +18,7 @@
             <path d="M0 0h24v24H0V0z" fill="none"/>
           </svg>
         </div>
-        <div class="sort-cuprins">
+        <div class="sort-cuprins" v-if="false">
           <input
             v-model="sortCuprinsAZ"
             type="checkbox"

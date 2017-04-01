@@ -26,11 +26,13 @@
       :style="{ backgroundColor: currentTheme.backgroundColor2 }"
       class="app__main">
       <navbar :theme="currentTheme" :themes="themes"></navbar>
-      <router-view
-        :theme="currentTheme"
-        :caieteRef="caieteRef"
-        class="app__main-view">
-      </router-view>
+      <transition name="router-view" mode="out-in">
+        <router-view
+          :theme="currentTheme"
+          :caieteRef="caieteRef"
+          class="app__main-view">
+        </router-view>
+      </transition>
     </main>
     <transition name="sidebar-slide-right">
       <sidebar-right
@@ -210,6 +212,18 @@ body
 
 .app__main-view
   flex-grow 1
+.router-view-enter-active
+  animation router-view-in 0.4s
+.router-view-leave-active
+  animation router-view-out 0.4s
+@keyframes router-view-in
+  from
+    opacity 0
+  to
+    opacity 1
+@keyframes router-view-out
+  to
+    opacity 0
 
 .icon
   cursor pointer

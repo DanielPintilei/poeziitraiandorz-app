@@ -122,6 +122,9 @@ export default {
   created () {
     window.addEventListener('keyup', this.keyboardNavPoezie)
   },
+  beforeDestroy () {
+    window.removeEventListener('keyup', this.keyboardNavPoezie)
+  },
   computed: {
     fontSize () {
       return `${this.defaultFontSize}rem`
@@ -141,10 +144,10 @@ export default {
       console.log('next')
     },
     keyboardNavPoezie (e) {
-      if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      if (e.key === 'ArrowLeft') {
         // this.router.push()
         this.prevPoezie()
-      } else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+      } else if (e.key === 'ArrowRight') {
         this.nextPoezie()
       }
     },

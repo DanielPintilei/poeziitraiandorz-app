@@ -1,7 +1,8 @@
 <template>
   <article
     class="poezie">
-    <transition name="poezie">
+    <!--<transition name="poezie">-->
+    <transition :name="transitionName" mode="out-in">
       <div
         :key="$route.params.nr"
         id="poezie"
@@ -115,7 +116,8 @@ export default {
     return {
       defaultFontSize: store.state.lastFontSize,
       zoomMenuOpen: false,
-      shareMenuOpen: false
+      shareMenuOpen: false,
+      transitionName: ''
     }
   },
   computed: {
@@ -172,6 +174,13 @@ export default {
       let currentURL = document.getElementById('currentURL')
       this.copyElementText(currentURL)
     }
+  },
+  watch: {
+    '$route' (to, from) {
+      const toDepth = to.params.nr
+      const fromDepth = from.params.nr
+      this.transitionName = toDepth < fromDepth ? 'slide-right' : 'slide-left'
+    }
   }
 }
 </script>
@@ -184,7 +193,8 @@ export default {
   flex-direction column
   align-items center
   padding 35px 25px 60px
-  overflow auto
+  overflow-x hidden
+  overflow-y auto
   @media (min-width $breakpointMobileSmall + 1px)
     padding 50px 30px
   @media (min-width 900px)
@@ -195,14 +205,41 @@ export default {
   flex-shrink 0
   user-select auto
 
-.poezie-enter-active
-.poezie-leave-active
-  transition opacity 0.2s
-.poezie-enter-active
-  transition-delay 0.2s
-.poezie-enter
-.poezie-leave-to
-  opacity 0
+.slide-left-enter-active
+  animation slide-left-in 0.3s ease-in-out
+.slide-left-leave-active
+  animation slide-left-out 0.3s ease-in-out
+@keyframes slide-left-in
+  from
+    transform translateX(100%)
+    opacity 0
+  to
+    transform translateX(0)
+    opacity 1
+@keyframes slide-left-out
+  from
+    transform translateX(0)
+  to
+    transform translateX(-100%)
+    opacity 0
+
+.slide-right-enter-active
+  animation slide-right-in 0.3s ease-in-out
+.slide-right-leave-active
+  animation slide-right-out 0.3s ease-in-out
+@keyframes slide-right-in
+  from
+    transform translateX(-100%)
+    opacity 0
+  to
+    transform translateX(0)
+    opacity 1
+@keyframes slide-right-out
+  from
+    transform translateX(0)
+  to
+    transform translateX(100%)
+    opacity 0
 
 .poezie__titlu
   max-width 600px

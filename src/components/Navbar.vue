@@ -6,24 +6,28 @@
       borderColor: theme.borderColor
     }">
     <div class="navbar__icons-left">
-      <svg
-        @click="sidebarLeftToggle"
-        v-show="sidebarLeftToggled"
-        :fill="theme.iconColor"
-        class="icon"
-        width="24" height="24" viewBox="0 0 24 24">
-        <path d="M15.41 16.09l-4.58-4.59 4.58-4.59L14 5.5l-6 6 6 6z"/>
-        <path d="M0-.5h24v24H0z" fill="none"/>
-      </svg>
-      <svg
-        @click="sidebarLeftToggle"
-        v-show="!sidebarLeftToggled"
-        :fill="theme.iconColor"
-        class="icon icon-list"
-        width="24" height="24" viewBox="0 0 24 24">
-        <path d="M4 10.5c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5 1.5-.67 1.5-1.5-.67-1.5-1.5-1.5zm0-6c-.83 0-1.5.67-1.5 1.5S3.17 7.5 4 7.5 5.5 6.83 5.5 6 4.83 4.5 4 4.5zm0 12c-.83 0-1.5.68-1.5 1.5s.68 1.5 1.5 1.5 1.5-.68 1.5-1.5-.67-1.5-1.5-1.5zM7 19h14v-2H7v2zm0-6h14v-2H7v2zm0-8v2h14V5H7z"/>
-        <path d="M0 0h24v24H0V0z" fill="none"/>
-      </svg>
+      <div
+        :class="{toggled: sidebarLeftToggled}"
+        class="navbar__icons-toggle navbar__icons-toggle--left">
+        <svg
+          @click="sidebarLeftToggle"
+          v-show="sidebarLeftToggled"
+          :fill="theme.iconColor"
+          class="icon icon-list-arrow"
+          width="24" height="24" viewBox="0 0 24 24">
+          <path d="M15.41 16.09l-4.58-4.59 4.58-4.59L14 5.5l-6 6 6 6z"/>
+          <path d="M0-.5h24v24H0z" fill="none"/>
+        </svg>
+        <svg
+          @click="sidebarLeftToggle"
+          v-show="!sidebarLeftToggled"
+          :fill="theme.iconColor"
+          class="icon icon-list"
+          width="24" height="24" viewBox="0 0 24 24">
+          <path d="M4 10.5c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5 1.5-.67 1.5-1.5-.67-1.5-1.5-1.5zm0-6c-.83 0-1.5.67-1.5 1.5S3.17 7.5 4 7.5 5.5 6.83 5.5 6 4.83 4.5 4 4.5zm0 12c-.83 0-1.5.68-1.5 1.5s.68 1.5 1.5 1.5 1.5-.68 1.5-1.5-.67-1.5-1.5-1.5zM7 19h14v-2H7v2zm0-6h14v-2H7v2zm0-8v2h14V5H7z"/>
+          <path d="M0 0h24v24H0V0z" fill="none"/>
+        </svg>
+      </div>
       <svg
         :fill="theme.iconColor"
         class="icon icon-menu"
@@ -66,12 +70,12 @@
       </div>
       <div
         :class="{toggled: sidebarRightToggled}"
-        class="navbar__icons-toggle">
+        class="navbar__icons-toggle navbar__icons-toggle--right">
         <svg
           @click="sidebarRightToggle"
           v-show="sidebarRightToggled"
           :fill="theme.iconColor"
-          class="icon"
+          class="icon icon-search-arrow"
           width="24" height="24" viewBox="0 0 24 24">
           <path d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"/>
           <path d="M0-.25h24v24H0z" fill="none"/>
@@ -194,15 +198,24 @@ $iconsGroupWidth = 100px
 
 .navbar__icons-toggle
   display inline-block
-  width 44px
-  @media (min-width $breakpointMobile + 1px)
-    transition width 0.2s linear
+  transition width 0.2s linear
   &.toggled
     width 24px
+
+.navbar__icons-toggle--right
+  width 44px
+
+.navbar__icons-toggle--left
+  width 37px
 
 .icon-search
   margin-right 20px
   @media (max-width $breakpointMobile)
     margin-left 13px
+
+.icon-list-arrow
+.icon-search-arrow
+  @media (max-width $breakpointMobile)
+    opacity 0
 
 </style>

@@ -95,6 +95,7 @@
           <div class="poezii">
             <router-link
               v-for="poezie in caiet.poezii"
+              :id="`r${poezie.nr}`"
               :to="{
                 name: 'Poezie',
                 params: {
@@ -141,6 +142,9 @@ export default {
   methods: {
     setSelectedPoezie (poezie) {
       store.commit('setSelectedPoezie', poezie)
+    },
+    linkScrollIntoView (el) {
+      document.getElementById(el).scrollIntoView()
     }
   },
   watch: {
@@ -236,7 +240,7 @@ $iconSortHeight = 24px
 .caiet
   a
     text-decoration none
-    line-height 1.8
+    line-height 1.2
 
 .caiet__checkbox
   display none
@@ -275,8 +279,7 @@ $iconSortHeight = 24px
 
 .link-span
   display flex
-  padding-right 20px
-  padding-left 18px
+  padding 5px 20px 6px 18px
   &:hover
     background-color $linkHoverBackground
   & span:first-child

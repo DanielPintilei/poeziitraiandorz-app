@@ -1,8 +1,8 @@
 <template>
-  <article
+  <div
     class="poezie">
     <transition :name="poezieTransitionName" mode="out-in">
-      <div
+      <article
         :key="$route.params.nr"
         id="poezie"
         :style="{fontSize: fontSize}"
@@ -14,7 +14,7 @@
         <pre class="poezie__strofe">{{ strofe }}<br></pre>
         <br>
         <span class="poezie__url" id="currentURL">{{ currentURL }}</span>
-      </div>
+      </article>
     </transition>
     <div
       @click="prevPoezie"
@@ -101,7 +101,7 @@
         <path d="M9 4v3h5v12h3V7h5V4H9zm-6 8h3v7h3v-7h3V9H3v3z"/>
       </svg>
     </div>
-  </article>
+  </div>
 </template>
 
 <script>
@@ -138,14 +138,22 @@ export default {
   },
   methods: {
     prevPoezie () {
-      console.log('prev')
+      let prevRoute = document.getElementById(`r${this.nr - 1}`)
+      if (prevRoute) {
+        prevRoute.click()
+        prevRoute.scrollIntoView()
+      } else this.$router.push('inceput')
     },
     nextPoezie () {
-      console.log('next')
+      let nextRoute = document.getElementById(`r${this.nr + 1}`)
+      if (nextRoute) {
+        nextRoute.click()
+        // console.log(nextRoute.parentElement)
+        nextRoute.scrollIntoView()
+      } else this.$router.push('sfarsit')
     },
     keyboardNavPoezie (e) {
       if (e.key === 'ArrowLeft') {
-        // this.router.push()
         this.prevPoezie()
       } else if (e.key === 'ArrowRight') {
         this.nextPoezie()

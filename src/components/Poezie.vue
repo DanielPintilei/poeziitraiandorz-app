@@ -3,11 +3,11 @@
     class="poezie">
     <transition :name="poezieTransitionName" mode="out-in">
       <article
-        :key="$route.params.nr"
+        :key="nr"
         id="poezie"
         :style="{fontSize: fontSize}"
         class="poezie__main">
-        <!--<h1 class="poezie__titlu">{{ nr }} nr simplu</h1>-->
+        <!--<h1 class="poezie__titlu">{{ nr }}</h1>-->
         <!--<h1 class="poezie__titlu">{{ currentNr }}</h1>-->
         <!--<h1 class="poezie__titlu">{{ $route.params.adresa }}</h1>-->
         <h1 class="poezie__titlu">{{ titlu }}</h1>
@@ -137,25 +137,33 @@ export default {
     }
   },
   methods: {
+    checkCaiet (poezie) {
+      let routeParent = poezie.parentElement.parentElement.firstElementChild
+      if (!routeParent.checked) routeParent.click()
+    },
     prevPoezie () {
-      let prevRoute = document.getElementById(`r${this.nr - 1}`)
+      // let prevRoute = document.getElementById(`r${this.nr - 1}`)
+      let prevRoute = document.getElementById(`r${this.currentNr - 1}`)
       if (prevRoute) {
+        this.checkCaiet(prevRoute)
         prevRoute.click()
         prevRoute.scrollIntoView()
       } else this.$router.push('inceput')
     },
     nextPoezie () {
-      let nextRoute = document.getElementById(`r${this.nr + 1}`)
+      // let nextRoute = document.getElementById(`r${this.nr + 1}`)
+      let nextRoute = document.getElementById(`r${this.currentNr + 1}`)
       if (nextRoute) {
         nextRoute.click()
-        // console.log(nextRoute.parentElement)
+        this.checkCaiet(nextRoute)
         nextRoute.scrollIntoView()
       } else this.$router.push('sfarsit')
     },
     keyboardNavPoezie (e) {
-      if (e.key === 'ArrowLeft') {
+      let searchFocus = document.getElementById('searchInput') === document.activeElement
+      if (e.key === 'ArrowLeft' && !searchFocus) {
         this.prevPoezie()
-      } else if (e.key === 'ArrowRight') {
+      } else if (e.key === 'ArrowRight' && !searchFocus) {
         this.nextPoezie()
       }
     },
@@ -197,8 +205,10 @@ export default {
   },
   watch: {
     '$route' (to, from) {
-      const toDepth = to.params.nr
-      const fromDepth = from.params.nr
+      // const toDepth = to.params.nr
+      const toDepth = to.path.replace(/\//, '').match(/^\d+/)
+      // const fromDepth = from.params.nr
+      const fromDepth = from.path.replace(/\//, '').match(/^\d+/)
       this.poezieTransitionName = toDepth < fromDepth ? 'slide-right-poezie' : 'slide-left-poezie'
     }
   }

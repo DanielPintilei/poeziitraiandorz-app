@@ -9,6 +9,7 @@
           backgroundColor: theme.navbarColor
         }">
         <input
+          id="searchInput"
           type="search"
           class="search-box__input"
           placeholder="Caută">

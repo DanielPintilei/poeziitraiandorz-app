@@ -23,7 +23,7 @@ export default new Router({
       component: Sfarsit
     },
     {
-      path: '/:adresa',
+      path: '/:nr-:titlu',
       name: 'Poezie',
       component: Poezie,
       props: true

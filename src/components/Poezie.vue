@@ -7,11 +7,15 @@
         id="poezie"
         :style="{fontSize: fontSize}"
         class="poezie__main">
-        <!--<h1 class="poezie__titlu">{{ nr }}</h1>-->
-        <!--<h1 class="poezie__titlu">{{ currentNr }}</h1>-->
-        <!--<h1 class="poezie__titlu">{{ $route.params.adresa }}</h1>-->
-        <h1 class="poezie__titlu">{{ titlu }}</h1>
-        <pre class="poezie__strofe">{{ strofe }}<br></pre>
+        <template v-for="caiet in caieteRef">
+          <template v-for="poezie in caiet.poezii">
+            <template v-if="poezie.nr === nr">
+              <!--<h1 class="poezie__titlu">{{ poezie.nr }}</h1>-->
+              <h1 class="poezie__titlu">{{ poezie.titlu }}</h1>
+              <pre class="poezie__strofe">{{ poezie.strofe }}<br></pre>
+            </template>
+          </template>
+        </template>
         <br>
         <span class="poezie__url" id="currentURL">{{ currentURL }}</span>
       </article>
@@ -116,7 +120,8 @@ export default {
       defaultFontSize: store.state.lastFontSize,
       zoomMenuOpen: false,
       shareMenuOpen: false,
-      poezieTransitionName: ''
+      poezieTransitionName: '',
+      currentURL: ''
     }
   },
   created () {
@@ -128,12 +133,6 @@ export default {
   computed: {
     fontSize () {
       return `${this.defaultFontSize}rem`
-    },
-    currentURL () {
-      return location.href
-    },
-    currentNr () {
-      return +this.$route.params.adresa.match(/^\d+/).toString()
     }
   },
   methods: {
@@ -142,8 +141,7 @@ export default {
       if (!routeParent.checked) routeParent.click()
     },
     prevPoezie () {
-      // let prevRoute = document.getElementById(`r${this.nr - 1}`)
-      let prevRoute = document.getElementById(`r${this.currentNr - 1}`)
+      let prevRoute = document.getElementById(`r${this.nr - 1}`)
       if (prevRoute) {
         this.checkCaiet(prevRoute)
         prevRoute.click()
@@ -151,8 +149,7 @@ export default {
       } else this.$router.push('inceput')
     },
     nextPoezie () {
-      // let nextRoute = document.getElementById(`r${this.nr + 1}`)
-      let nextRoute = document.getElementById(`r${this.currentNr + 1}`)
+      let nextRoute = document.getElementById(`r${this.nr + 1}`)
       if (nextRoute) {
         nextRoute.click()
         this.checkCaiet(nextRoute)
@@ -205,11 +202,10 @@ export default {
   },
   watch: {
     '$route' (to, from) {
-      // const toDepth = to.params.nr
-      const toDepth = to.path.replace(/\//, '').match(/^\d+/)
-      // const fromDepth = from.params.nr
-      const fromDepth = from.path.replace(/\//, '').match(/^\d+/)
+      const toDepth = to.params.nr
+      const fromDepth = from.params.nr
       this.poezieTransitionName = toDepth < fromDepth ? 'slide-right-poezie' : 'slide-left-poezie'
+      this.currentURL = location.href
     }
   }
 }

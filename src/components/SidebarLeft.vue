@@ -99,10 +99,8 @@
               :to="{
                 name: 'Poezie',
                 params: {
-                  adresa: `${poezie.nr}-${poezie.titlu.replace(/\s+/g, '-').replace(/[ăâ]+/g,'a').replace(/[ĂÂ]+/g,'A').replace(/[î]+/g,'i').replace(/[Î]+/g,'I').replace(/[ș]+/g,'s').replace(/[Ș]+/g,'S').replace(/[ț]+/g,'t').replace(/[Ț]+/g,'T').replace(/[^\w-]+/g,'')}`,
                   nr: poezie.nr,
-                  titlu: poezie.titlu,
-                  strofe: poezie.strofe
+                  titlu: poezie.titlu.replace(/\s+/g, '-').replace(/[ăâ]+/g,'a').replace(/[ĂÂ]+/g,'A').replace(/[î]+/g,'i').replace(/[Î]+/g,'I').replace(/[ș]+/g,'s').replace(/[Ș]+/g,'S').replace(/[ț]+/g,'t').replace(/[Ț]+/g,'T').replace(/[^\w-]+/g,'')
                 }
               }">
               <span

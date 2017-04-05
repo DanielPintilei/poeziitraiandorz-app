@@ -99,7 +99,7 @@
               :to="{
                 name: 'Poezie',
                 params: {
-                  nr: poezie.nr,
+                  nr: +poezie.nr,
                   titlu: poezie.titlu.replace(/\s+/g, '-').replace(/[ăâ]+/g,'a').replace(/[ĂÂ]+/g,'A').replace(/[î]+/g,'i').replace(/[Î]+/g,'I').replace(/[ș]+/g,'s').replace(/[Ș]+/g,'S').replace(/[ț]+/g,'t').replace(/[Ț]+/g,'T').replace(/[^\w-]+/g,'')
                 }
               }">

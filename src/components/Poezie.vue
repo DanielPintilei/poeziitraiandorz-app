@@ -42,7 +42,10 @@
         <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
       </svg>
     </div>
-    <div class="poezie__share" :style="{backgroundColor: theme.backgroundColor}">
+    <div
+      @mouseenter="setCurrentURL"
+      class="poezie__share"
+      :style="{backgroundColor: theme.backgroundColor}">
       <svg
         @click="copyPoezie"
         class="icon icon-copy"
@@ -141,7 +144,8 @@ export default {
       if (!routeParent.checked) routeParent.click()
     },
     prevPoezie () {
-      let prevRoute = document.getElementById(`r${this.nr - 1}`)
+      let currentNr = +this.nr
+      let prevRoute = document.getElementById(`r${currentNr - 1}`)
       if (prevRoute) {
         this.checkCaiet(prevRoute)
         prevRoute.click()
@@ -149,7 +153,8 @@ export default {
       } else this.$router.push('inceput')
     },
     nextPoezie () {
-      let nextRoute = document.getElementById(`r${this.nr + 1}`)
+      let currentNr = +this.nr
+      let nextRoute = document.getElementById(`r${currentNr + 1}`)
       if (nextRoute) {
         nextRoute.click()
         this.checkCaiet(nextRoute)
@@ -179,6 +184,9 @@ export default {
     toggleShareMenu () {
       this.shareMenuOpen = !this.shareMenuOpen
     },
+    setCurrentURL () {
+      this.currentURL = location.href
+    },
     copyElementText (elcopy) {
       const selectElementText = (el) => {
         let range = document.createRange()
@@ -205,7 +213,6 @@ export default {
       const toDepth = to.params.nr
       const fromDepth = from.params.nr
       this.poezieTransitionName = toDepth < fromDepth ? 'slide-right-poezie' : 'slide-left-poezie'
-      this.currentURL = location.href
     }
   }
 }

@@ -57,6 +57,15 @@ import SidebarRight from './components/SidebarRight'
 let app = Firebase.initializeApp({databaseURL: 'https://poeziitraiandorz.firebaseio.com'})
 let db = app.database()
 let caieteRef = db.ref('caiete')
+// let caieteRef = ''
+// caieteRef.once('value')
+//   .then(function (snap) {
+//     // caieteRef = snap.val()
+//   })
+
+// caieteRef.orderByChild('nr').on('child_added', function (snap) {
+//   console.log(snap.val())
+// })
 
 export default {
   name: 'app',

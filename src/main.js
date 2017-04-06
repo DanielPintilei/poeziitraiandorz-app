@@ -4,7 +4,9 @@ import Vue from 'vue'
 import VueFire from 'vuefire'
 import App from './App'
 import router from './router'
+import VueTouch from 'vue-touch'
 
+Vue.use(VueTouch, { name: 'v-touch' })
 Vue.use(VueFire)
 
 /* eslint-disable no-new */

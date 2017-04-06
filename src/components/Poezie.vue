@@ -2,7 +2,10 @@
   <div
     class="poezie">
     <transition :name="poezieTransitionName" mode="out-in">
-      <article
+      <v-touch
+        tag="article"
+        @swipeleft="nextPoezie"
+        @swiperight="prevPoezie"
         :key="nr"
         id="poezie"
         :style="{fontSize: fontSize}"
@@ -10,7 +13,7 @@
         <template v-for="caiet in caieteRef">
           <template v-for="poezie in caiet.poezii">
             <template v-if="poezie.nr === nr">
-              <!--<h1 class="poezie__titlu">{{ poezie.nr }}</h1>-->
+              <h1 class="poezie__titlu">{{ poezie.nr }}</h1>
               <h1 class="poezie__titlu">{{ poezie.titlu }}</h1>
               <pre class="poezie__strofe">{{ poezie.strofe }}<br></pre>
             </template>
@@ -18,7 +21,7 @@
         </template>
         <br>
         <span class="poezie__url" id="currentURL">{{ currentURL }}</span>
-      </article>
+      </v-touch>
     </transition>
     <div
       @click="prevPoezie"
@@ -113,6 +116,7 @@
 
 <script>
 import { store } from '../store/index'
+// import Hammer from 'hammerjs'
 
 export default {
   name: 'poezie',
@@ -127,6 +131,16 @@ export default {
       currentURL: ''
     }
   },
+  // mounted () {
+  //   let poezie = document.getElementById('poezie')
+  //   let panPoezie = new Hammer(poezie)
+  //   panPoezie.on('panleft pancancel', (ev) => {
+  //     console.log(ev)
+  //     this.nextPoezie()
+  //     // setTimeout(() => {
+  //     // }, 1000)
+  //   })
+  // },
   created () {
     window.addEventListener('keyup', this.keyboardNavPoezie)
   },

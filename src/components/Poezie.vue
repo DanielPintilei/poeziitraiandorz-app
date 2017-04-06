@@ -3,6 +3,7 @@
     class="poezie">
     <transition :name="poezieTransitionName" mode="out-in">
       <v-touch
+        :enabled="{ panup: false, pandown: false }"
         tag="article"
         @swipeleft="nextPoezie"
         @swiperight="prevPoezie"

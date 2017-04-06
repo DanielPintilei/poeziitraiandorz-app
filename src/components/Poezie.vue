@@ -3,7 +3,7 @@
     class="poezie">
     <transition :name="poezieTransitionName" mode="out-in">
       <v-touch
-        :enabled="{ panup: false, pandown: false }"
+        :pan-options="{ direction: 'horizontal'}"
         tag="article"
         @swipeleft="nextPoezie"
         @swiperight="prevPoezie"

@@ -1,9 +1,9 @@
 <template>
-  <svg width="200" height="3" viewBox="0 0 200 3">
+  <svg width="200" height="2" viewBox="0 0 200 2">
     <line
       :stroke="color"
       class="loading"
-      x1="0" y1="1.5" x2="200" y2="1.5" stroke-width="3" />
+      x1="0" y1="1" x2="200" y2="1" stroke-width="2" />
   </svg>
 </template>
 
@@ -28,8 +28,5 @@ export default {
   to {
     stroke-dashoffset: -200;
   }
-}
-svg {
-  width 140px
 }
 </style>

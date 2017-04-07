@@ -113,18 +113,26 @@
             </span>
           </router-link>
         </div>
+        <div class="loading">
+          <loading :color="theme.accentColor"></loading>
+        </div>
       </div>
     </div>
   </aside>
 </template>
 
 <script>
+import Loading from './Loading'
+
 import { store } from '../store/index'
 
 export default {
   name: 'sidebar-left',
   store,
   props: ['theme', 'cuprinsCaieteRef', 'cuprinsPoeziiRef'],
+  components: {
+    Loading
+  },
   data () {
     return {
       selectedCaiete: store.state.selectedCaiete,
@@ -216,6 +224,7 @@ $iconSortHeight = 24px
     transform scale(0.9)
 
 .sidebar-left__cuprins
+  position relative
   flex-grow 1
   padding-top 4px
   padding-bottom 12px
@@ -277,5 +286,18 @@ a
       background-color $linkSelectedBackground
     & span:first-child
       opacity 0.5
+
+.loading
+  position absolute
+  top 0
+  right 0
+  left 0
+  bottom 0
+  display flex
+  align-items center
+  justify-content center
+  .caiet + &
+  .cuprinsAZ + &
+    display none
 
 </style>

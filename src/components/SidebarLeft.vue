@@ -80,7 +80,7 @@
                 name: 'Poezie',
                 params: {
                   nr: +poezie.nr,
-                  titlu: poezie.titlu.replace(/\s+/g, '-').replace(/[ăâ]+/g,'a').replace(/[ĂÂ]+/g,'A').replace(/[î]+/g,'i').replace(/[Î]+/g,'I').replace(/[ș]+/g,'s').replace(/[Ș]+/g,'S').replace(/[ț]+/g,'t').replace(/[Ț]+/g,'T').replace(/[^\w-]+/g,'')
+                  titlu: formatTitlu(poezie.titlu)
                 }
               }">
               <span
@@ -94,8 +94,24 @@
         </div>
         <div
           v-if="sortCuprinsAZ"
-          v-for="poezie in cuprinsPoeziiRef"
           class="cuprinsAZ">
+          <router-link
+            v-for="poezie in cuprinsPoeziiRef"
+            :id="`r${poezie.nr}`"
+            :to="{
+              name: 'Poezie',
+              params: {
+                nr: +poezie.nr,
+                titlu: formatTitlu(poezie.titlu)
+              }
+            }">
+            <span
+              @click="setSelectedPoezie(poezie.nr)"
+              class="link-span">
+              <span>{{poezie.nr}}</span>
+              <span>{{poezie.titlu}}</span>
+            </span>
+          </router-link>
         </div>
       </div>
     </div>
@@ -116,6 +132,9 @@ export default {
     }
   },
   methods: {
+    formatTitlu (titlu) {
+      return titlu.replace(/\s+/g, '-').replace(/[ăâ]+/g, 'a').replace(/[ĂÂ]+/g, 'A').replace(/[î]+/g, 'i').replace(/[Î]+/g, 'I').replace(/[ș]+/g, 's').replace(/[Ș]+/g, 'S').replace(/[ț]+/g, 't').replace(/[Ț]+/g, 'T').replace(/[^\w-]+/g, '')
+    },
     sidebarLeftToggle () {
       store.commit('toggleSidebarLeft')
     },
@@ -132,9 +151,6 @@ export default {
     },
     sortCuprinsAZ () {
       store.commit('setSortCuprinsAZ', this.sortCuprinsAZ)
-    },
-    sortCuprinsAZInvert () {
-      store.commit('setSortCuprinsAZInvert', this.sortCuprinsAZInvert)
     }
   }
 }
@@ -206,10 +222,10 @@ $iconSortHeight = 24px
   border-right 1px solid
   overflow auto
 
-.caiet
-  a
-    text-decoration none
-    line-height 1.2
+// .caiet
+a
+  text-decoration none
+  line-height 1.2
 
 .caiet__checkbox
   display none

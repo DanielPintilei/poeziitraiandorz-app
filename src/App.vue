@@ -18,6 +18,7 @@
     <transition name="sidebar-slide-left">
       <sidebar-left
         :cuprinsCaieteRef="cuprinsCaieteRef"
+        :cuprinsPoeziiRef="cuprinsPoeziiRef"
         :theme="currentTheme"
         v-show="sidebarLeftShow">
       </sidebar-left>

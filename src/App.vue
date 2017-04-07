@@ -17,7 +17,7 @@
     </transition>
     <transition name="sidebar-slide-left">
       <sidebar-left
-        :caieteRef="caieteRef"
+        :cuprinsCaieteRef="cuprinsCaieteRef"
         :theme="currentTheme"
         v-show="sidebarLeftShow">
       </sidebar-left>
@@ -29,7 +29,7 @@
       <transition name="router-view" mode="out-in">
         <router-view
           :theme="currentTheme"
-          :caieteRef="caieteRef"
+          :cuprinsCaieteRef="cuprinsCaieteRef"
           class="app__main-view">
         </router-view>
       </transition>
@@ -37,7 +37,7 @@
     <transition name="sidebar-slide-right">
       <sidebar-right
         :theme="currentTheme"
-        :caieteRef="caieteRef"
+        :cuprinsCaieteRef="cuprinsCaieteRef"
         v-show="sidebarRightShow">
       </sidebar-right>
     </transition>
@@ -56,20 +56,22 @@ import SidebarRight from './components/SidebarRight'
 
 let app = Firebase.initializeApp({databaseURL: 'https://poeziitraiandorz.firebaseio.com'})
 let db = app.database()
-let caieteRef = db.ref('caiete')
+let cuprinsCaieteRef = db.ref('cuprinsCaiete')
+let cuprinsPoeziiRef = db.ref('cuprinsPoezii')
 
-// caieteRef123.once('value')
+// cuprinsCaieteRef123.once('value')
 //   .then(function (snap) {
-//     caieteRef = snap.val()
+//     cuprinsCaieteRef = snap.val()
 //   })
-// caieteRef.orderByChild('nr').on('child_added', function (snap) {
+// cuprinsCaieteRef.orderByChild('nr').on('child_added', function (snap) {
 //   console.log(snap.val())
 // })
 
 export default {
   name: 'app',
   firebase: {
-    caieteRef
+    cuprinsCaieteRef,
+    cuprinsPoeziiRef
   },
   store,
   components: {
@@ -79,7 +81,7 @@ export default {
   },
   data () {
     return {
-      // caieteRef: Poezii.caiete,
+      // cuprinsCaieteRef: Poezii.caiete,
       themes: [
         {
           accentColor: '#dcbf8c',

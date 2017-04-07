@@ -11,7 +11,6 @@ export const store = new Vuex.Store({
     selectedCaiete: [],
     // selectedPoezie: null,
     sortCuprinsAZ: false,
-    sortCuprinsAZInvert: false,
     // lastRoute: '/'
     defaultFontSize: 1,
     lastFontSize: 1

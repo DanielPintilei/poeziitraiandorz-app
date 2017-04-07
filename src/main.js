@@ -3,8 +3,12 @@
 import Vue from 'vue'
 import VueFire from 'vuefire'
 import App from './App'
+import { sync } from 'vuex-router-sync'
 import router from './router'
+import { store } from './store/index'
 import VueTouch from 'vue-touch'
+
+sync(store, router)
 
 Vue.use(VueTouch, { name: 'v-touch' })
 Vue.use(VueFire)

@@ -37,18 +37,24 @@
         <label for="two">Two</label>
         <br>
         <span>Picked: {{ picked }}</span>-->
+        <loading :color="theme.accentColor"></loading>
       </div>
     </div>
   </aside>
 </template>
 
 <script>
+import Loading from './Loading'
+
 import { store } from '../store/index'
 
 export default {
   name: 'sidebar-right',
   store,
-  props: ['theme', 'caieteRef'],
+  props: ['theme', 'cuprinsCaieteRef'],
+  components: {
+    Loading
+  },
   methods: {
   },
   data () {

@@ -1,6 +1,8 @@
 <template>
   <div
     class="poezie">
+    <!--{{$store.state.route.path}}-->
+    <!--{{$store.state.route.params}}-->
     <transition :name="poezieTransitionName" mode="out-in">
       <v-touch
         :swipe-options="{ direction: 'horizontal'}"
@@ -11,7 +13,7 @@
         id="poezie"
         :style="{fontSize: fontSize}"
         class="poezie__main">
-        <template v-for="caiet in caieteRef">
+        <template v-for="caiet in cuprinsCaieteRef">
           <template v-for="poezie in caiet.poezii">
             <template v-if="poezie.nr === nr">
               <h1 class="poezie__titlu">{{ poezie.nr }}</h1>
@@ -122,7 +124,7 @@ import { store } from '../store/index'
 export default {
   name: 'poezie',
   store,
-  props: ['theme', 'nr', 'titlu', 'strofe', 'caieteRef'],
+  props: ['theme', 'nr', 'titlu', 'strofe', 'cuprinsCaieteRef'],
   data () {
     return {
       defaultFontSize: store.state.lastFontSize,

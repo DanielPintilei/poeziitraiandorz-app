@@ -9,16 +9,15 @@
           borderBottomColor: theme.borderColor,
           backgroundColor: theme.navbarColor
         }">
-        <div class="sidebar-left__title">
-          <svg
-            class="icon-cuprins"
-            :fill="theme.iconColor"
-            width="24" height="24" viewBox="0 0 24 24">
-            <path d="M4 10.5c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5 1.5-.67 1.5-1.5-.67-1.5-1.5-1.5zm0-6c-.83 0-1.5.67-1.5 1.5S3.17 7.5 4 7.5 5.5 6.83 5.5 6 4.83 4.5 4 4.5zm0 12c-.83 0-1.5.68-1.5 1.5s.68 1.5 1.5 1.5 1.5-.68 1.5-1.5-.67-1.5-1.5-1.5zM7 19h14v-2H7v2zm0-6h14v-2H7v2zm0-8v2h14V5H7z"/>
-            <path d="M0 0h24v24H0V0z" fill="none"/>
-          </svg>
-        </div>
-        <div class="sort-cuprins" v-if="false">
+        <svg
+          @click="sidebarLeftToggle"
+          class="icon icon-cuprins"
+          :fill="theme.iconColor"
+          width="24" height="24" viewBox="0 0 24 24">
+          <path d="M4 10.5c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5 1.5-.67 1.5-1.5-.67-1.5-1.5-1.5zm0-6c-.83 0-1.5.67-1.5 1.5S3.17 7.5 4 7.5 5.5 6.83 5.5 6 4.83 4.5 4 4.5zm0 12c-.83 0-1.5.68-1.5 1.5s.68 1.5 1.5 1.5 1.5-.68 1.5-1.5-.67-1.5-1.5-1.5zM7 19h14v-2H7v2zm0-6h14v-2H7v2zm0-8v2h14V5H7z"/>
+          <path d="M0 0h24v24H0V0z" fill="none"/>
+        </svg>
+        <div class="sort-cuprins">
           <input
             v-model="sortCuprinsAZ"
             type="checkbox"
@@ -26,32 +25,13 @@
             class="sort-cuprins__checkbox">
           <label
             for="checkboxSortCuprins"
-            class="sort-cuprins__label sort-cuprins__label--check">
+            class="sort-cuprins__label">
             <svg
               :fill="theme.iconColor"
               class="icon icon-sort-cuprins"
               height="24" viewBox="0 0 24 24" width="24">
               <path d="M0 0h24v24H0V0zm0 0h24v24H0V0zm.75.75h22.5v22.5H.75z" fill="none"/>
               <path d="M14.94 4.66h-4.72l2.36-2.36zm-4.69 14.71h4.66l-2.33 2.33zM6.1 6.27L1.6 17.73h1.84l.92-2.45h5.11l.92 2.45h1.84L7.74 6.27H6.1zm-1.13 7.37l1.94-5.18 1.94 5.18H4.97zm10.76 2.5h6.12v1.59h-8.53v-1.29l5.92-8.56h-5.88v-1.6h8.3v1.26l-5.93 8.6z"/>
-            </svg>
-          </label>
-          <input
-            v-model="sortCuprinsAZInvert"
-            type="checkbox"
-            id="checkboxDirectionCuprins"
-            class="sort-cuprins__checkbox">
-          <label
-            v-if="$store.state.sortCuprinsAZ"
-            for="checkboxDirectionCuprins"
-            class="sort-cuprins__label">
-            <svg
-              :fill="theme.iconColor"
-              class="icon-sort-cuprins"
-              :class="{'down': sortCuprinsAZInvert}"
-              width="24" viewBox="0 0 24 24" height="24">
-              <path d="M 16,17.01 V 10 h -2 v 7.01 h -3 l 4,3.99 4,-3.99 z" />
-              <path class="path-sort-cuprins" d="M 9,3 5,6.99 H 8 V 14 h 2 V 6.99 h 3 z" />
-              <path d="M0 0h24v24H0z" fill="none" />
             </svg>
           </label>
         </div>
@@ -65,7 +45,7 @@
         }">
         <div
           v-if="!sortCuprinsAZ"
-          v-for="(caiet, index) in caieteRef"
+          v-for="(caiet, index) in cuprinsCaieteRef"
           class="caiet">
           <input
             type="checkbox"
@@ -114,7 +94,7 @@
         </div>
         <div
           v-if="sortCuprinsAZ"
-          v-for="poezie in poeziiSortate"
+          v-for="poezie in cuprinsPoeziiRef"
           class="cuprinsAZ">
         </div>
       </div>
@@ -128,16 +108,17 @@ import { store } from '../store/index'
 export default {
   name: 'sidebar-left',
   store,
-  props: ['theme', 'caieteRef'],
+  props: ['theme', 'cuprinsCaieteRef', 'cuprinsPoeziiRef'],
   data () {
     return {
       selectedCaiete: store.state.selectedCaiete,
-      sortCuprinsAZ: store.state.sortCuprinsAZ,
-      sortCuprinsAZInvert: store.state.sortCuprinsAZInvert,
-      poeziiSortate: []
+      sortCuprinsAZ: store.state.sortCuprinsAZ
     }
   },
   methods: {
+    sidebarLeftToggle () {
+      store.commit('toggleSidebarLeft')
+    },
     setSelectedPoezie (poezie) {
       store.commit('setSelectedPoezie', poezie)
     },
@@ -196,11 +177,8 @@ export default {
   border-right 1px solid
   border-bottom 1px solid
 
-.sidebar-left__title
-  display flex
-  align-items center
-
 .icon-cuprins
+  opacity 1
   margin-right 7px
 
 $iconSortHeight = 24px
@@ -209,7 +187,7 @@ $iconSortHeight = 24px
 
 .sort-cuprins__checkbox
   display none
-  &:checked + .sort-cuprins__label--check .icon-sort-cuprins
+  &:checked + .sort-cuprins__label .icon-sort-cuprins
     opacity 1
 
 .sort-cuprins__label
@@ -220,13 +198,6 @@ $iconSortHeight = 24px
 .icon-sort-cuprins
   &:active
     transform scale(0.9)
-  &.down
-    transform rotate(180deg)
-    &:active
-      transform scale(0.9)
-
-.path-sort-cuprins
-  opacity $iconOpacity
 
 .sidebar-left__cuprins
   flex-grow 1

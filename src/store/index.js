@@ -13,7 +13,8 @@ export const store = new Vuex.Store({
     sortCuprinsAZ: false,
     // lastRoute: '/'
     defaultFontSize: 1,
-    lastFontSize: 1
+    lastFontSize: 1,
+    selectEnabled: false
   },
   getters: {
     getSidebarLeftToggled: state => {
@@ -33,6 +34,9 @@ export const store = new Vuex.Store({
     },
     getCurrentTheme: state => {
       return state.currentTheme
+    },
+    getSelectEnabled: state => {
+      return state.selectEnabled
     }
     // getLastRoute: state => {
     //   return state.lastRoute
@@ -63,6 +67,9 @@ export const store = new Vuex.Store({
     },
     setSelectedTheme (state, n) {
       state.currentTheme = n
+    },
+    setSelectEnabled (state, n) {
+      state.selectEnabled = n
     }
   }
 })

@@ -12,6 +12,7 @@
         :key="nr"
         id="poezie"
         :style="{fontSize: fontSize}"
+        :class="{select: selectEnabled}"
         class="poezie__main">
         <template v-for="caiet in cuprinsCaieteRef">
           <template v-for="poezie in caiet.poezii">
@@ -49,11 +50,11 @@
       </svg>
     </div>
     <div
-      @mouseenter="setCurrentURL"
       class="poezie__share"
       :style="{backgroundColor: theme.backgroundColor}">
       <svg
-        @click="copyPoezie"
+        data-clipboard-target="#poezie"
+        @click="enableSelect"
         class="icon icon-copy"
         :fill="theme.iconColor"
         height="24" viewBox="0 0 24 24" width="24">
@@ -61,12 +62,12 @@
         <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
       </svg>
       <svg
-        @click="copyURL"
-        class="icon icon-copy"
+        @click=""
+        class="icon icon-share"
         :fill="theme.iconColor"
         height="24" viewBox="0 0 24 24" width="24">
         <path d="M0 0h24v24H0z" fill="none"/>
-        <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/>
+        <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/>
       </svg>
     </div>
     <div class="poezie__zoom" :style="{backgroundColor: theme.backgroundColor}">
@@ -119,7 +120,7 @@
 
 <script>
 import { store } from '../store/index'
-// import Hammer from 'hammerjs'
+import Clipboard from 'clipboard'
 
 export default {
   name: 'poezie',
@@ -134,16 +135,17 @@ export default {
       currentURL: ''
     }
   },
-  // mounted () {
-  //   let poezie = document.getElementById('poezie')
-  //   let panPoezie = new Hammer(poezie)
-  //   panPoezie.on('panleft pancancel', (ev) => {
-  //     console.log(ev)
-  //     this.nextPoezie()
-  //     // setTimeout(() => {
-  //     // }, 1000)
-  //   })
-  // },
+  mounted () {
+    let clipboard = new Clipboard('.icon-copy')
+    clipboard.on('success', function (e) {
+      // console.info('Text:', e.text)
+      e.clearSelection()
+      store.commit('setSelectEnabled', false)
+    })
+    clipboard.on('error', function (e) {
+      store.commit('setSelectEnabled', false)
+    })
+  },
   created () {
     window.addEventListener('keyup', this.keyboardNavPoezie)
   },
@@ -153,6 +155,9 @@ export default {
   computed: {
     fontSize () {
       return `${this.defaultFontSize}rem`
+    },
+    selectEnabled () {
+      return store.getters.getSelectEnabled
     }
   },
   methods: {
@@ -201,28 +206,8 @@ export default {
     toggleShareMenu () {
       this.shareMenuOpen = !this.shareMenuOpen
     },
-    setCurrentURL () {
-      this.currentURL = location.href
-    },
-    copyElementText (elcopy) {
-      const selectElementText = (el) => {
-        let range = document.createRange()
-        range.selectNodeContents(el)
-        let selection = window.getSelection()
-        selection.removeAllRanges()
-        selection.addRange(range)
-      }
-      selectElementText(elcopy)
-      document.execCommand('copy')
-      window.getSelection().removeAllRanges()
-    },
-    copyPoezie () {
-      let poezie = document.getElementById('poezie')
-      this.copyElementText(poezie)
-    },
-    copyURL () {
-      let currentURL = document.getElementById('currentURL')
-      this.copyElementText(currentURL)
+    enableSelect () {
+      store.commit('setSelectEnabled', true)
     }
   },
   watch: {
@@ -230,6 +215,7 @@ export default {
       const toDepth = to.params.nr
       const fromDepth = from.params.nr
       this.poezieTransitionName = toDepth < fromDepth ? 'slide-right-poezie' : 'slide-left-poezie'
+      this.currentURL = location.href
     }
   }
 }
@@ -253,8 +239,10 @@ export default {
 .poezie__main
   flex-grow 1
   flex-shrink 0
-  user-select auto
+  // user-select auto
   will-change transform
+  &.select
+    user-select: all !important;
 
 .slide-left-poezie-enter-active
   animation slide-left-poezie-in 0.3s ease-in-out
@@ -364,6 +352,7 @@ $iconPrevNextSide = 20px
     left 0
 
 .icon-copy
+.icon-share
   display inline-block
   @media (max-width $breakpointMobileSmall)
     margin-right 10px

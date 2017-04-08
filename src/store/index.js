@@ -30,9 +30,6 @@ export const store = new Vuex.Store({
     // getSelectedPoezie: state => {
     //   return state.selectedPoezie
     // },
-    getThemes: state => {
-      return state.themes
-    },
     getCurrentTheme: state => {
       return state.currentTheme
     },

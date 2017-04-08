@@ -3,7 +3,6 @@
     class="poezie">
     <!--{{$store.state.route.path}}-->
     <!--{{$store.state.route.params}}-->
-    {{ showCopyConfirm }}
     <transition :name="poezieTransitionName" mode="out-in">
       <v-touch
         :swipe-options="{ direction: 'horizontal'}"
@@ -23,6 +22,7 @@
         <pre
           v-if="poeziiRef[nr-1]"
           class="poezie__strofe">{{ poeziiRef[nr-1].s }}</pre>
+        <loading v-if="!poeziiRef[nr-1]" :color="theme.accentColor"></loading>
         <br>
         <span class="poezie__url" id="currentURL">{{ currentURL }}</span>
       </v-touch>
@@ -159,11 +159,15 @@
 <script>
 import { store } from '../store/index'
 import Clipboard from 'clipboard'
+import Loading from './Loading'
 
 export default {
   name: 'poezie',
   store,
   props: ['theme', 'nr', 'titlu', 'poeziiRef'],
+  components: {
+    Loading
+  },
   data () {
     return {
       defaultFontSize: store.state.lastFontSize,
@@ -242,10 +246,10 @@ export default {
       this.defaultFontSize = store.state.defaultFontSize
     },
     zoomOut () {
-      this.defaultFontSize -= 0.04
+      if (this.defaultFontSize > 0.8) this.defaultFontSize -= 0.04
     },
     zoomIn () {
-      this.defaultFontSize += 0.04
+      if (this.defaultFontSize < 1.5) this.defaultFontSize += 0.04
     },
     toggleShareMenu () {
       this.shareMenuOpen = !this.shareMenuOpen

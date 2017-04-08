@@ -14,15 +14,14 @@
         :style="{fontSize: fontSize}"
         :class="{select: selectEnabled}"
         class="poezie__main">
-        <template v-for="caiet in cuprinsCaieteRef">
-          <template v-for="poezie in caiet.poezii">
-            <template v-if="poezie.nr === nr">
-              <h1 class="poezie__titlu">{{ poezie.nr }}</h1>
-              <h1 class="poezie__titlu">{{ poezie.titlu }}</h1>
-              <pre class="poezie__strofe">{{ poezie.strofe }}<br></pre>
-            </template>
-          </template>
-        </template>
+        <!--{{ $store.state.lastSelectedPoezie }}-->
+        <h1 v-if="poeziiRef[nr-1]" class="poezie__titlu">
+          <!--{{ poeziiRef[nr-1].n }}-->
+          {{ poeziiRef[nr-1].t }}
+        </h1>
+        <pre
+          v-if="poeziiRef[nr-1]"
+          class="poezie__strofe">{{ poeziiRef[nr-1].s }}</pre>
         <br>
         <span class="poezie__url" id="currentURL">{{ currentURL }}</span>
       </v-touch>
@@ -155,7 +154,7 @@ import Clipboard from 'clipboard'
 export default {
   name: 'poezie',
   store,
-  props: ['theme', 'nr', 'titlu', 'strofe', 'cuprinsCaieteRef'],
+  props: ['theme', 'nr', 'titlu', 'poeziiRef'],
   data () {
     return {
       defaultFontSize: store.state.lastFontSize,
@@ -402,9 +401,9 @@ $iconPrevNextSide = 20px
   display flex
   align-items center
   justify-content space-around
-  width 200px
-  height 70px
-  padding 7px
+  width 180px
+  height 60px
+  padding 4px
   background-color #fff
   box-shadow 4px 2px 6px 0px rgba(0,0,0,0.1)
   border-radius 4px

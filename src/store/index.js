@@ -9,7 +9,7 @@ export const store = new Vuex.Store({
     sidebarRightToggled: false,
     currentTheme: 0,
     selectedCaiete: [],
-    // selectedPoezie: null,
+    lastSelectedPoezie: null,
     sortCuprinsAZ: false,
     // lastRoute: '/'
     defaultFontSize: 1,

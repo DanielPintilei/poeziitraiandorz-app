@@ -30,7 +30,7 @@
       <transition name="router-view" mode="out-in">
         <router-view
           :theme="currentTheme"
-          :cuprinsCaieteRef="cuprinsCaieteRef"
+          :poeziiRef="poeziiRef"
           class="app__main-view">
         </router-view>
       </transition>

@@ -1,9 +1,6 @@
 <template>
   <aside class="sidebar-right">
-    <v-touch
-      :swipe-options="{ direction: 'horizontal'}"
-      @swiperight="sidebarRightToggle"
-      class="sidebar-right__inner">
+    <div class="sidebar-right__inner">
       <div
         class="search-box"
         :style="{
@@ -24,7 +21,9 @@
           <path d="M0 0h24v24H0z" fill="none"/>
         </svg>
       </div>
-      <div
+      <v-touch
+        :swipe-options="{ direction: 'horizontal'}"
+        @swiperight="sidebarRightToggle"
         class="sidebar-right__filters"
         :style="{
           backgroundColor: theme.backgroundColor2,
@@ -41,8 +40,8 @@
         <br>
         <span>Picked: {{ picked }}</span>-->
         <loading :color="theme.accentColor"></loading>
-      </div>
-    </v-touch>
+      </v-touch>
+    </div>
   </aside>
 </template>
 

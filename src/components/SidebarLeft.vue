@@ -150,7 +150,7 @@ export default {
       store.commit('setSelectedPoezie', poezie)
     },
     scrollLinkIntoView () {
-      let route = document.getElementsByClassName('router-link-active')[0]
+      let route = document.querySelector('.router-link-active')
       let routeParent = route.parentElement.parentElement.firstElementChild
       if (routeParent && !routeParent.checked) routeParent.click()
       route.scrollIntoView()

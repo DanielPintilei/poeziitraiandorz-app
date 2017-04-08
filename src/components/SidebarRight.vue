@@ -1,6 +1,9 @@
 <template>
   <aside class="sidebar-right">
-    <div class="sidebar-right__inner">
+    <v-touch
+      :swipe-options="{ direction: 'horizontal'}"
+      @swiperight="sidebarRightToggle"
+      class="sidebar-right__inner">
       <div
         class="search-box"
         :style="{
@@ -39,7 +42,7 @@
         <span>Picked: {{ picked }}</span>-->
         <loading :color="theme.accentColor"></loading>
       </div>
-    </div>
+    </v-touch>
   </aside>
 </template>
 
@@ -55,13 +58,14 @@ export default {
   components: {
     Loading
   },
-  methods: {
-  },
   data () {
     return {
     }
   },
-  computed: {
+  methods: {
+    sidebarRightToggle () {
+      store.commit('toggleSidebarRight')
+    }
   }
 }
 </script>

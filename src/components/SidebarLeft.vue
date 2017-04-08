@@ -1,6 +1,9 @@
 <template>
   <aside class="sidebar-left">
-    <div class="sidebar-left__inner">
+    <v-touch
+      :swipe-options="{ direction: 'horizontal'}"
+      @swipeleft="sidebarLeftToggle"
+      class="sidebar-left__inner">
       <div
         class="sidebar-left__top"
         :style="{
@@ -117,7 +120,7 @@
         </div>
         <loading class="loading" :color="theme.accentColor"></loading>
       </div>
-    </div>
+    </v-touch>
   </aside>
 </template>
 

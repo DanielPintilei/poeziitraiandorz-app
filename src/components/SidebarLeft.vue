@@ -17,7 +17,9 @@
           <path d="M4 10.5c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5 1.5-.67 1.5-1.5-.67-1.5-1.5-1.5zm0-6c-.83 0-1.5.67-1.5 1.5S3.17 7.5 4 7.5 5.5 6.83 5.5 6 4.83 4.5 4 4.5zm0 12c-.83 0-1.5.68-1.5 1.5s.68 1.5 1.5 1.5 1.5-.68 1.5-1.5-.67-1.5-1.5-1.5zM7 19h14v-2H7v2zm0-6h14v-2H7v2zm0-8v2h14V5H7z"/>
           <path d="M0 0h24v24H0V0z" fill="none"/>
         </svg>
-        <div class="sort-cuprins">
+        <div
+          @click="scrollLinkIntoView"
+          class="sort-cuprins">
           <input
             v-model="sortCuprinsAZ"
             type="checkbox"
@@ -27,7 +29,7 @@
             for="checkboxSortCuprins"
             class="sort-cuprins__label">
             <svg
-              :fill="theme.iconColor"
+              :fill="!sortCuprinsAZ ? theme.iconColor : theme.accentColor"
               class="icon icon-sort-cuprins"
               height="24" viewBox="0 0 24 24" width="24">
               <path d="M0 0h24v24H0V0zm0 0h24v24H0V0zm.75.75h22.5v22.5H.75z" fill="none"/>
@@ -70,24 +72,24 @@
               <path d="M0 0h24v24H0z" fill="none"/>
               <path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/>
             </svg>
-            {{caiet.titlu}}
+            {{caiet.t}}
           </label>
           <div class="poezii">
             <router-link
-              v-for="poezie in caiet.poezii"
-              :id="`r${poezie.nr}`"
+              v-for="poezie in caiet.p"
+              :id="`${poezie.n}`"
               :to="{
                 name: 'Poezie',
                 params: {
-                  nr: +poezie.nr,
-                  titlu: formatTitlu(poezie.titlu)
+                  nr: +poezie.n,
+                  titlu: formatTitlu(poezie.t)
                 }
               }">
               <span
-                @click="setSelectedPoezie(poezie.nr)"
+                @click="setSelectedPoezie(poezie.n)"
                 class="link-span">
-                <span>{{poezie.nr}}</span>
-                <span>{{poezie.titlu}}</span>
+                <span>{{poezie.n}}</span>
+                <span>{{poezie.t}}</span>
               </span>
             </router-link>
           </div>
@@ -97,25 +99,23 @@
           class="cuprinsAZ">
           <router-link
             v-for="poezie in cuprinsPoeziiRef"
-            :id="`r${poezie.nr}`"
+            :id="`${+poezie['.key']+1}`"
             :to="{
               name: 'Poezie',
               params: {
-                nr: +poezie.nr,
-                titlu: formatTitlu(poezie.titlu)
+                nr: +poezie.n,
+                titlu: formatTitlu(poezie.t)
               }
             }">
             <span
-              @click="setSelectedPoezie(poezie.nr)"
+              @click="setSelectedPoezie(poezie.n)"
               class="link-span">
-              <span>{{poezie.nr}}</span>
-              <span>{{poezie.titlu}}</span>
+              <span>{{poezie.n}}</span>
+              <span>{{poezie.t}}</span>
             </span>
           </router-link>
         </div>
-        <div class="loading">
-          <loading :color="theme.accentColor"></loading>
-        </div>
+        <loading class="loading" :color="theme.accentColor"></loading>
       </div>
     </div>
   </aside>
@@ -149,8 +149,11 @@ export default {
     setSelectedPoezie (poezie) {
       store.commit('setSelectedPoezie', poezie)
     },
-    linkScrollIntoView (el) {
-      document.getElementById(el).scrollIntoView()
+    scrollLinkIntoView () {
+      let route = document.getElementsByClassName('router-link-active')[0]
+      let routeParent = route.parentElement.parentElement.firstElementChild
+      if (routeParent && !routeParent.checked) routeParent.click()
+      route.scrollIntoView()
     }
   },
   watch: {
@@ -194,16 +197,17 @@ export default {
   flex-shrink 0
   display flex
   align-items center
-  justify-content space-between
   height $navbarHeight
   padding-left 20px
-  padding-right 20px
+  // padding-right 20px
   border-right 1px solid
   border-bottom 1px solid
 
 .icon-cuprins
   opacity 1
   margin-right 7px
+  @media (min-width $breakpointMobile + 1px)
+    pointer-events none
 
 $iconSortHeight = 24px
 .sort-cuprins
@@ -288,14 +292,6 @@ a
       opacity 0.5
 
 .loading
-  position absolute
-  top 0
-  right 0
-  left 0
-  bottom 0
-  display flex
-  align-items center
-  justify-content center
   .caiet + &
   .cuprinsAZ + &
     display none

@@ -59,6 +59,7 @@ let app = Firebase.initializeApp({databaseURL: 'https://poeziitraiandorz.firebas
 let db = app.database()
 let cuprinsCaieteRef = db.ref('cuprinsCaiete')
 let cuprinsPoeziiRef = db.ref('cuprinsPoezii')
+let poeziiRef = db.ref('poezii')
 
 // cuprinsCaieteRef123.once('value')
 //   .then(function (snap) {
@@ -72,7 +73,8 @@ export default {
   name: 'app',
   firebase: {
     cuprinsCaieteRef,
-    cuprinsPoeziiRef
+    cuprinsPoeziiRef,
+    poeziiRef
   },
   store,
   components: {

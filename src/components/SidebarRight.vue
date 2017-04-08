@@ -128,6 +128,7 @@ export default {
   opacity $iconOpacity
 
 .sidebar-right__filters
+  position relative
   flex-grow: 1
   padding-top 4px
   padding-bottom 12px

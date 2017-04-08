@@ -40,6 +40,8 @@ export default {
   methods: {
     setSelectedTheme (n) {
       store.commit('setSelectedTheme', n)
+      let metaThemeColor = document.querySelector('meta[name=theme-color]')
+      metaThemeColor.setAttribute('content', this.themes[store.getters.getCurrentTheme].accentColor)
     }
   }
 }

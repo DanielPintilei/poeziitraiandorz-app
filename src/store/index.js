@@ -7,14 +7,15 @@ export const store = new Vuex.Store({
   state: {
     sidebarLeftToggled: false,
     sidebarRightToggled: false,
-    currentTheme: 0,
+    currentTheme: 1,
     selectedCaiete: [],
     lastSelectedPoezie: null,
     sortCuprinsAZ: false,
     // lastRoute: '/'
     defaultFontSize: 1,
     lastFontSize: 1,
-    selectEnabled: false
+    selectEnabled: false,
+    showCopyConfirm: false
   },
   getters: {
     getSidebarLeftToggled: state => {
@@ -37,6 +38,9 @@ export const store = new Vuex.Store({
     },
     getSelectEnabled: state => {
       return state.selectEnabled
+    },
+    getShowCopyConfirm: state => {
+      return state.showCopyConfirm
     }
     // getLastRoute: state => {
     //   return state.lastRoute
@@ -70,6 +74,12 @@ export const store = new Vuex.Store({
     },
     setSelectEnabled (state, n) {
       state.selectEnabled = n
+    },
+    toggleCopyConfirm (state) {
+      state.showCopyConfirm = true
+      setTimeout(function () {
+        state.showCopyConfirm = false
+      }, 4000)
     }
   }
 })

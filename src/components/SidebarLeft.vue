@@ -201,7 +201,6 @@ export default {
   align-items center
   height $navbarHeight
   padding-left 20px
-  // padding-right 20px
   border-right 1px solid
   border-bottom 1px solid
 
@@ -237,7 +236,6 @@ $iconSortHeight = 24px
   border-right 1px solid
   overflow auto
 
-// .caiet
 a
   text-decoration none
   line-height 1.2

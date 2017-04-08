@@ -3,6 +3,7 @@
     class="poezie">
     <!--{{$store.state.route.path}}-->
     <!--{{$store.state.route.params}}-->
+    {{ showCopyConfirm }}
     <transition :name="poezieTransitionName" mode="out-in">
       <v-touch
         :swipe-options="{ direction: 'horizontal'}"
@@ -70,12 +71,20 @@
         <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/>
       </svg>
     </div>
+    <transition name="pop">
+      <div
+        v-if="showCopyConfirm"
+        :style="{backgroundColor: theme.confirmColor, color: theme.backgroundColor}"
+        class="copy-confirm">
+        <span>Copiat</span>
+      </div>
+    </transition>
     <div
       @click="toggleShareMenu"
       v-if="shareMenuOpen"
       class="backdrop backdrop--social">
     </div>
-    <transition name="social">
+    <transition name="pop">
       <social-sharing
         v-if="shareMenuOpen"
         class="social"
@@ -172,6 +181,7 @@ export default {
       // console.info('Text:', e.text)
       e.clearSelection()
       store.commit('setSelectEnabled', false)
+      store.commit('toggleCopyConfirm')
     })
     clipboard.on('error', function (e) {
       store.commit('setSelectEnabled', false)
@@ -189,6 +199,9 @@ export default {
     },
     selectEnabled () {
       return store.getters.getSelectEnabled
+    },
+    showCopyConfirm () {
+      return store.getters.getShowCopyConfirm
     }
   },
   methods: {
@@ -391,6 +404,14 @@ $iconPrevNextSide = 20px
     display block
     margin-top 10px
 
+.copy-confirm
+  position absolute
+  bottom 80px
+  left 50px
+  padding 10px 20px
+  border-radius 4px
+  transform-origin bottom left
+
 .backdrop--social
   position fixed
 
@@ -412,12 +433,12 @@ $iconPrevNextSide = 20px
   @media (max-width $breakpointMobileSmall)
     bottom 50px
 
-.social-enter-active
+.pop-enter-active
   transition transform $pickerDuration $sidebarTiming
-.social-leave-active
+.pop-leave-active
   transition transform $pickerDuration $sidebarTiming
-.social-enter
-.social-leave-to
+.pop-enter
+.pop-leave-to
   transform scale(0)
 
 .poezie__zoom

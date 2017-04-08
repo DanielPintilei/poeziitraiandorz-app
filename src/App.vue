@@ -47,7 +47,6 @@
 
 <script>
 import Firebase from 'firebase'
-// import Poezii from './poezii.json'
 
 import { store } from './store/index'
 
@@ -60,14 +59,6 @@ let db = app.database()
 let cuprinsCaieteRef = db.ref('cuprinsCaiete')
 let cuprinsPoeziiRef = db.ref('cuprinsPoezii')
 let poeziiRef = db.ref('poezii')
-
-// cuprinsCaieteRef123.once('value')
-//   .then(function (snap) {
-//     cuprinsCaieteRef = snap.val()
-//   })
-// cuprinsCaieteRef.orderByChild('nr').on('child_added', function (snap) {
-//   console.log(snap.val())
-// })
 
 export default {
   name: 'app',
@@ -84,21 +75,7 @@ export default {
   },
   data () {
     return {
-      // cuprinsCaieteRef: Poezii.caiete,
       themes: [
-        {
-          accentColor: '#dcbf8c',
-          textColor: '#fff',
-          textColor2: '#dedede',
-          borderColor: '#dcbf8c',
-          borderColor2: '#675d4c',
-          backgroundColor: '#212121',
-          backgroundColor2: '#292929',
-          backdropColor: '#212121',
-          navbarColor: '#212121',
-          logoColor: '#fff',
-          iconColor: '#fff'
-        },
         {
           accentColor: '#dcbf8c',
           textColor: '#000',
@@ -110,6 +87,20 @@ export default {
           navbarColor: '#fff',
           logoColor: '#dcbf8c',
           iconColor: '#000'
+        },
+        {
+          accentColor: '#dcbf8c',
+          textColor: '#fff',
+          textColor2: '#dedede',
+          borderColor: '#dcbf8c',
+          borderColor2: '#675d4c',
+          backgroundColor: '#212121',
+          backgroundColor2: '#292929',
+          backdropColor: '#212121',
+          navbarColor: '#212121',
+          logoColor: '#fff',
+          iconColor: '#fff',
+          confirmColor: '#C6FF00'
         },
         {
           accentColor: '#FDD835',

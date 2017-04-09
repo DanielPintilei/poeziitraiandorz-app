@@ -122,14 +122,14 @@ export default {
           confirm2: '#212121'
         },
         {
-          theme: '#FDD835',
+          theme: '#FFEB3B',
           accent: '#448AFF',
           text: '#212121',
           text2: '#424242',
-          border: '#FDD835',
-          border2: '#c2af0a',
-          background: '#FDD835',
-          backdrop: '#FDD835',
+          border: '#FFEB3B',
+          border2: '#dac50b',
+          background: '#FFEB3B',
+          backdrop: '#FFEB3B',
           navbar: '#212121',
           logo: '#fff',
           icon: '#fff',
@@ -137,12 +137,12 @@ export default {
           confirm2: '#212121'
         },
         {
-          theme: '#4A148C',
+          theme: '#69F0AE',
           accent: '#69F0AE',
           text: '#fff',
           text2: '#e6e6e6',
           border: '#4A148C',
-          border2: '#c2af0a',
+          border2: '#45544d',
           background: '#4A148C',
           backdrop: '#4A148C',
           navbar: '#6A1B9A',
@@ -150,9 +150,28 @@ export default {
           icon: '#fff',
           confirm: '#FFFF00',
           confirm2: '#212121'
+        },
+        {
+          theme: '#4E342E',
+          accent: '#00E5FF',
+          text: '#fff',
+          text2: '#e6e6e6',
+          border: '#4E342E',
+          border2: '#45544d',
+          background: '#4E342E',
+          backdrop: '#4E342E',
+          navbar: '#FF5722',
+          logo: '#fff',
+          icon: '#fff',
+          confirm: '#FFFF00',
+          confirm2: '#212121'
         }
       ]
     }
+  },
+  created () {
+    let metaThemeColor = document.querySelector('meta[name=theme-color]')
+    metaThemeColor.setAttribute('content', this.themes[store.getters.getCurrentTheme].theme)
   },
   computed: {
     sidebarLeftShow () {

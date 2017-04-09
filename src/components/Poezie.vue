@@ -386,7 +386,6 @@ $iconPrevNextSide = 20px
   overflow hidden
   @media (max-width $breakpointMobileSmall)
     bottom 0
-    width 50%
     padding 10px 10px 5px
   @media (min-width $breakpointMobileSmall + 1px)
     background-color transparent !important
@@ -400,6 +399,7 @@ $iconPrevNextSide = 20px
   left $poezieButtonGroupSide
   @media (max-width $breakpointMobileSmall)
     left 0
+    width 30%
 
 .icon-copy
 .icon-share-toggle
@@ -455,6 +455,7 @@ $iconPrevNextSide = 20px
   right $poezieButtonGroupSide
   @media (max-width $breakpointMobileSmall)
     right 0
+    width 70%
     text-align right
 
 .icon-zoom

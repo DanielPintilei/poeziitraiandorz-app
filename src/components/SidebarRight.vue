@@ -118,6 +118,8 @@ export default {
   overflow visible
   -webkit-appearance textfield
   outline-offset -2px
+  &::placeholder
+    opacity 0.5
   &::-webkit-search-cancel-button
   &::-webkit-search-decoration
     -webkit-appearance none

@@ -43,7 +43,7 @@
         class="sidebar-left__cuprins"
         :style="{
           color: theme.text2,
-          backgroundColor: theme.background2,
+          backgroundColor: theme.background,
           borderColor: theme.border2
         }">
         <div

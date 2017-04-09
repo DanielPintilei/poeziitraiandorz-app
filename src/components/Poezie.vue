@@ -74,7 +74,7 @@
     <transition name="pop">
       <div
         v-if="showCopyConfirm"
-        :style="{backgroundColor: theme.confirm, color: theme.confirmText}"
+        :style="{backgroundColor: theme.confirm, color: theme.confirm2}"
         class="copy-confirm">
         <span >Copiat</span>
       </div>
@@ -283,8 +283,8 @@ export default {
   overflow-y auto
   @media (min-width $breakpointMobileSmall + 1px)
     padding 50px 30px
-  @media (min-width 900px)
-    padding 100px 60px
+  @media (min-width $breakpointMobile + 1px)
+    padding 70px 80px
 
 .poezie__main
   flex-grow 1
@@ -340,7 +340,7 @@ export default {
   @media (max-width $breakpointMobileSmall)
     font-size 1.5em
   @media (min-width $breakpointMobile + 1px)
-    margin 0 0 2em
+    margin 0 0 1.5em
 
 .poezie__strofe
   margin 0 0 1.6em
@@ -351,7 +351,7 @@ export default {
   @media (max-width $breakpointMobileSmall)
     font-size 0.938em
   @media (min-width $breakpointMobile + 1px)
-    columns 2
+    columns 250px 2
     column-gap 3em
 
 $iconPrevNextSide = 20px

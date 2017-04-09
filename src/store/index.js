@@ -7,7 +7,7 @@ export const store = new Vuex.Store({
   state: {
     sidebarLeftToggled: true,
     sidebarRightToggled: true,
-    currentTheme: 0,
+    currentTheme: 4,
     selectedCaiete: [],
     lastSelectedPoezie: null,
     sortCuprinsAZ: false,
@@ -46,12 +46,14 @@ export const store = new Vuex.Store({
   mutations: {
     toggleSidebarLeft (state) {
       let route = document.querySelector('.router-link-active')
+      let routeParent = route.parentElement.parentElement.firstElementChild
       let waitToggle = new Promise((resolve) => {
         state.sidebarLeftToggled = !state.sidebarLeftToggled
         resolve()
       })
       waitToggle.then(() => {
         if (state.sidebarLeftToggled) {
+          if (routeParent && !routeParent.checked) routeParent.click()
           route.scrollIntoView()
         }
       })

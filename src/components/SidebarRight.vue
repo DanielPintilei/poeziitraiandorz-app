@@ -9,6 +9,7 @@
           backgroundColor: theme.navbar
         }">
         <input
+          :style="{ color: theme.text }"
           id="searchInput"
           type="search"
           class="search-box__input"
@@ -26,7 +27,7 @@
         @swiperight="sidebarRightToggle"
         class="sidebar-right__filters"
         :style="{
-          backgroundColor: theme.background2,
+          backgroundColor: theme.background,
           borderColor: theme.border2
         }">
         <!--<input type="checkbox" id="checkbox" v-model="checked">
@@ -111,7 +112,6 @@ export default {
   margin-left 12px
   align-self stretch
   font-size 15px
-  color #fff
   background-color transparent
   border none
   outline none

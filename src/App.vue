@@ -77,59 +77,79 @@ export default {
     return {
       themes: [
         {
-          accent: '#dcbf8c',
+          theme: '#ecce93',
+          accent: '#ecce93',
           text: '#212121',
           text2: '#757575',
-          border: '#dcbf8c',
-          // border2: '#9e9e9e',
+          border: '#ecce93',
           border2: '#e1e1e1',
           background: '#fff',
-          background2: '#fff',
           backdrop: '#fff',
           navbar: '#fff',
-          logo: '#dcbf8c',
+          logo: '#ecce93',
           icon: '#212121',
           confirm: '#FFFF00',
-          confirmText: '#212121'
+          confirm2: '#212121'
         },
         {
-          accent: '#dcbf8c',
+          theme: '#ecce93',
+          accent: '#ecce93',
           text: '#fff',
           text2: '#dedede',
-          border: '#dcbf8c',
+          border: '#ecce93',
           border2: '#675d4c',
           background: '#212121',
-          background2: '#292929',
           backdrop: '#212121',
           navbar: '#212121',
           logo: '#fff',
           icon: '#fff',
-          confirm: '#C6FF00'
+          confirm: '#C6FF00',
+          confirm2: '#212121'
         },
         {
-          accent: '#FDD835',
-          text: '#fff',
-          text2: '#fff',
-          border: '#FBC02D',
-          background: '#FFEB3B',
-          background2: '#FDD835',
-          backdrop: '#FDD835',
-          navbar: '#424242',
-          logo: '#fff',
-          icon: '#fff'
-        },
-        {
-          accent: '#1A237E',
-          text: '#000',
-          text2: '#000',
-          border: '#303F9F',
-          border2: '#ccc',
-          background: '#3F51B5',
-          background2: '#303F9F',
-          backdrop: '#303F9F',
+          theme: '#CDDC39',
+          accent: '#7C4DFF',
+          text: '#212121',
+          text2: '#424242',
+          border: '#CDDC39',
+          border2: '#b5c431',
+          background: '#CDDC39',
+          backdrop: '#CDDC39',
           navbar: '#fff',
-          logo: '#000',
-          icon: '#000'
+          logo: '#4d4d4d',
+          icon: '#212121',
+          confirm: '#FFFF00',
+          confirm2: '#212121'
+        },
+        {
+          theme: '#FDD835',
+          accent: '#448AFF',
+          text: '#212121',
+          text2: '#424242',
+          border: '#FDD835',
+          border2: '#c2af0a',
+          background: '#FDD835',
+          backdrop: '#FDD835',
+          navbar: '#212121',
+          logo: '#fff',
+          icon: '#fff',
+          confirm: '#FFFF00',
+          confirm2: '#212121'
+        },
+        {
+          theme: '#4A148C',
+          accent: '#69F0AE',
+          text: '#fff',
+          text2: '#e6e6e6',
+          border: '#4A148C',
+          border2: '#c2af0a',
+          background: '#4A148C',
+          backdrop: '#4A148C',
+          navbar: '#6A1B9A',
+          logo: '#fff',
+          icon: '#fff',
+          confirm: '#FFFF00',
+          confirm2: '#212121'
         }
       ]
     }
@@ -170,7 +190,6 @@ body
   -moz-osx-font-smoothing grayscale
   -ms-text-size-adjust 100%
   -webkit-text-size-adjust 100%
-  margin 0
   user-select none
 
 ::-webkit-scrollbar

@@ -45,7 +45,16 @@ export const store = new Vuex.Store({
   },
   mutations: {
     toggleSidebarLeft (state) {
-      state.sidebarLeftToggled = !state.sidebarLeftToggled
+      let route = document.querySelector('.router-link-active')
+      let waitToggle = new Promise((resolve) => {
+        state.sidebarLeftToggled = !state.sidebarLeftToggled
+        resolve()
+      })
+      waitToggle.then(() => {
+        if (state.sidebarLeftToggled) {
+          route.scrollIntoView()
+        }
+      })
     },
     toggleSidebarRight (state) {
       state.sidebarRightToggled = !state.sidebarRightToggled

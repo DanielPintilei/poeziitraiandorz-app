@@ -137,7 +137,7 @@ export default {
           confirm2: '#212121'
         },
         {
-          theme: '#69F0AE',
+          theme: '#4A148C',
           accent: '#69F0AE',
           text: '#fff',
           text2: '#e6e6e6',
@@ -160,7 +160,7 @@ export default {
           border2: '#45544d',
           background: '#4E342E',
           backdrop: '#4E342E',
-          navbar: '#FF5722',
+          navbar: '#FF7043',
           logo: '#fff',
           icon: '#fff',
           confirm: '#FFFF00',

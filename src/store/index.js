@@ -76,7 +76,7 @@ export const store = new Vuex.Store({
       state.showCopyConfirm = true
       setTimeout(function () {
         state.showCopyConfirm = false
-      }, 4000)
+      }, 3000)
     }
   }
 })

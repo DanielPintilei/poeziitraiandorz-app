@@ -101,12 +101,13 @@
           class="cuprinsAZ">
           <router-link
             v-for="poezie in cuprinsPoeziiRef"
-            :id="`${+poezie['.key']+1}`"
+            :id="+poezie['.key']+1"
             :to="{
               name: 'Poezie',
               params: {
                 nr: +poezie.n,
-                titlu: formatTitlu(poezie.t)
+                titlu: formatTitlu(poezie.t),
+                order: +poezie['.key']+1
               }
             }">
             <span

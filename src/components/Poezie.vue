@@ -260,9 +260,11 @@ export default {
   },
   watch: {
     '$route' (to, from) {
-      const toDepth = to.params.nr
-      const fromDepth = from.params.nr
+      let toDepth = to.params.order === undefined ? to.params.nr : to.params.order
+      let fromDepth = from.params.order === undefined ? from.params.nr : from.params.order
+
       this.poezieTransitionName = toDepth < fromDepth ? 'slide-right-poezie' : 'slide-left-poezie'
+
       this.currentURL = location.href
     }
   }

@@ -246,10 +246,10 @@ export default {
       this.defaultFontSize = store.state.defaultFontSize
     },
     zoomOut () {
-      if (this.defaultFontSize > 0.8) this.defaultFontSize -= 0.04
+      if (this.defaultFontSize > 0.9) this.defaultFontSize -= 0.06
     },
     zoomIn () {
-      if (this.defaultFontSize < 1.5) this.defaultFontSize += 0.04
+      if (this.defaultFontSize < 1.1) this.defaultFontSize += 0.06
     },
     toggleShareMenu () {
       this.shareMenuOpen = !this.shareMenuOpen
@@ -415,6 +415,10 @@ $iconPrevNextSide = 20px
   padding 10px 20px
   border-radius 4px
   transform-origin bottom left
+  z-index 10
+  @media (max-width $breakpointMobileSmall)
+    bottom 50px
+    left 30px
 
 .backdrop--social
   position fixed
@@ -438,9 +442,9 @@ $iconPrevNextSide = 20px
     bottom 50px
 
 .pop-enter-active
-  transition transform $pickerDuration $sidebarTiming
+  transition transform $popDuration $popTiming
 .pop-leave-active
-  transition transform $pickerDuration $sidebarTiming
+  transition transform $popDuration $popTiming
 .pop-enter
 .pop-leave-to
   transform scale(0)

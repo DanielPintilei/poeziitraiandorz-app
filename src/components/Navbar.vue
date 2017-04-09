@@ -189,9 +189,9 @@ $iconsGroupWidth = 100px
     opacity 1
 
 .theme-picker-enter-active
-  transition transform $pickerDuration $sidebarTiming
+  transition transform $popDuration $sidebarTiming
 .theme-picker-leave-active
-  transition transform $pickerDuration $sidebarTiming
+  transition transform $popDuration $sidebarTiming
 .theme-picker-enter
 .theme-picker-leave-to
   transform scale(0)

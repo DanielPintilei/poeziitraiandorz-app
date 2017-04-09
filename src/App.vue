@@ -3,15 +3,15 @@
     id="app"
     class="app"
     :style="{
-      color: currentTheme.textColor,
-      backgroundColor: currentTheme.backgroundColor,
-      borderColor: currentTheme.borderColor
+      color: currentTheme.text,
+      backgroundColor: currentTheme.background,
+      borderColor: currentTheme.border
     }">
     <transition name="backdrop">
       <div
         @click="closeSidebars"
         v-if="sidebarLeftShow || sidebarRightShow"
-        :style="{ backgroundColor: currentTheme.backdropColor }"
+        :style="{ backgroundColor: currentTheme.backdrop }"
         class="backdrop backdrop--sidebar">
       </div>
     </transition>
@@ -24,7 +24,7 @@
       </sidebar-left>
     </transition>
     <main
-      :style="{ backgroundColor: currentTheme.backgroundColor2 }"
+      :style="{ backgroundColor: currentTheme.background2 }"
       class="app__main">
       <navbar :theme="currentTheme" :themes="themes"></navbar>
       <transition name="router-view" mode="out-in">
@@ -77,55 +77,59 @@ export default {
     return {
       themes: [
         {
-          accentColor: '#dcbf8c',
-          textColor: '#000',
-          textColor2: '#000',
-          borderColor: '#dcbf8c',
-          backgroundColor: '#fff',
-          backgroundColor2: '#fff',
-          backdropColor: '#fff',
-          navbarColor: '#fff',
-          logoColor: '#dcbf8c',
-          iconColor: '#000'
+          accent: '#dcbf8c',
+          text: '#212121',
+          text2: '#757575',
+          border: '#dcbf8c',
+          // border2: '#9e9e9e',
+          border2: '#e1e1e1',
+          background: '#fff',
+          background2: '#fff',
+          backdrop: '#fff',
+          navbar: '#fff',
+          logo: '#dcbf8c',
+          icon: '#212121',
+          confirm: '#FFFF00',
+          confirmText: '#212121'
         },
         {
-          accentColor: '#dcbf8c',
-          textColor: '#fff',
-          textColor2: '#dedede',
-          borderColor: '#dcbf8c',
-          borderColor2: '#675d4c',
-          backgroundColor: '#212121',
-          backgroundColor2: '#292929',
-          backdropColor: '#212121',
-          navbarColor: '#212121',
-          logoColor: '#fff',
-          iconColor: '#fff',
-          confirmColor: '#C6FF00'
+          accent: '#dcbf8c',
+          text: '#fff',
+          text2: '#dedede',
+          border: '#dcbf8c',
+          border2: '#675d4c',
+          background: '#212121',
+          background2: '#292929',
+          backdrop: '#212121',
+          navbar: '#212121',
+          logo: '#fff',
+          icon: '#fff',
+          confirm: '#C6FF00'
         },
         {
-          accentColor: '#FDD835',
-          textColor: '#fff',
-          textColor2: '#fff',
-          borderColor: '#FBC02D',
-          backgroundColor: '#FFEB3B',
-          backgroundColor2: '#FDD835',
-          backdropColor: '#FDD835',
-          navbarColor: '#424242',
-          logoColor: '#fff',
-          iconColor: '#fff'
+          accent: '#FDD835',
+          text: '#fff',
+          text2: '#fff',
+          border: '#FBC02D',
+          background: '#FFEB3B',
+          background2: '#FDD835',
+          backdrop: '#FDD835',
+          navbar: '#424242',
+          logo: '#fff',
+          icon: '#fff'
         },
         {
-          accentColor: '#1A237E',
-          textColor: '#000',
-          textColor2: '#000',
-          borderColor: '#303F9F',
-          borderColor2: '#ccc',
-          backgroundColor: '#3F51B5',
-          backgroundColor2: '#303F9F',
-          backdropColor: '#303F9F',
-          navbarColor: '#fff',
-          logoColor: '#000',
-          iconColor: '#000'
+          accent: '#1A237E',
+          text: '#000',
+          text2: '#000',
+          border: '#303F9F',
+          border2: '#ccc',
+          background: '#3F51B5',
+          background2: '#303F9F',
+          backdrop: '#303F9F',
+          navbar: '#fff',
+          logo: '#000',
+          icon: '#000'
         }
       ]
     }

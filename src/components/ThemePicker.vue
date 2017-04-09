@@ -3,14 +3,14 @@
     <div
       v-for="(theme, index) in themes"
       @click="setSelectedTheme(index)"
-      :style="{backgroundColor: theme.backgroundColor}"
+      :style="{backgroundColor: theme.background}"
       class="swatch">
       <div
         class="swatch__inner"
-        :style="{backgroundColor: theme.accentColor}">
+        :style="{backgroundColor: theme.accent}">
         <svg
           v-if="index === currentTheme"
-          :fill="theme.backgroundColor"
+          :fill="theme.background"
           class="swatch__check"
           height="24" viewBox="0 0 24 24" width="24">
           <path d="M0 0h24v24H0z" fill="none"/>
@@ -41,7 +41,7 @@ export default {
     setSelectedTheme (n) {
       store.commit('setSelectedTheme', n)
       let metaThemeColor = document.querySelector('meta[name=theme-color]')
-      metaThemeColor.setAttribute('content', this.themes[store.getters.getCurrentTheme].accentColor)
+      metaThemeColor.setAttribute('content', this.themes[store.getters.getCurrentTheme].accent)
     }
   }
 }

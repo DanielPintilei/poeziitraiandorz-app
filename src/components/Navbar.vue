@@ -2,8 +2,8 @@
   <header
     class="navbar"
     :style="{
-      backgroundColor: theme.navbarColor,
-      borderColor: theme.borderColor
+      backgroundColor: theme.navbar,
+      borderColor: theme.border
     }">
     <div class="navbar__icons-left">
       <div
@@ -12,7 +12,7 @@
         <svg
           @click="sidebarLeftToggle"
           v-show="sidebarLeftToggled"
-          :fill="theme.iconColor"
+          :fill="theme.icon"
           class="icon icon-list-arrow"
           width="24" height="24" viewBox="0 0 24 24">
           <path d="M15.41 16.09l-4.58-4.59 4.58-4.59L14 5.5l-6 6 6 6z"/>
@@ -21,7 +21,7 @@
         <svg
           @click="sidebarLeftToggle"
           v-show="!sidebarLeftToggled"
-          :fill="theme.iconColor"
+          :fill="theme.icon"
           class="icon icon-list"
           width="24" height="24" viewBox="0 0 24 24">
           <path d="M4 10.5c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5 1.5-.67 1.5-1.5-.67-1.5-1.5-1.5zm0-6c-.83 0-1.5.67-1.5 1.5S3.17 7.5 4 7.5 5.5 6.83 5.5 6 4.83 4.5 4 4.5zm0 12c-.83 0-1.5.68-1.5 1.5s.68 1.5 1.5 1.5 1.5-.68 1.5-1.5-.67-1.5-1.5-1.5zM7 19h14v-2H7v2zm0-6h14v-2H7v2zm0-8v2h14V5H7z"/>
@@ -29,7 +29,7 @@
         </svg>
       </div>
       <svg
-        :fill="theme.iconColor"
+        :fill="theme.icon"
         class="icon icon-menu"
         width="24" height="24" viewBox="0 0 24 24">
         <path d="M0 0h24v24H0z" fill="none"/>
@@ -37,7 +37,7 @@
       </svg>
     </div>
     <router-link to="/" class="logo">
-      <svg :fill="theme.logoColor" class="logo__img"
+      <svg :fill="theme.logo" class="logo__img"
         width="28.222mm"
         height="12.848mm"
         viewBox="0 0 99.999878 45.523945">
@@ -53,13 +53,13 @@
       <div class="icon-picker-wrapper">
         <svg
           @click="toggleThemePicker"
-          :fill="theme.iconColor"
+          :fill="theme.icon"
           :class="{toggled: themePickerToggled}"
           class="icon icon-picker"
           width="24" height="24" viewBox="0 0 24 24">
           <path d="M0 0h24v24H0z" fill="none"/>
           <path d="M16.56 8.94L7.62 0 6.21 1.41l2.38 2.38-5.15 5.15c-.59.59-.59 1.54 0 2.12l5.5 5.5c.29.29.68.44 1.06.44s.77-.15 1.06-.44l5.5-5.5c.59-.58.59-1.53 0-2.12zM5.21 10L10 5.21 14.79 10H5.21zM19 11.5s-2 2.17-2 3.5c0 1.1.9 2 2 2s2-.9 2-2c0-1.33-2-3.5-2-3.5z"/>
-          <path :fill="theme.accentColor" d="M0 20h24v4H0z" />
+          <path :fill="theme.accent" d="M0 20h24v4H0z" />
         </svg>
         <transition name="theme-picker">
           <theme-picker
@@ -74,7 +74,7 @@
         <svg
           @click="sidebarRightToggle"
           v-show="sidebarRightToggled"
-          :fill="theme.iconColor"
+          :fill="theme.icon"
           class="icon icon-search-arrow"
           width="24" height="24" viewBox="0 0 24 24">
           <path d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"/>
@@ -83,7 +83,7 @@
         <svg
           @click="sidebarRightToggle"
           v-show="!sidebarRightToggled"
-          :fill="theme.iconColor"
+          :fill="theme.icon"
           class="icon icon-search"
           width="24" height="24" viewBox="0 0 24 24">
           <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>

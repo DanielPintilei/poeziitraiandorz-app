@@ -4,9 +4,9 @@
       <div
         class="search-box"
         :style="{
-          borderLeftColor: theme.borderColor2,
-          borderBottomColor: theme.borderColor,
-          backgroundColor: theme.navbarColor
+          borderLeftColor: theme.border2,
+          borderBottomColor: theme.border,
+          backgroundColor: theme.navbar
         }">
         <input
           id="searchInput"
@@ -14,7 +14,7 @@
           class="search-box__input"
           placeholder="Caută">
         <svg
-          :fill="theme.iconColor"
+          :fill="theme.icon"
           class="search-box__icon"
           height="24" viewBox="0 0 24 24" width="24">
           <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
@@ -26,8 +26,8 @@
         @swiperight="sidebarRightToggle"
         class="sidebar-right__filters"
         :style="{
-          backgroundColor: theme.backgroundColor2,
-          borderColor: theme.borderColor2
+          backgroundColor: theme.background2,
+          borderColor: theme.border2
         }">
         <!--<input type="checkbox" id="checkbox" v-model="checked">
         <label for="checkbox">{{ checked }}</label>-->
@@ -39,7 +39,7 @@
         <label for="two">Two</label>
         <br>
         <span>Picked: {{ picked }}</span>-->
-        <loading :color="theme.accentColor"></loading>
+        <loading :color="theme.accent"></loading>
       </v-touch>
     </div>
   </aside>

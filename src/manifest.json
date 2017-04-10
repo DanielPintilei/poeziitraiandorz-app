@@ -1,0 +1,9 @@
+{
+  "name": "Poezii—Traian Dorz",
+  "short_name": "Poezii",
+  "theme_color": "#ecce93",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "scope": "/",
+  "start_url": "/"
+}

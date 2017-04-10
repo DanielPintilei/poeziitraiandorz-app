@@ -60,7 +60,7 @@
             :for="`caiet${index}`"
             class="caiet__titlu">
             <svg
-              :fill="theme.icon"
+              :fill="theme.icon2"
               class="icon-arrow"
               width="24" height="24" viewBox="0 0 24 24">
               <path d="m 9.5,17.5 5,-5 -5,-5 z"/>

@@ -44,7 +44,7 @@
         :style="{
           color: theme.text2,
           backgroundColor: theme.background,
-          borderColor: theme.border2
+          borderColor: theme.border3
         }">
         <div
           v-if="!sortCuprinsAZ"

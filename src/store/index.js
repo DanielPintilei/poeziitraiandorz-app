@@ -7,7 +7,7 @@ export const store = new Vuex.Store({
   state: {
     sidebarLeftToggled: false,
     sidebarRightToggled: false,
-    currentTheme: 2,
+    currentTheme: 0,
     selectedCaiete: [],
     lastSelectedPoezie: null,
     sortCuprinsAZ: false,
@@ -15,7 +15,8 @@ export const store = new Vuex.Store({
     defaultFontSize: 1,
     lastFontSize: 1,
     selectEnabled: false,
-    showCopyConfirm: false
+    showCopyConfirm: false,
+    moreOpen: false
   },
   getters: {
     getSidebarLeftToggled: state => {
@@ -23,6 +24,9 @@ export const store = new Vuex.Store({
     },
     getSidebarRightToggled: state => {
       return state.sidebarRightToggled
+    },
+    getMoreOpen: state => {
+      return state.moreOpen
     },
     getSelectedCaiete: state => {
       return state.selectedCaiete
@@ -64,6 +68,9 @@ export const store = new Vuex.Store({
     closeSidebars (state) {
       state.sidebarRightToggled = false
       state.sidebarLeftToggled = false
+    },
+    toggleMore (state) {
+      state.moreOpen = !state.moreOpen
     },
     setSelectedCaiete (state, n) {
       state.selectedCaiete = n

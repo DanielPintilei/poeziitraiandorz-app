@@ -1,6 +1,6 @@
 <template>
   <div class="landing">
-    Thank you Netlify! :)
+    în lucru
   </div>
 </template>
 

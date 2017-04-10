@@ -9,7 +9,7 @@
           backgroundColor: theme.navbar
         }">
         <input
-          :style="{ color: theme.text }"
+          :style="{ color: theme.text3 }"
           id="searchInput"
           type="search"
           class="search-box__input"
@@ -28,7 +28,7 @@
         class="sidebar-right__filters"
         :style="{
           backgroundColor: theme.background,
-          borderColor: theme.border2
+          borderColor: theme.border3
         }">
         <!--<input type="checkbox" id="checkbox" v-model="checked">
         <label for="checkbox">{{ checked }}</label>-->

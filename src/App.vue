@@ -42,6 +42,17 @@
         v-show="sidebarRightShow">
       </sidebar-right>
     </transition>
+    <transition name="backdrop">
+      <div
+        @click="toggleMore"
+        v-if="moreOpen"
+        :style="{ backgroundColor: currentTheme.backdrop }"
+        class="backdrop">
+      </div>
+    </transition>
+    <more
+      v-if="moreOpen">
+    </more>
   </div>
 </template>
 
@@ -53,6 +64,7 @@ import { store } from './store/index'
 import Navbar from './components/Navbar'
 import SidebarLeft from './components/SidebarLeft'
 import SidebarRight from './components/SidebarRight'
+import More from './components/More'
 
 let app = Firebase.initializeApp({databaseURL: 'https://poeziitraiandorz.firebaseio.com'})
 let db = app.database()
@@ -71,7 +83,8 @@ export default {
   components: {
     Navbar,
     SidebarLeft,
-    SidebarRight
+    SidebarRight,
+    More
   },
   data () {
     return {
@@ -81,8 +94,10 @@ export default {
           accent: '#ecce93',
           text: '#212121',
           text2: '#757575',
+          text3: '#212121',
           border: '#ecce93',
           border2: '#e1e1e1',
+          border3: '#e1e1e1',
           background: '#fff',
           backdrop: '#fff',
           navbar: '#fff',
@@ -97,8 +112,10 @@ export default {
           accent: '#ecce93',
           text: '#fff',
           text2: '#dedede',
+          text3: '#fff',
           border: '#ecce93',
           border2: '#675d4c',
+          border3: '#675d4c',
           background: '#212121',
           backdrop: '#212121',
           navbar: '#212121',
@@ -113,8 +130,10 @@ export default {
           accent: '#ff764b',
           text: '#393a3e',
           text2: '#757575',
+          text3: '#dedede',
           border: '#393a3e',
-          border2: '#675d4c',
+          border2: '#756b57',
+          border3: '#beb6a7',
           background: '#fff4d7',
           backdrop: '#fff4d7',
           navbar: '#393a3e',
@@ -200,11 +219,17 @@ export default {
     },
     currentTheme () {
       return this.themes[store.getters.getCurrentTheme]
+    },
+    moreOpen () {
+      return store.getters.getMoreOpen
     }
   },
   methods: {
     closeSidebars () {
       store.commit('closeSidebars')
+    },
+    toggleMore () {
+      store.commit('toggleMore')
     }
   }
 }

@@ -82,6 +82,7 @@
           <path d="M0-.25h24v24H0z" fill="none"/>
         </svg>
         <svg
+          style="opacity: 0"
           @click="sidebarRightToggle"
           v-show="!sidebarRightToggled"
           :fill="theme.icon"

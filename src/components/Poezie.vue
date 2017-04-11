@@ -292,7 +292,7 @@ export default {
   // user-select auto
   will-change transform
   &.select
-    user-select: all !important;
+    user-select: all !important
 
 .slide-left-poezie-enter-active
   animation slide-left-poezie-in 0.3s ease-in-out
@@ -336,7 +336,7 @@ export default {
   font-family 'Playfair Display', serif
   font-size 1.875em
   font-weight normal
-  line-height 1.3;
+  line-height 1.3
   @media (max-width $breakpointMobileSmall)
     font-size 1.5em
   @media (min-width $breakpointMobile + 1px)

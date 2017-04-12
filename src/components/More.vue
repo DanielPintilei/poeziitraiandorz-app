@@ -1,8 +1,8 @@
 <template>
   <div
-    :style="{ backgroundColor: theme.background, borderColor: theme.border }"
+    :style="{ backgroundColor: theme.background, borderColor: theme.border2 }"
     class="more">
-    <div>
+    <div class="more__inner">
       <div class="more__item">
         <svg
           :fill="theme.icon2"
@@ -60,9 +60,9 @@ export default {
   right 50%
   bottom 50%
   left 50%
-  transform translateX(-50%) translateY(-50%)
-  width 300px
-  height 300px
+  transform translateX(-50%) translateY(-50%) rotate(45deg)
+  width 280px
+  height 280px
   border 1px solid
   display flex
   align-items center
@@ -70,6 +70,9 @@ export default {
   opacity 0.8
   cursor default
   z-index 20
+
+.more__inner
+  transform rotate(-45deg)
 
 .more__item
   display flex

@@ -50,9 +50,12 @@
         class="backdrop">
       </div>
     </transition>
-    <more
-      v-if="moreOpen">
-    </more>
+    <transition name="backdrop">
+      <more
+        :theme="currentTheme"
+        v-if="moreOpen">
+      </more>
+    </transition>
   </div>
 </template>
 
@@ -302,6 +305,7 @@ body
 
 .app__main-view
   flex-grow 1
+
 .router-view-enter-active
   animation router-view-in 0.4s
 .router-view-leave-active

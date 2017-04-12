@@ -11,7 +11,7 @@ module.exports = {
   }),
   postcss: [
     require('autoprefixer')({
-      browsers: ['last 2 versions', 'not ie <= 10', 'not ie_mob <= 10']
+      browsers: ['last 2 versions', 'not ie <= 11', 'not ie_mob <=11']
     })
   ]
 }

@@ -86,7 +86,7 @@ export default {
   @media (min-width $breakpointMobileSmall + 1px)
     position absolute
     top 50%
-    transform translateY(-50%)
+    transform translateY(50%)
 
 .out-next
   right 20px

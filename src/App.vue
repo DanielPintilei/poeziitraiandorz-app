@@ -108,7 +108,7 @@ export default {
           icon: '#212121',
           icon2: '#212121',
           confirm: '#FFFF00',
-          confirm2: '#212121'
+          confirm2: '#757575'
         },
         {
           theme: '#ecce93',
@@ -144,7 +144,7 @@ export default {
           icon: '#fff',
           icon2: '#757575',
           confirm: '#18FFFF',
-          confirm2: '#212121'
+          confirm2: '#757575'
         }
         // {
         //   theme: '#CDDC39',

@@ -68,6 +68,7 @@ export default {
   align-items center
   justify-content center
   opacity 0.8
+  cursor default
   z-index 20
 
 .more__item

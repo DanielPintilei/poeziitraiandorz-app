@@ -66,6 +66,7 @@ export default {
   flex-direction column
   align-items center
   justify-content center
+  cursor default
   @media (min-width $breakpointMobileSmall + 1px)
     padding 40px
 

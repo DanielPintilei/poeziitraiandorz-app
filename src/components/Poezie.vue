@@ -279,6 +279,7 @@ export default {
   flex-direction column
   align-items center
   padding 35px 25px 60px
+  cursor default
   overflow-x hidden
   overflow-y auto
   @media (min-width $breakpointMobileSmall + 1px)

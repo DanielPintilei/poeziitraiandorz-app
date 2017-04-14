@@ -278,31 +278,21 @@ export default {
   display flex
   flex-direction column
   align-items center
-  // padding 35px 25px 60px
-  padding bottom 60px
+  padding 35px 25px 60px
   cursor default
+  width 100% // del
   // overflow-x hidden
   overflow-y auto
-  // @media (min-width $breakpointMobileSmall + 1px)
-  //   padding 50px 30px
-  // @media (min-width $breakpointMobile + 1px)
-  //   padding 70px 80px
   @media (min-width $breakpointMobileSmall + 1px)
-    padding-bottom 50px
+    padding 50px 30px
   @media (min-width $breakpointMobile + 1px)
-    padding-bottom 70px
+    padding 70px 80px
 
 .poezie__main
-  flex-grow 1
-  flex-shrink 0
-
-  padding 35px 25px 0
-  @media (min-width $breakpointMobileSmall + 1px)
-    padding-bottom 50px 30px 0
-  @media (min-width $breakpointMobile + 1px)
-    padding-bottom 70px 80px 0
-
+  // flex-grow 1
+  // flex-shrink 0
   // user-select auto
+  max-width 100% // del
   will-change transform
   &.select
     user-select: all !important
@@ -344,7 +334,8 @@ export default {
     opacity 0
 
 .poezie__titlu
-  max-width 600px
+  // max-width 600px
+  max-width 100% // del
   margin 0 0 1em
   font-family 'Playfair Display', serif
   font-size 1.875em
@@ -356,6 +347,7 @@ export default {
     margin 0 0 1.5em
 
 .poezie__strofe
+  max-width 100% // del
   margin 0 0 1.6em
   font-family 'Libre Baskerville', serif
   font-size 1em

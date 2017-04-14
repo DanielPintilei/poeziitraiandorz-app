@@ -266,7 +266,8 @@ body
 .app
   position relative
   display flex
-  width 100vw
+  // width 100vw
+  width 100% // del
   height 100vh
   border 3px solid
   overflow hidden

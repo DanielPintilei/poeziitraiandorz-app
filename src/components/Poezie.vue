@@ -281,7 +281,6 @@ export default {
   padding 35px 25px 60px
   cursor default
   width 100% // del
-  // overflow-x hidden
   overflow-y auto
   @media (min-width $breakpointMobileSmall + 1px)
     padding 50px 30px
@@ -289,9 +288,6 @@ export default {
     padding 70px 80px
 
 .poezie__main
-  // flex-grow 1
-  // flex-shrink 0
-  // user-select auto
   max-width 100% // del
   will-change transform
   &.select
@@ -334,8 +330,8 @@ export default {
     opacity 0
 
 .poezie__titlu
-  // max-width 600px
-  max-width 100% // del
+  max-width 600px
+  // max-width 100% // del
   margin 0 0 1em
   font-family 'Playfair Display', serif
   font-size 1.875em
@@ -347,7 +343,7 @@ export default {
     margin 0 0 1.5em
 
 .poezie__strofe
-  max-width 100% // del
+  // max-width 100% // del
   margin 0 0 1.6em
   font-family 'Libre Baskerville', serif
   font-size 1em

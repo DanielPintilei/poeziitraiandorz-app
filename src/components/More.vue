@@ -60,7 +60,8 @@ export default {
   right 50%
   bottom 50%
   left 50%
-  transform translateX(-50%) translateY(-50%) rotate(45deg)
+  // transform translateX(-50%) translateY(-50%) rotate(45deg)
+  transform translateX(-50%) translateY(-50%)
   width 280px
   height 280px
   border 1px solid
@@ -71,8 +72,8 @@ export default {
   cursor default
   z-index 20
 
-.more__inner
-  transform rotate(-45deg)
+// .more__inner
+//   transform rotate(-45deg)
 
 .more__item
   display flex

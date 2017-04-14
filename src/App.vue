@@ -302,9 +302,12 @@ body
   display flex
   flex-direction column
   width 100%
+  max-width 100vw
 
 .app__main-view
   flex-grow 1
+  width 100%
+  max-width 100vw
 
 .router-view-enter-active
   animation router-view-in 0.4s

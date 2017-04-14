@@ -290,6 +290,7 @@ export default {
 .poezie__main
   flex-grow 1
   flex-shrink 0
+  max-width 100vw
   // user-select auto
   will-change transform
   &.select

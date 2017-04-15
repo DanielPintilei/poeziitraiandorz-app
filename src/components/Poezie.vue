@@ -279,33 +279,18 @@ export default {
   display flex
   flex-direction column
   align-items center
-  // padding 35px 25px 60px
-  padding-top 35px // del
-  padding-bottom 60px // del
+  padding 35px 25px 60px
   cursor default
   max-width 100%
+  overflow-x hidden
   overflow-y auto
-  // @media (min-width $breakpointMobileSmall + 1px)
-  //   padding 50px 30px
-  // @media (min-width $breakpointMobile + 1px)
-  //   padding 70px 80px
   @media (min-width $breakpointMobileSmall + 1px)
-    padding-top 50px
-    padding-bottom 50px
+    padding 50px 30px
   @media (min-width $breakpointMobile + 1px)
-    padding-top 70px
-    padding-bottom 70px
+    padding 70px 80px
 
 .poezie__main
   max-width 100%
-  padding-right 25px // del
-  padding-left 25px // del
-  @media (min-width $breakpointMobileSmall + 1px)
-    padding-right 30px // del
-    padding-left 30px // del
-  @media (min-width $breakpointMobile + 1px)
-    padding-right 80px // del
-    padding-left 80px // del
   border 2px solid deeppink // bd
   will-change transform
   &.select

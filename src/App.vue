@@ -269,6 +269,7 @@ body
   width 100%
   height 100vh
   border 3px solid
+  overflow hidden
 
 .backdrop
   position absolute

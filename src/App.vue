@@ -69,7 +69,9 @@ import SidebarLeft from './components/SidebarLeft'
 import SidebarRight from './components/SidebarRight'
 import More from './components/More'
 
-let app = Firebase.initializeApp({databaseURL: process.env.DATABASE_URL})
+/* eslint-disable no-undef */
+let app = Firebase.initializeApp({databaseURL: DATABASE_URL})
+/* eslint-enable no-undef */
 let db = app.database()
 let cuprinsCaieteRef = db.ref('cuprinsCaiete')
 let cuprinsPoeziiRef = db.ref('cuprinsPoezii')

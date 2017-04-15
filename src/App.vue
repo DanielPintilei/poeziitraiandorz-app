@@ -69,7 +69,7 @@ import SidebarLeft from './components/SidebarLeft'
 import SidebarRight from './components/SidebarRight'
 import More from './components/More'
 
-let app = Firebase.initializeApp({databaseURL: process.env.DB_URL})
+let app = Firebase.initializeApp({databaseURL: 'https://poeziitraiandorz.firebaseio.com'})
 let db = app.database()
 let cuprinsCaieteRef = db.ref('cuprinsCaiete')
 let cuprinsPoeziiRef = db.ref('cuprinsPoezii')

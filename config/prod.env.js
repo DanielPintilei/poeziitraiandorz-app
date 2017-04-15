@@ -1,4 +1,3 @@
 module.exports = {
-  NODE_ENV: '"production"',
-  DB_URL: '""'
+  NODE_ENV: '"production"'
 }

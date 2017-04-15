@@ -14,7 +14,8 @@ sync(store, router)
 Vue.use(VueFire)
 Vue.use(VueTouch, { name: 'v-touch' })
 Vue.use(SocialSharing)
-
+console.log(process.env.NODE_ENV)
+console.log(process.env.DB_URL)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

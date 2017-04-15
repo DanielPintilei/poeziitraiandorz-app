@@ -275,12 +275,13 @@ export default {
 @import "../variables"
 
 .poezie
+  border 2px solid mediumseagreen // bd
   display flex
   flex-direction column
   align-items center
   padding 35px 25px 60px
   cursor default
-  width 100%
+  max-width 100%
   overflow-y auto
   @media (min-width $breakpointMobileSmall + 1px)
     padding 50px 30px

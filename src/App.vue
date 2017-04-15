@@ -69,7 +69,7 @@ import SidebarLeft from './components/SidebarLeft'
 import SidebarRight from './components/SidebarRight'
 import More from './components/More'
 
-let app = Firebase.initializeApp({databaseURL: process.env.DATABASE_URL})
+let app = Firebase.initializeApp({databaseURL: 'https://poeziitraiandorz.firebaseio.com'})
 let db = app.database()
 let cuprinsCaieteRef = db.ref('cuprinsCaiete')
 let cuprinsPoeziiRef = db.ref('cuprinsPoezii')
@@ -146,66 +146,6 @@ export default {
           confirm: '#18FFFF',
           confirm2: '#757575'
         }
-        // {
-        //   theme: '#CDDC39',
-        //   accent: '#7C4DFF',
-        //   text: '#212121',
-        //   text2: '#424242',
-        //   border: '#CDDC39',
-        //   border2: '#b5c431',
-        //   background: '#CDDC39',
-        //   backdrop: '#CDDC39',
-        //   navbar: '#fff',
-        //   logo: '#4d4d4d',
-        //   icon: '#212121',
-        //   confirm: '#FFFF00',
-        //   confirm2: '#212121'
-        // },
-        // {
-        //   theme: '#FFEB3B',
-        //   accent: '#448AFF',
-        //   text: '#212121',
-        //   text2: '#424242',
-        //   border: '#FFEB3B',
-        //   border2: '#dac50b',
-        //   background: '#FFEB3B',
-        //   backdrop: '#FFEB3B',
-        //   navbar: '#212121',
-        //   logo: '#fff',
-        //   icon: '#fff',
-        //   confirm: '#FFFF00',
-        //   confirm2: '#212121'
-        // },
-        // {
-        //   theme: '#4A148C',
-        //   accent: '#69F0AE',
-        //   text: '#fff',
-        //   text2: '#e6e6e6',
-        //   border: '#4A148C',
-        //   border2: '#45544d',
-        //   background: '#4A148C',
-        //   backdrop: '#4A148C',
-        //   navbar: '#6A1B9A',
-        //   logo: '#fff',
-        //   icon: '#fff',
-        //   confirm: '#FFFF00',
-        //   confirm2: '#212121'
-        // },
-        // {
-        //   theme: '#4E342E',
-        //   accent: '#00E5FF',
-        //   text: '#fff',
-        //   text2: '#e6e6e6',
-        //   border: '#4E342E',
-        //   border2: '#45544d',
-        //   background: '#4E342E',
-        //   backdrop: '#4E342E',
-        //   navbar: '#FF7043',
-        //   logo: '#fff',
-        //   icon: '#fff',
-        //   confirm: '#FFFF00',
-        //   confirm2: '#212121'
-        // }
       ]
     }
   },

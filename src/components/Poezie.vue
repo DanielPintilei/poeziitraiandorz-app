@@ -275,15 +275,12 @@ export default {
 @import "../variables"
 
 .poezie
-  border 2px solid mediumseagreen // bd
   display flex
   flex-direction column
   align-items center
   padding 35px 25px 60px
   cursor default
   max-width 100%
-  overflow-x hidden
-  overflow-y auto
   @media (min-width $breakpointMobileSmall + 1px)
     padding 50px 30px
   @media (min-width $breakpointMobile + 1px)
@@ -291,7 +288,6 @@ export default {
 
 .poezie__main
   max-width 100%
-  border 2px solid deeppink // bd
   will-change transform
   &.select
     user-select: all !important

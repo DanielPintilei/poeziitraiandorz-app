@@ -366,11 +366,11 @@ $iconPrevNextSide = 20px
   margin-bottom -24px
   left $iconPrevNextSide
   @media (max-width $breakpointMobileSmall)
-    transform translateX(-50px)
+    transform translateY(-10px) translateX(-50px)
 .button-next
   right $iconPrevNextSide
   @media (max-width $breakpointMobileSmall)
-    transform translateX(50px)
+    transform translateY(-10px) translateX(50px)
 
 .poezie__url
   display block

@@ -289,6 +289,8 @@ export default {
 
 .poezie__main
   max-width 100% // del
+  max-width 100vw // del
+  border 2px solid deeppink // bd
   will-change transform
   &.select
     user-select: all !important
@@ -331,7 +333,6 @@ export default {
 
 .poezie__titlu
   max-width 600px
-  // max-width 100% // del
   margin 0 0 1em
   font-family 'Playfair Display', serif
   font-size 1.875em
@@ -343,7 +344,6 @@ export default {
     margin 0 0 1.5em
 
 .poezie__strofe
-  // max-width 100% // del
   margin 0 0 1.6em
   font-family 'Libre Baskerville', serif
   font-size 1em

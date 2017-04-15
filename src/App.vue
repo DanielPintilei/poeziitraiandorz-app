@@ -298,13 +298,15 @@ body
 
 .app__main
   position relative
-  flex-grow 1
+  // flex-grow 1
   display flex
   flex-direction column
   width 100%
+  border 3px solid crimson // bd
 
 .app__main-view
   flex-grow 1
+  border 4px solid mediumseagreen // bd
 
 .router-view-enter-active
   animation router-view-in 0.4s

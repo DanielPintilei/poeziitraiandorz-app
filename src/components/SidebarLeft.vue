@@ -149,6 +149,10 @@ export default {
       store.commit('toggleSidebarLeft')
     },
     setSelectedPoezie (poezie) {
+      const tapMQ = window.matchMedia('(max-width: 900px)')
+      if (tapMQ.matches) {
+        this.sidebarLeftToggle()
+      }
       store.commit('setSelectedPoezie', poezie)
     },
     scrollLinkIntoView () {

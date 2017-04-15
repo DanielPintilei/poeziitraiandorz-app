@@ -1,14 +1,13 @@
 <template>
-  <div
+  <v-touch
+    :swipe-options="{ direction: 'horizontal'}"
+    @swipeleft="nextPoezie"
+    @swiperight="prevPoezie"
     class="poezie">
     <!--{{$store.state.route.path}}-->
     <!--{{$store.state.route.params}}-->
     <transition :name="poezieTransitionName" mode="out-in">
-      <v-touch
-        :swipe-options="{ direction: 'horizontal'}"
-        tag="article"
-        @swipeleft="nextPoezie"
-        @swiperight="prevPoezie"
+      <article
         :key="nr"
         id="poezie"
         :style="{fontSize: fontSize}"
@@ -25,7 +24,7 @@
         <loading v-if="!poeziiRef[nr-1]" :color="theme.accent"></loading>
         <br>
         <span class="poezie__url" id="currentURL">{{ currentURL }}</span>
-      </v-touch>
+      </article>
     </transition>
     <div
       @click="prevPoezie"
@@ -153,7 +152,7 @@
         <path d="M9 4v3h5v12h3V7h5V4H9zm-6 8h3v7h3v-7h3V9H3v3z"/>
       </svg>
     </div>
-  </div>
+  </v-touch>
 </template>
 
 <script>

@@ -287,6 +287,7 @@ export default {
     padding 70px 80px
 
 .poezie__main
+  flex-grow 1
   max-width 100%
   will-change transform
   &.select
@@ -357,13 +358,12 @@ $iconPrevNextSide = 20px
 .button-next
   height 24px
   opacity 0.5
-  @media (max-width $breakpointMobileSmall)
-    display flex
   @media (min-width $breakpointMobileSmall + 1px)
     position absolute
     top 50%
     transform translateY(-50%)
 .button-prev
+  margin-bottom -24px
   left $iconPrevNextSide
   @media (max-width $breakpointMobileSmall)
     transform translateY(-27px) translateX(-50px)

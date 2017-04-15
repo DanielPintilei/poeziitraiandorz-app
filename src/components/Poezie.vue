@@ -357,20 +357,21 @@ $iconPrevNextSide = 20px
 .button-prev
 .button-next
   height 24px
-  opacity 0.5
+  opacity 0.2
   @media (min-width $breakpointMobileSmall + 1px)
     position absolute
     top 50%
     transform translateY(-50%)
+    opacity 0.5
 .button-prev
   margin-bottom -24px
   left $iconPrevNextSide
   @media (max-width $breakpointMobileSmall)
-    transform translateY(-27px) translateX(-50px)
+    transform translateX(-50px)
 .button-next
   right $iconPrevNextSide
   @media (max-width $breakpointMobileSmall)
-    transform translateY(-27px) translateX(50px)
+    transform translateX(50px)
 
 .poezie__url
   display block

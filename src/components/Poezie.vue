@@ -280,7 +280,7 @@ export default {
   align-items center
   padding 35px 25px 60px
   cursor default
-  width 100% // del
+  width 100%
   overflow-y auto
   @media (min-width $breakpointMobileSmall + 1px)
     padding 50px 30px
@@ -288,8 +288,7 @@ export default {
     padding 70px 80px
 
 .poezie__main
-  max-width 100% // del
-  max-width 100vw // del
+  max-width 100%
   border 2px solid deeppink // bd
   will-change transform
   &.select

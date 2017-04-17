@@ -32,9 +32,8 @@
       <svg
         class="icon"
         :fill="theme.icon2"
-        height="24" viewBox="0 0 24 24" width="24">
-        <path d="M0 0h24v24H0z" fill="none"/>
-        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+        height="24" width="24">
+        <use xlink:href="#iconPrev"></use>
       </svg>
     </div>
     <div
@@ -43,9 +42,8 @@
       <svg
         class="icon"
         :fill="theme.icon2"
-        height="24" viewBox="0 0 24 24" width="24">
-        <path d="M0 0h24v24H0z" fill="none"/>
-        <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
+        height="24" width="24">
+        <use xlink:href="#iconNext"></use>
       </svg>
     </div>
     <div
@@ -338,7 +336,7 @@ export default {
   // margin 0 0 1em // Playfair
   margin 0 0 0.8em
   // font-family 'Playfair Display', serif
-  font-family 'Old Standard TT', serif
+  font-family $font1
   // font-size 1.875em // Playfair
   font-size 2em
   font-weight normal
@@ -354,7 +352,7 @@ export default {
 .poezie__strofe
   margin 0 0 1.6em
   // font-family 'Libre Baskerville', serif
-  font-family 'Lora', serif
+  font-family $font2
   // font-size 1em // Baskerville
   font-size 1.063em
   // line-height 1.45 // Baskerville

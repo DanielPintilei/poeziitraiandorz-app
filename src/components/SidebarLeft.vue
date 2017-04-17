@@ -11,7 +11,6 @@
         <svg
           @click="sidebarLeftToggle"
           class="icon icon-cuprins"
-          :fill="theme.icon"
           width="24" height="24">
           <use xlink:href="#iconList"></use>
         </svg>

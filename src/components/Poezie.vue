@@ -334,25 +334,35 @@ export default {
     opacity 0
 
 .poezie__titlu
-  max-width 600px
-  margin 0 0 1em
-  font-family 'Playfair Display', serif
-  font-size 1.875em
+  // max-width 600px
+  // margin 0 0 1em // Playfair
+  margin 0 0 0.8em
+  // font-family 'Playfair Display', serif
+  font-family 'Old Standard TT', serif
+  // font-size 1.875em // Playfair
+  font-size 2em
   font-weight normal
   line-height 1.3
   @media (max-width $breakpointMobileSmall)
-    font-size 1.5em
+    // font-size 1.5em // Playfair
+    font-size 1.65em
+    line-height 1.1 // Old Standard
   @media (min-width $breakpointMobile + 1px)
-    margin 0 0 1.5em
+    // margin 0 0 1.5em // Playfair
+    margin 0 0 1.2em
 
 .poezie__strofe
   margin 0 0 1.6em
-  font-family 'Libre Baskerville', serif
-  font-size 1em
-  line-height 1.45
+  // font-family 'Libre Baskerville', serif
+  font-family 'Lora', serif
+  // font-size 1em // Baskerville
+  font-size 1.063em
+  // line-height 1.45 // Baskerville
+  line-height 1.3
   white-space pre-wrap
   @media (max-width $breakpointMobileSmall)
-    font-size 0.938em
+    // font-size 0.938em // Baskerville
+    font-size 1em
   @media (min-width $breakpointMobile + 1px)
     columns 250px 2
     column-gap 3em

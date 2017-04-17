@@ -12,9 +12,8 @@
           @click="sidebarLeftToggle"
           class="icon icon-cuprins"
           :fill="theme.icon"
-          width="24" height="24" viewBox="0 0 24 24">
-          <path d="M4 10.5c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5 1.5-.67 1.5-1.5-.67-1.5-1.5-1.5zm0-6c-.83 0-1.5.67-1.5 1.5S3.17 7.5 4 7.5 5.5 6.83 5.5 6 4.83 4.5 4 4.5zm0 12c-.83 0-1.5.68-1.5 1.5s.68 1.5 1.5 1.5 1.5-.68 1.5-1.5-.67-1.5-1.5-1.5zM7 19h14v-2H7v2zm0-6h14v-2H7v2zm0-8v2h14V5H7z"/>
-          <path d="M0 0h24v24H0V0z" fill="none"/>
+          width="24" height="24">
+          <use xlink:href="#iconList"></use>
         </svg>
         <div
           @click="scrollLinkIntoView"
@@ -61,17 +60,15 @@
             class="caiet__titlu">
             <svg
               :fill="theme.icon2"
-              class="icon-arrow"
-              width="24" height="24" viewBox="0 0 24 24">
-              <path d="m 9.5,17.5 5,-5 -5,-5 z"/>
-              <path d="M0 0h24v24H0z" fill="none"/>
+              class="icon-caret"
+              width="24" height="24">
+              <use xlink:href="#iconCaret"></use>
             </svg>
             <svg
               class="icon-caiet"
               :fill="theme.accent"
-              width="24" height="24" viewBox="0 0 24 24">
-              <path d="M0 0h24v24H0z" fill="none"/>
-              <path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/>
+              width="24" height="24">
+              <use xlink:href="#iconCaiet"></use>
             </svg>
             {{caiet.t}}
           </label>
@@ -249,7 +246,7 @@ a
   &:not(:checked) + .caiet__titlu + .poezii
     display none
   &:checked + .caiet__titlu
-    & .icon-arrow
+    & .icon-caret
       transform rotate(45deg)
       opacity 1
     & .icon-caiet
@@ -265,11 +262,11 @@ a
     transform scale(0.9)
   &:hover
     background-color $linkHoverBackground
-    .icon-arrow
+    .icon-caret
     .icon-caiet
       opacity 1
 
-.icon-arrow
+.icon-caret
   width 22px
   margin-right -7px
   opacity $iconOpacity

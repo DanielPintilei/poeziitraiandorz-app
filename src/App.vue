@@ -196,6 +196,7 @@ body
   -ms-text-size-adjust 100%
   -webkit-text-size-adjust 100%
   user-select none
+  -webkit-tap-highlight-color rgba(0, 0, 0, 0)
 
 ::-webkit-scrollbar
   width: 8px

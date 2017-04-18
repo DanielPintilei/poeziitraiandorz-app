@@ -22,11 +22,8 @@
 </template>
 
 <script>
-import { store } from '../store/index'
-
 export default {
   name: 'theme-picker',
-  store,
   props: ['themes'],
   data () {
     return {
@@ -34,14 +31,14 @@ export default {
   },
   computed: {
     currentTheme () {
-      return store.getters.getCurrentTheme
+      return this.$store.state.currentTheme
     }
   },
   methods: {
     setSelectedTheme (n) {
-      store.commit('setSelectedTheme', n)
-      let metaThemeColor = document.querySelector('meta[name=theme-color]')
-      metaThemeColor.setAttribute('content', this.themes[store.getters.getCurrentTheme].theme)
+      this.$store.commit('setSelectedTheme', n)
+      const metaThemeColor = document.querySelector('meta[name=theme-color]')
+      metaThemeColor.setAttribute('content', this.themes[this.$store.state.currentTheme].theme)
     }
   }
 }

@@ -48,7 +48,7 @@ export default {
       this.$router.go(-1)
     },
     keyboardNavPoezie (e) {
-      let searchFocus = document.getElementById('searchInput') === document.activeElement
+      const searchFocus = document.getElementById('searchInput') === document.activeElement
       if (e.key === 'ArrowRight' && !searchFocus) {
         this.goBack()
       }

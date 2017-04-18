@@ -9,49 +9,22 @@ export const store = new Vuex.Store({
     sidebarRightToggled: false,
     currentTheme: 0,
     selectedCaiete: [],
-    lastSelectedPoezie: null,
+    selectedPoezie: null,
     sortCuprinsAZ: false,
-    // lastRoute: '/'
     defaultFontSize: 1,
-    lastFontSize: 1,
     selectEnabled: false,
     showCopyConfirm: false,
-    moreOpen: false
+    moreOpen: false,
+    searchFocused: false
   },
   getters: {
-    getSidebarLeftToggled: state => {
-      return state.sidebarLeftToggled
-    },
-    getSidebarRightToggled: state => {
-      return state.sidebarRightToggled
-    },
-    getMoreOpen: state => {
-      return state.moreOpen
-    },
-    getSelectedCaiete: state => {
-      return state.selectedCaiete
-    },
-    // getSelectedPoezie: state => {
-    //   return state.selectedPoezie
-    // },
-    getCurrentTheme: state => {
-      return state.currentTheme
-    },
-    getSelectEnabled: state => {
-      return state.selectEnabled
-    },
-    getShowCopyConfirm: state => {
-      return state.showCopyConfirm
-    }
-    // getLastRoute: state => {
-    //   return state.lastRoute
-    // }
+
   },
   mutations: {
     toggleSidebarLeft (state) {
-      let route = document.querySelector('.router-link-active')
-      let routeParent = route.parentElement.parentElement.firstElementChild
-      let waitToggle = new Promise((resolve) => {
+      const route = document.querySelector('.router-link-active')
+      const routeParent = route.parentElement.parentElement.firstElementChild
+      const waitToggle = new Promise((resolve) => {
         state.sidebarLeftToggled = !state.sidebarLeftToggled
         resolve()
       })
@@ -95,6 +68,9 @@ export const store = new Vuex.Store({
       setTimeout(function () {
         state.showCopyConfirm = false
       }, 3000)
+    },
+    handleSearchFocus (state, n) {
+      state.searchFocused = n
     }
   }
 })

@@ -88,8 +88,6 @@
 <script>
 import Firebase from 'firebase'
 
-import { store } from './store/index'
-
 import Navbar from './components/Navbar'
 import SidebarLeft from './components/SidebarLeft'
 import SidebarRight from './components/SidebarRight'
@@ -108,7 +106,6 @@ export default {
     cuprinsPoeziiRef,
     poeziiRef
   },
-  store,
   components: {
     Navbar,
     SidebarLeft,
@@ -177,28 +174,28 @@ export default {
   },
   created () {
     let metaThemeColor = document.querySelector('meta[name=theme-color]')
-    metaThemeColor.setAttribute('content', this.themes[store.getters.getCurrentTheme].theme)
+    metaThemeColor.setAttribute('content', this.themes[this.$store.state.currentTheme].theme)
   },
   computed: {
     sidebarLeftShow () {
-      return store.getters.getSidebarLeftToggled
+      return this.$store.state.sidebarLeftToggled
     },
     sidebarRightShow () {
-      return store.getters.getSidebarRightToggled
+      return this.$store.state.sidebarRightToggled
     },
     currentTheme () {
-      return this.themes[store.getters.getCurrentTheme]
+      return this.themes[this.$store.state.currentTheme]
     },
     moreOpen () {
-      return store.getters.getMoreOpen
+      return this.$store.state.moreOpen
     }
   },
   methods: {
     closeSidebars () {
-      store.commit('closeSidebars')
+      this.$store.commit('closeSidebars')
     },
     toggleMore () {
-      store.commit('toggleMore')
+      this.$store.commit('toggleMore')
     }
   }
 }

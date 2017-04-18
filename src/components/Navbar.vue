@@ -29,7 +29,7 @@
       </div>
       <svg
         @click="toggleMore"
-        :fill="theme.icon"
+        :fill="$store.state.moreOpen ? theme.accent : theme.icon"
         class="icon icon-more"
         width="24" height="24" viewBox="0 0 24 24">
         <path d="M0 0h24v24H0z" fill="none"/>
@@ -53,7 +53,7 @@
       <div class="icon-picker-wrapper">
         <svg
           @click="toggleThemePicker"
-          :fill="theme.icon"
+          :fill="themePickerToggled ? theme.accent : theme.icon"
           :class="{toggled: themePickerToggled}"
           class="icon icon-picker"
           width="24" height="24" viewBox="0 0 24 24">
@@ -95,13 +95,10 @@
 </template>
 
 <script>
-import { store } from '../store/index'
-
 import ThemePicker from './ThemePicker'
 
 export default {
   name: 'navbar',
-  store,
   props: ['theme', 'themes'],
   components: {
     ThemePicker
@@ -113,21 +110,21 @@ export default {
   },
   computed: {
     sidebarLeftToggled () {
-      return store.getters.getSidebarLeftToggled
+      return this.$store.state.sidebarLeftToggled
     },
     sidebarRightToggled () {
-      return store.getters.getSidebarRightToggled
+      return this.$store.state.sidebarRightToggled
     },
     moreOpen () {
-      return store.getters.getMoreOpen
+      return this.$store.state.moreOpen
     }
   },
   methods: {
     sidebarLeftToggle () {
-      store.commit('toggleSidebarLeft')
+      this.$store.commit('toggleSidebarLeft')
     },
     sidebarRightToggle () {
-      store.commit('toggleSidebarRight')
+      this.$store.commit('toggleSidebarRight')
     },
     toggleThemePicker () {
       this.themePickerToggled = !this.themePickerToggled
@@ -136,7 +133,7 @@ export default {
       this.themePickerToggled = false
     },
     toggleMore () {
-      store.commit('toggleMore')
+      this.$store.commit('toggleMore')
     }
   }
 }

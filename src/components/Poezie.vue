@@ -159,20 +159,18 @@
 </template>
 
 <script>
-import { store } from '../store/index'
 import Clipboard from 'clipboard'
 import Loading from './Loading'
 
 export default {
   name: 'poezie',
-  store,
   props: ['theme', 'nr', 'titlu', 'poeziiRef'],
   components: {
     Loading
   },
   data () {
     return {
-      defaultFontSize: store.state.lastFontSize,
+      defaultFontSize: this.$store.state.defaultFontSize,
       zoomMenuOpen: false,
       shareMenuOpen: false,
       poezieTransitionName: '',
@@ -181,8 +179,8 @@ export default {
   },
   mounted () {
     this.currentURL = location.href
-
-    let clipboard = new Clipboard('.icon-copy')
+    const store = this.$store
+    const clipboard = new Clipboard('.icon-copy')
     clipboard.on('success', function (e) {
       // console.info('Text:', e.text)
       e.clearSelection()
@@ -204,20 +202,20 @@ export default {
       return `${this.defaultFontSize}rem`
     },
     selectEnabled () {
-      return store.getters.getSelectEnabled
+      return this.$store.state.selectEnabled
     },
     showCopyConfirm () {
-      return store.getters.getShowCopyConfirm
+      return this.$store.state.showCopyConfirm
     }
   },
   methods: {
     checkCaiet (poezie) {
-      let routeParent = poezie.parentElement.parentElement.firstElementChild
+      const routeParent = poezie.parentElement.parentElement.firstElementChild
       if (routeParent && !routeParent.checked) routeParent.click()
     },
     prevPoezie () {
-      let currentNr = +document.querySelector('.router-link-active').id
-      let prevRoute = document.getElementById(`${currentNr - 1}`)
+      const currentNr = +document.querySelector('.router-link-active').id
+      const prevRoute = document.getElementById(`${currentNr - 1}`)
       if (prevRoute) {
         this.checkCaiet(prevRoute)
         prevRoute.click()
@@ -225,8 +223,8 @@ export default {
       } else this.$router.push('inceput')
     },
     nextPoezie () {
-      let currentNr = +document.querySelector('.router-link-active').id
-      let nextRoute = document.getElementById(`${currentNr + 1}`)
+      const currentNr = +document.querySelector('.router-link-active').id
+      const nextRoute = document.getElementById(`${currentNr + 1}`)
       if (nextRoute) {
         nextRoute.click()
         this.checkCaiet(nextRoute)
@@ -234,7 +232,7 @@ export default {
       } else this.$router.push('sfarsit')
     },
     keyboardNavPoezie (e) {
-      let searchFocus = document.getElementById('searchInput') === document.activeElement
+      const searchFocus = this.$store.state.searchFocused
       if (e.key === 'ArrowLeft' && !searchFocus) {
         this.prevPoezie()
       } else if (e.key === 'ArrowRight' && !searchFocus) {
@@ -245,7 +243,7 @@ export default {
       this.zoomMenuOpen = !this.zoomMenuOpen
     },
     zoomReset () {
-      this.defaultFontSize = store.state.defaultFontSize
+      this.defaultFontSize = this.$store.state.defaultFontSize
     },
     zoomOut () {
       if (this.defaultFontSize > 0.9) this.defaultFontSize -= 0.06
@@ -257,13 +255,13 @@ export default {
       this.shareMenuOpen = !this.shareMenuOpen
     },
     enableSelect () {
-      store.commit('setSelectEnabled', true)
+      this.$store.commit('setSelectEnabled', true)
     }
   },
   watch: {
     '$route' (to, from) {
-      let toDepth = to.params.order === undefined ? to.params.nr : to.params.order
-      let fromDepth = from.params.order === undefined ? from.params.nr : from.params.order
+      const toDepth = to.params.order === undefined ? to.params.nr : to.params.order
+      const fromDepth = from.params.order === undefined ? from.params.nr : from.params.order
 
       this.poezieTransitionName = toDepth < fromDepth ? 'slide-right-poezie' : 'slide-left-poezie'
 

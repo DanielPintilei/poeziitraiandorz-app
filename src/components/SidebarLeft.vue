@@ -11,6 +11,7 @@
         <svg
           @click="sidebarLeftToggle"
           class="icon icon-cuprins"
+          :fill="theme.accent"
           width="24" height="24">
           <use xlink:href="#iconList"></use>
         </svg>
@@ -122,19 +123,16 @@
 <script>
 import Loading from './Loading'
 
-import { store } from '../store/index'
-
 export default {
   name: 'sidebar-left',
-  store,
   props: ['theme', 'cuprinsCaieteRef', 'cuprinsPoeziiRef'],
   components: {
     Loading
   },
   data () {
     return {
-      selectedCaiete: store.state.selectedCaiete,
-      sortCuprinsAZ: store.state.sortCuprinsAZ
+      selectedCaiete: this.$store.state.selectedCaiete,
+      sortCuprinsAZ: this.$store.state.sortCuprinsAZ
     }
   },
   methods: {
@@ -142,28 +140,28 @@ export default {
       return titlu.replace(/\s+/g, '-').replace(/[ăâ]+/g, 'a').replace(/[ĂÂ]+/g, 'A').replace(/[î]+/g, 'i').replace(/[Î]+/g, 'I').replace(/[ș]+/g, 's').replace(/[Ș]+/g, 'S').replace(/[ț]+/g, 't').replace(/[Ț]+/g, 'T').replace(/[^\w-]+/g, '')
     },
     sidebarLeftToggle () {
-      store.commit('toggleSidebarLeft')
+      this.$store.commit('toggleSidebarLeft')
     },
     setSelectedPoezie (poezie) {
       const tapMQ = window.matchMedia('(max-width: 900px)')
       if (tapMQ.matches) {
         this.sidebarLeftToggle()
       }
-      store.commit('setSelectedPoezie', poezie)
+      this.$store.commit('setSelectedPoezie', poezie)
     },
     scrollLinkIntoView () {
-      let route = document.querySelector('.router-link-active')
-      let routeParent = route.parentElement.parentElement.firstElementChild
+      const route = document.querySelector('.router-link-active')
+      const routeParent = route.parentElement.parentElement.firstElementChild
       if (routeParent && !routeParent.checked) routeParent.click()
       route.scrollIntoView()
     }
   },
   watch: {
     selectedCaiete () {
-      store.commit('setSelectedCaiete', this.selectedCaiete)
+      this.$store.commit('setSelectedCaiete', this.selectedCaiete)
     },
     sortCuprinsAZ () {
-      store.commit('setSortCuprinsAZ', this.sortCuprinsAZ)
+      this.$store.commit('setSortCuprinsAZ', this.sortCuprinsAZ)
     }
   }
 }

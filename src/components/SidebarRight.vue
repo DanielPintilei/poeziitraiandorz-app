@@ -9,13 +9,15 @@
           backgroundColor: theme.navbar
         }">
         <input
+          @focus="handleSearchFocus(true)"
+          @blur="handleSearchFocus(false)"
           :style="{ color: theme.text3 }"
           id="searchInput"
           type="search"
           class="search-box__input"
           placeholder="Caută">
         <svg
-          :fill="theme.icon"
+          :fill="$store.state.searchFocused ? theme.accent : theme.icon"
           class="search-box__icon"
           height="24" width="24">
           <use xlink:href="#iconSearch"></use>
@@ -48,11 +50,8 @@
 <script>
 import Loading from './Loading'
 
-import { store } from '../store/index'
-
 export default {
   name: 'sidebar-right',
-  store,
   props: ['theme', 'cuprinsCaieteRef'],
   components: {
     Loading
@@ -63,7 +62,10 @@ export default {
   },
   methods: {
     sidebarRightToggle () {
-      store.commit('toggleSidebarRight')
+      this.$store.commit('toggleSidebarRight')
+    },
+    handleSearchFocus (n) {
+      this.$store.commit('handleSearchFocus', n)
     }
   }
 }

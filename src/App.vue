@@ -36,7 +36,7 @@
     <transition name="backdrop">
       <div
         @click="closeSidebars"
-        v-if="sidebarLeftShow || sidebarRightShow"
+        v-if="$store.state.sidebarLeftToggled || $store.state.sidebarRightToggled"
         :style="{ backgroundColor: currentTheme.backdrop }"
         class="backdrop backdrop--sidebar">
       </div>
@@ -46,7 +46,7 @@
         :cuprinsCaieteRef="cuprinsCaieteRef"
         :cuprinsPoeziiRef="cuprinsPoeziiRef"
         :theme="currentTheme"
-        v-show="sidebarLeftShow">
+        v-show="$store.state.sidebarLeftToggled">
       </sidebar-left>
     </transition>
     <main
@@ -65,13 +65,13 @@
       <sidebar-right
         :theme="currentTheme"
         :cuprinsCaieteRef="cuprinsCaieteRef"
-        v-show="sidebarRightShow">
+        v-show="$store.state.sidebarRightToggled">
       </sidebar-right>
     </transition>
     <transition name="backdrop">
       <div
         @click="toggleMore"
-        v-if="moreOpen"
+        v-if="$store.state.moreOpen"
         :style="{ backgroundColor: currentTheme.backdrop }"
         class="backdrop">
       </div>
@@ -79,7 +79,7 @@
     <transition name="backdrop">
       <more
         :theme="currentTheme"
-        v-if="moreOpen">
+        v-if="$store.state.moreOpen">
       </more>
     </transition>
   </div>
@@ -93,11 +93,11 @@ import SidebarLeft from './components/SidebarLeft'
 import SidebarRight from './components/SidebarRight'
 import More from './components/More'
 
-let app = Firebase.initializeApp({databaseURL: 'https://poeziitraiandorz.firebaseio.com'})
-let db = app.database()
-let cuprinsCaieteRef = db.ref('cuprinsCaiete')
-let cuprinsPoeziiRef = db.ref('cuprinsPoezii')
-let poeziiRef = db.ref('poezii')
+const app = Firebase.initializeApp({databaseURL: 'https://poeziitraiandorz.firebaseio.com'})
+const db = app.database()
+const cuprinsCaieteRef = db.ref('cuprinsCaiete')
+const cuprinsPoeziiRef = db.ref('cuprinsPoezii')
+const poeziiRef = db.ref('poezii')
 
 export default {
   name: 'app',
@@ -177,17 +177,8 @@ export default {
     metaThemeColor.setAttribute('content', this.themes[this.$store.state.currentTheme].theme)
   },
   computed: {
-    sidebarLeftShow () {
-      return this.$store.state.sidebarLeftToggled
-    },
-    sidebarRightShow () {
-      return this.$store.state.sidebarRightToggled
-    },
     currentTheme () {
       return this.themes[this.$store.state.currentTheme]
-    },
-    moreOpen () {
-      return this.$store.state.moreOpen
     }
   },
   methods: {

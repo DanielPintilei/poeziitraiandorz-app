@@ -10,18 +10,20 @@
       <article
         :key="nr"
         id="poezie"
-        :style="{fontSize: fontSize}"
-        :class="{select: selectEnabled}"
+        :style="{fontSize: fontSizeREM}"
+        :class="{select: $store.state.selectEnabled}"
         class="poezie__main">
         <!--{{ $store.state.lastSelectedPoezie }}-->
+        <!--{{ poeziiRef[nr-1].n }}-->
         <h1 v-if="poeziiRef[nr-1]" class="poezie__titlu">
-          <!--{{ poeziiRef[nr-1].n }}-->
           {{ poeziiRef[nr-1].t }}
         </h1>
         <pre
           v-if="poeziiRef[nr-1]"
           class="poezie__strofe">{{ poeziiRef[nr-1].s }}</pre>
-        <loading v-if="!poeziiRef[nr-1]" :color="theme.accent"></loading>
+        <loading v-if="!poeziiRef" :color="theme.accent"></loading>
+        <br>
+        <span class="poezie__author">—Traian Dorz</span>
         <br>
         <span class="poezie__url" id="currentURL">{{ currentURL }}</span>
       </article>
@@ -70,7 +72,7 @@
     </div>
     <transition name="pop">
       <div
-        v-if="showCopyConfirm"
+        v-if="$store.state.showCopyConfirm"
         :style="{backgroundColor: theme.confirm, color: theme.confirm2}"
         class="copy-confirm">
         <span >Copiat</span>
@@ -170,7 +172,6 @@ export default {
   },
   data () {
     return {
-      defaultFontSize: this.$store.state.defaultFontSize,
       zoomMenuOpen: false,
       shareMenuOpen: false,
       poezieTransitionName: '',
@@ -179,16 +180,15 @@ export default {
   },
   mounted () {
     this.currentURL = location.href
-    const store = this.$store
     const clipboard = new Clipboard('.icon-copy')
-    clipboard.on('success', function (e) {
+    clipboard.on('success', (e) => {
       // console.info('Text:', e.text)
       e.clearSelection()
-      store.commit('setSelectEnabled', false)
-      store.commit('toggleCopyConfirm')
+      this.$store.commit('setSelectEnabled', false)
+      this.$store.commit('toggleCopyConfirm')
     })
-    clipboard.on('error', function (e) {
-      store.commit('setSelectEnabled', false)
+    clipboard.on('error', (e) => {
+      this.$store.commit('setSelectEnabled', false)
     })
   },
   created () {
@@ -198,14 +198,11 @@ export default {
     window.removeEventListener('keyup', this.keyboardNavPoezie)
   },
   computed: {
+    fontSizeREM () {
+      return `${this.$store.state.fontSize}rem`
+    },
     fontSize () {
-      return `${this.defaultFontSize}rem`
-    },
-    selectEnabled () {
-      return this.$store.state.selectEnabled
-    },
-    showCopyConfirm () {
-      return this.$store.state.showCopyConfirm
+      return this.$store.state.fontSize
     }
   },
   methods: {
@@ -243,13 +240,13 @@ export default {
       this.zoomMenuOpen = !this.zoomMenuOpen
     },
     zoomReset () {
-      this.defaultFontSize = this.$store.state.defaultFontSize
+      this.$store.commit('zoomReset')
     },
     zoomOut () {
-      if (this.defaultFontSize > 0.9) this.defaultFontSize -= 0.06
+      this.$store.commit('zoomOut')
     },
     zoomIn () {
-      if (this.defaultFontSize < 1.1) this.defaultFontSize += 0.06
+      this.$store.commit('zoomIn')
     },
     toggleShareMenu () {
       this.shareMenuOpen = !this.shareMenuOpen
@@ -348,7 +345,8 @@ export default {
     margin 0 0 1.2em
 
 .poezie__strofe
-  margin 0 0 1.6em
+  // margin 0 0 1.6em
+  margin 0 0 0.6em
   // font-family 'Libre Baskerville', serif
   font-family $font2
   // font-size 1em // Baskerville
@@ -383,6 +381,7 @@ $iconPrevNextSide = 20px
   @media (max-width $breakpointMobileSmall)
     transform translateY(-10px) translateX(50px)
 
+.poezie__author
 .poezie__url
   display block
   height 0

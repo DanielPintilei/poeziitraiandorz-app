@@ -9,9 +9,10 @@ export const store = new Vuex.Store({
     sidebarRightToggled: false,
     currentTheme: 0,
     selectedCaiete: [],
-    selectedPoezie: null,
+    selectedPoezie: 1,
     sortCuprinsAZ: false,
     defaultFontSize: 1,
+    fontSize: 1,
     selectEnabled: false,
     showCopyConfirm: false,
     moreOpen: false,
@@ -59,6 +60,15 @@ export const store = new Vuex.Store({
     },
     setSelectedTheme (state, n) {
       state.currentTheme = n
+    },
+    zoomReset (state) {
+      state.fontSize = state.defaultFontSize
+    },
+    zoomOut (state) {
+      if (state.fontSize > 0.9) state.fontSize -= 0.06
+    },
+    zoomIn (state) {
+      if (state.fontSize < 1.1) state.fontSize += 0.06
     },
     setSelectEnabled (state, n) {
       state.selectEnabled = n

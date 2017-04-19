@@ -7,11 +7,11 @@
     }">
     <div class="navbar__icons-left">
       <div
-        :class="{toggled: sidebarLeftToggled}"
+        :class="{toggled: $store.state.sidebarLeftToggled}"
         class="navbar__icons-toggle navbar__icons-toggle--left">
         <svg
           @click="sidebarLeftToggle"
-          v-show="sidebarLeftToggled"
+          v-show="$store.state.sidebarLeftToggled"
           :fill="theme.icon"
           class="icon icon-list-arrow"
           width="24" height="24" viewBox="0 0 24 24">
@@ -20,7 +20,7 @@
         </svg>
         <svg
           @click="sidebarLeftToggle"
-          v-show="!sidebarLeftToggled"
+          v-show="!$store.state.sidebarLeftToggled"
           :fill="theme.icon"
           class="icon icon-list"
           width="24" height="24">
@@ -69,11 +69,11 @@
         </transition>
       </div>
       <div
-        :class="{toggled: sidebarRightToggled}"
+        :class="{toggled: $store.state.sidebarRightToggled}"
         class="navbar__icons-toggle navbar__icons-toggle--right">
         <svg
           @click="sidebarRightToggle"
-          v-show="sidebarRightToggled"
+          v-show="$store.state.sidebarRightToggled"
           :fill="theme.icon"
           class="icon icon-search-arrow"
           width="24" height="24" viewBox="0 0 24 24">
@@ -83,7 +83,7 @@
           <!--style="visibility: hidden"-->
         <svg
           @click="sidebarRightToggle"
-          v-show="!sidebarRightToggled"
+          v-show="!$store.state.sidebarRightToggled"
           :fill="theme.icon"
           class="icon icon-search"
           width="24" height="24">
@@ -109,15 +109,6 @@ export default {
     }
   },
   computed: {
-    sidebarLeftToggled () {
-      return this.$store.state.sidebarLeftToggled
-    },
-    sidebarRightToggled () {
-      return this.$store.state.sidebarRightToggled
-    },
-    moreOpen () {
-      return this.$store.state.moreOpen
-    }
   },
   methods: {
     sidebarLeftToggle () {

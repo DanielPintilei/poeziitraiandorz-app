@@ -2,12 +2,19 @@
   <aside class="sidebar-right">
     <div class="sidebar-right__inner">
       <div
+        @click="focusSearch"
         class="search-box"
         :style="{
           borderLeftColor: theme.border2,
           borderBottomColor: theme.border,
           backgroundColor: theme.navbar
         }">
+        <svg
+          :fill="$store.state.searchFocused ? theme.accent : theme.icon"
+          class="search-box__icon"
+          height="24" width="24">
+          <use xlink:href="#iconSearch"></use>
+        </svg>
         <input
           @focus="handleSearchFocus(true)"
           @blur="handleSearchFocus(false)"
@@ -16,12 +23,6 @@
           type="search"
           class="search-box__input"
           placeholder="Caută">
-        <svg
-          :fill="$store.state.searchFocused ? theme.accent : theme.icon"
-          class="search-box__icon"
-          height="24" width="24">
-          <use xlink:href="#iconSearch"></use>
-        </svg>
       </div>
       <v-touch
         :swipe-options="{ direction: 'horizontal'}"
@@ -66,6 +67,9 @@ export default {
     },
     handleSearchFocus (n) {
       this.$store.commit('handleSearchFocus', n)
+    },
+    focusSearch () {
+      document.getElementById('searchInput').focus()
     }
   }
 }
@@ -124,11 +128,6 @@ export default {
   &::-webkit-search-cancel-button
   &::-webkit-search-decoration
     -webkit-appearance none
-
-  &:focus
-  &:active
-    & + .search-box__icon
-      opacity 1
 
 .search-box__icon
   opacity $iconOpacity

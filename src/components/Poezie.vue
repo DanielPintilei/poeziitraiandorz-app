@@ -6,6 +6,7 @@
     class="poezie">
     <!--{{$store.state.route.path}}-->
     <!--{{$store.state.route.params}}-->
+    <!--{{ poeziiRef[nr-1].n }}-->
     <transition :name="poezieTransitionName" mode="out-in">
       <article
         :key="nr"
@@ -13,8 +14,6 @@
         :style="{fontSize: fontSizeREM}"
         :class="{select: $store.state.selectEnabled}"
         class="poezie__main">
-        <!--{{ $store.state.lastSelectedPoezie }}-->
-        <!--{{ poeziiRef[nr-1].n }}-->
         <h1 v-if="poeziiRef[nr-1]" class="poezie__titlu">
           {{ poeziiRef[nr-1].t }}
         </h1>
@@ -275,7 +274,8 @@ export default {
   display flex
   flex-direction column
   align-items center
-  padding 35px 25px 60px
+  margin-bottom 43px
+  padding 35px 25px 17px
   cursor default
   max-width 100%
   @media (min-width $breakpointMobileSmall + 1px)
@@ -346,7 +346,7 @@ export default {
 
 .poezie__strofe
   // margin 0 0 1.6em
-  margin 0 0 0.6em
+  margin 0
   // font-family 'Libre Baskerville', serif
   font-family $font2
   // font-size 1em // Baskerville
@@ -395,8 +395,6 @@ $iconPrevNextSide = 20px
   @media (max-width $breakpointMobileSmall)
     bottom 0
     padding 10px 10px 5px
-  @media (min-width $breakpointMobileSmall + 1px)
-    background-color transparent !important
 
 .icon-share-toggle
 .icon-zoom-toggle
@@ -407,7 +405,7 @@ $iconPrevNextSide = 20px
   left $poezieButtonGroupSide
   @media (max-width $breakpointMobileSmall)
     left 0
-    width 30%
+    width 35%
 
 .icon-copy
 .icon-share-toggle

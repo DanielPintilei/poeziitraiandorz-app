@@ -195,6 +195,9 @@ export default {
 <style lang="stylus">
 @import "variables"
 
+:root
+  --themeBG #fff
+
 *
   box-sizing border-box
 
@@ -211,6 +214,7 @@ body
   -webkit-text-size-adjust 100%
   user-select none
   -webkit-tap-highlight-color rgba(0, 0, 0, 0)
+  background-color var(--themeBG)
 
 ::-webkit-scrollbar
   width: 8px

@@ -37,8 +37,12 @@ export default {
   methods: {
     setSelectedTheme (n) {
       this.$store.commit('setSelectedTheme', n)
-      const metaThemeColor = document.querySelector('meta[name=theme-color]')
-      metaThemeColor.setAttribute('content', this.themes[this.$store.state.currentTheme].theme)
+
+      const currentTheme = this.themes[this.$store.state.currentTheme]
+
+      document.querySelector('meta[name=theme-color]').setAttribute('content', currentTheme.theme)
+
+      document.body.style.setProperty('--themeBG', currentTheme.background)
     }
   }
 }

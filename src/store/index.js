@@ -11,7 +11,6 @@ export const store = new Vuex.Store({
     selectedCaiete: [],
     selectedPoezie: 1,
     sortCuprinsAZ: false,
-    defaultFontSize: 1,
     fontSize: 1,
     selectEnabled: false,
     showCopyConfirm: false,
@@ -62,7 +61,7 @@ export const store = new Vuex.Store({
       state.currentTheme = n
     },
     zoomReset (state) {
-      state.fontSize = state.defaultFontSize
+      state.fontSize = 1
     },
     zoomOut (state) {
       if (state.fontSize > 0.9) state.fontSize -= 0.06

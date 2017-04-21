@@ -9,7 +9,6 @@ export const store = new Vuex.Store({
     sidebarRightToggled: false,
     currentTheme: 0,
     selectedCaiete: [],
-    selectedPoezie: 1,
     sortCuprinsAZ: false,
     fontSize: 1,
     selectEnabled: false,
@@ -47,9 +46,6 @@ export const store = new Vuex.Store({
     },
     setSelectedCaiete (state, n) {
       state.selectedCaiete = n
-    },
-    setSelectedPoezie (state, n) {
-      state.selectedPoezie = n
     },
     setSortCuprinsAZ (state, n) {
       state.sortCuprinsAZ = n

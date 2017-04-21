@@ -4,9 +4,6 @@
     @swipeleft="nextPoezie"
     @swiperight="prevPoezie"
     class="poezie">
-    <!--{{$store.state.route.path}}-->
-    <!--{{$store.state.route.params}}-->
-    <!--{{ poeziiRef[nr-1].n }}-->
     <transition :name="poezieTransitionName" mode="out-in">
       <article
         :key="nr"
@@ -14,13 +11,20 @@
         :style="{fontSize: fontSizeREM}"
         :class="{select: $store.state.selectEnabled}"
         class="poezie__main">
-        <h1 v-if="poeziiRef[nr-1]" class="poezie__titlu">
-          {{ poeziiRef[nr-1].t }}
+        <h1 v-if="poezieRef" class="poezie__titlu">
+          {{ poezieRef.n }}
+          {{ poezieRef.t }}
         </h1>
         <pre
+          v-if="poezieRef"
+          class="poezie__strofe">{{ poezieRef.s }}</pre>
+        <!--<h1 v-if="poeziiRef[nr-1]" class="poezie__titlu">
+          {{ poeziiRef[nr-1].t }}
+        </h1>-->
+        <!--<pre
           v-if="poeziiRef[nr-1]"
-          class="poezie__strofe">{{ poeziiRef[nr-1].s }}</pre>
-        <loading v-if="!poeziiRef" :color="theme.accent"></loading>
+          class="poezie__strofe">{{ poeziiRef[nr-1].s }}</pre>-->
+        <loading v-if="!poezieRef" :color="theme.accent"></loading>
         <br>
         <span class="poezie__author">—Traian Dorz</span>
         <br>
@@ -165,7 +169,7 @@ import Loading from './Loading'
 
 export default {
   name: 'poezie',
-  props: ['theme', 'nr', 'titlu', 'poeziiRef'],
+  props: ['theme', 'nr', 'titlu', 'poezieRef'],
   components: {
     Loading
   },

@@ -84,7 +84,7 @@
                 }
               }">
               <span
-                @click="setSelectedPoezie(poezie.n)"
+                @click="tapPoezie"
                 class="link-span">
                 <span>{{poezie.n}}</span>
                 <span>{{poezie.t}}</span>
@@ -107,7 +107,7 @@
               }
             }">
             <span
-              @click="setSelectedPoezie(poezie.n)"
+              @click="tapPoezie"
               class="link-span">
               <span>{{poezie.n}}</span>
               <span>{{poezie.t}}</span>
@@ -142,12 +142,11 @@ export default {
     sidebarLeftToggle () {
       this.$store.commit('toggleSidebarLeft')
     },
-    setSelectedPoezie (poezie) {
+    tapPoezie () {
       const tapMQ = window.matchMedia('(max-width: 900px)')
       if (tapMQ.matches) {
         this.sidebarLeftToggle()
       }
-      this.$store.commit('setSelectedPoezie', poezie)
     },
     scrollLinkIntoView () {
       const route = document.querySelector('.router-link-active')

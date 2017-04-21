@@ -56,7 +56,7 @@
       <transition name="router-view" mode="out-in">
         <router-view
           :theme="currentTheme"
-          :poeziiRef="poeziiRef"
+          :poezieRef="poezieRef"
           class="app__main-view">
         </router-view>
       </transition>
@@ -97,14 +97,21 @@ const app = Firebase.initializeApp({databaseURL: 'https://poeziitraiandorz.fireb
 const db = app.database()
 const cuprinsCaieteRef = db.ref('cuprinsCaiete')
 const cuprinsPoeziiRef = db.ref('cuprinsPoezii')
-const poeziiRef = db.ref('poezii')
+const poezieRef = db.ref('poezii')
+
+// const getObj = (snap) => {
+//   // console.log(snap.val().s)
+//   return snap.val().s
+// }
+// poeziiRef.child(1).once('value', getObj)
 
 export default {
   name: 'app',
-  firebase: {
-    cuprinsCaieteRef,
-    cuprinsPoeziiRef,
-    poeziiRef
+  firebase () {
+    return {
+      cuprinsCaieteRef,
+      cuprinsPoeziiRef
+    }
   },
   components: {
     Navbar,
@@ -175,10 +182,15 @@ export default {
   created () {
     let metaThemeColor = document.querySelector('meta[name=theme-color]')
     metaThemeColor.setAttribute('content', this.themes[this.$store.state.currentTheme].theme)
+
+    this.$bindAsObject('poezieRef', poezieRef.child(this.currentNr))
   },
   computed: {
     currentTheme () {
       return this.themes[this.$store.state.currentTheme]
+    },
+    currentNr () {
+      return this.$store.state.route.params.nr - 1
     }
   },
   methods: {
@@ -187,6 +199,11 @@ export default {
     },
     toggleMore () {
       this.$store.commit('toggleMore')
+    }
+  },
+  watch: {
+    '$route' () {
+      this.$bindAsObject('poezieRef', poezieRef.child(this.currentNr))
     }
   }
 }

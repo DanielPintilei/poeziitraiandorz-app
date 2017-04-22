@@ -11,20 +11,25 @@
         :style="{fontSize: fontSizeREM}"
         :class="{select: $store.state.selectEnabled}"
         class="poezie__main">
-        <h1 v-if="poezieRef" class="poezie__titlu">
-          {{ poezieRef.n }}
+        <!--<h1 class="poezie__titlu">
+          <template v-if="$store.state.fullBook && $store.state.poeziiSnap[nr-1]">
+            full
+            {{ $store.state.poeziiSnap[nr-1].n }}
+            {{ $store.state.poeziiSnap[nr-1].t }}
+          </template>
+          <template v-if="!$store.state.fullBook && poezieRef">
+            single
+            {{ poezieRef.n }}
+            {{ poezieRef.t }}
+          </template>
+        </h1>
+        <pre class="poezie__strofe"><template v-if="$store.state.fullBook && $store.state.poeziiSnap[nr-1]">{{ $store.state.poeziiSnap[nr-1].s }}</template><template v-if="!$store.state.fullBook && poezieRef">{{ poezieRef.s }}</template></pre>-->
+        <h1 class="poezie__titlu">
+          <!--{{ poezieRef.n }}-->
           {{ poezieRef.t }}
         </h1>
-        <pre
-          v-if="poezieRef"
-          class="poezie__strofe">{{ poezieRef.s }}</pre>
-        <!--<h1 v-if="poeziiRef[nr-1]" class="poezie__titlu">
-          {{ poeziiRef[nr-1].t }}
-        </h1>-->
-        <!--<pre
-          v-if="poeziiRef[nr-1]"
-          class="poezie__strofe">{{ poeziiRef[nr-1].s }}</pre>-->
-        <loading v-if="!poezieRef" :color="theme.accent"></loading>
+        <pre class="poezie__strofe">{{ poezieRef.s }}</pre>
+        <loading class="loading" :color="theme.accent"></loading>
         <br>
         <span class="poezie__author">—Traian Dorz</span>
         <br>
@@ -364,6 +369,8 @@ export default {
   @media (min-width $breakpointMobile + 1px)
     columns 250px 2
     column-gap 3em
+  & + .loading
+    display none
 
 $iconPrevNextSide = 20px
 .button-prev

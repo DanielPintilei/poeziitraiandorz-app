@@ -97,13 +97,7 @@ const app = Firebase.initializeApp({databaseURL: 'https://poeziitraiandorz.fireb
 const db = app.database()
 const cuprinsCaieteRef = db.ref('cuprinsCaiete')
 const cuprinsPoeziiRef = db.ref('cuprinsPoezii')
-const poezieRef = db.ref('poezii')
-
-// const getObj = (snap) => {
-//   // console.log(snap.val().s)
-//   return snap.val().s
-// }
-// poeziiRef.child(1).once('value', getObj)
+const poeziiRef = db.ref('poezii')
 
 export default {
   name: 'app',
@@ -183,7 +177,7 @@ export default {
     let metaThemeColor = document.querySelector('meta[name=theme-color]')
     metaThemeColor.setAttribute('content', this.themes[this.$store.state.currentTheme].theme)
 
-    this.$bindAsObject('poezieRef', poezieRef.child(this.currentNr))
+    this.bindPoezieRef()
   },
   computed: {
     currentTheme () {
@@ -192,6 +186,12 @@ export default {
     currentNr () {
       return this.$store.state.route.params.nr - 1
     }
+    // poeziiSnap () {
+    //   const getSnap = (snap) => {
+    //     this.$store.commit('setPoeziiSnap', snap.val())
+    //   }
+    //   poeziiRef.once('value').then(getSnap)
+    // }
   },
   methods: {
     closeSidebars () {
@@ -199,11 +199,16 @@ export default {
     },
     toggleMore () {
       this.$store.commit('toggleMore')
+    },
+    bindPoezieRef () {
+      // if (!this.$store.state.fullBook) {
+      // }
+      this.$bindAsObject('poezieRef', poeziiRef.child(this.currentNr))
     }
   },
   watch: {
     '$route' () {
-      this.$bindAsObject('poezieRef', poezieRef.child(this.currentNr))
+      this.bindPoezieRef()
     }
   }
 }

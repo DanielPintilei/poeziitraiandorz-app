@@ -15,6 +15,8 @@ export const store = new Vuex.Store({
     showCopyConfirm: false,
     moreOpen: false,
     searchFocused: false
+    // fullBook: false
+    // poeziiSnap: []
   },
   getters: {
 
@@ -50,9 +52,6 @@ export const store = new Vuex.Store({
     setSortCuprinsAZ (state, n) {
       state.sortCuprinsAZ = n
     },
-    setSortCuprinsAZInvert (state, n) {
-      state.sortCuprinsAZInvert = n
-    },
     setSelectedTheme (state, n) {
       state.currentTheme = n
     },
@@ -77,5 +76,11 @@ export const store = new Vuex.Store({
     handleSearchFocus (state, n) {
       state.searchFocused = n
     }
+    // setFullBook (state) {
+    //   state.fullBook = true
+    // }
+    // setPoeziiSnap (state, n) {
+    //   state.poeziiSnap = n
+    // }
   }
 })

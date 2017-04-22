@@ -116,6 +116,7 @@ export default {
     },
     sidebarRightToggle () {
       this.$store.commit('toggleSidebarRight')
+      // this.$store.commit('setFullBook')
     },
     toggleThemePicker () {
       this.themePickerToggled = !this.themePickerToggled

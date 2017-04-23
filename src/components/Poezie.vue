@@ -13,17 +13,17 @@
         class="poezie__main">
         <h1 class="poezie__titlu">
           <template v-if="$store.state.fullBook && $store.state.poeziiSnap[nr-1]">
-            full
-            {{ $store.state.poeziiSnap[nr-1].n }}
+            <!--full
+            {{ $store.state.poeziiSnap[nr-1].n }}-->
             {{ $store.state.poeziiSnap[nr-1].t }}
           </template>
-          <template v-if="!$store.state.fullBook && poezieRef">
-            single
-            {{ poezieRef.n }}
-            {{ poezieRef.t }}
+          <template v-if="$store.state.poezieSnap && !$store.state.poeziiSnap.length > 0">
+            <!--single
+            {{ $store.state.poezieSnap.n }}-->
+            {{ $store.state.poezieSnap.t }}
           </template>
         </h1>
-        <pre class="poezie__strofe"><template v-if="$store.state.fullBook && $store.state.poeziiSnap[nr-1]">{{ $store.state.poeziiSnap[nr-1].s }}</template><template v-if="!$store.state.fullBook && poezieRef">{{ poezieRef.s }}</template></pre>
+        <pre class="poezie__strofe"><template v-if="$store.state.fullBook && $store.state.poeziiSnap[nr-1]">{{ $store.state.poeziiSnap[nr-1].s }}</template><template v-if="$store.state.poezieSnap && !$store.state.poeziiSnap.length > 0">{{ $store.state.poezieSnap.s }}</template></pre>
         <loading class="loading" :color="theme.accent"></loading>
         <br>
         <span class="poezie__author">—Traian Dorz</span>
@@ -169,7 +169,7 @@ import Loading from './Loading'
 
 export default {
   name: 'poezie',
-  props: ['theme', 'nr', 'titlu', 'poezieRef'],
+  props: ['theme', 'nr', 'titlu'],
   components: {
     Loading
   },

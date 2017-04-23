@@ -57,9 +57,9 @@
         :themes="themes">
       </navbar>
       <transition name="router-view" mode="out-in">
+          <!--:poezieRef="poezieRef"-->
         <router-view
           :theme="currentTheme"
-          :poezieRef="poezieRef"
           class="app__main-view">
         </router-view>
       </transition>
@@ -103,10 +103,10 @@ const poeziiRef = db.ref('poezii')
 
 export default {
   name: 'app',
-  firebase () {
-    return {
-    }
-  },
+  // firebase () {
+  //   return {
+  //   }
+  // },
   components: {
     Navbar,
     SidebarLeft,
@@ -177,7 +177,8 @@ export default {
     let metaThemeColor = document.querySelector('meta[name=theme-color]')
     metaThemeColor.setAttribute('content', this.themes[this.$store.state.currentTheme].theme)
 
-    this.bindPoezieRef()
+    // this.bindPoezieRef()
+    this.poezieSnap()
 
     const getSnap = (snap) => {
       this.$store.commit('setCuprinsCaieteSnap', snap.val())
@@ -199,11 +200,11 @@ export default {
     toggleMore () {
       this.$store.commit('toggleMore')
     },
-    bindPoezieRef () {
-      if (!this.$store.state.fullBook) {
-        this.$bindAsObject('poezieRef', poeziiRef.child(this.currentNr))
-      }
-    },
+    // bindPoezieRef () {
+    //   if (!this.$store.state.fullBook) {
+    //     this.$bindAsObject('poezieRef', poeziiRef.child(this.currentNr))
+    //   }
+    // },
     cuprinsPoeziiSnap () {
       const getSnap = (snap) => {
         this.$store.commit('setCuprinsPoeziiSnap', snap.val())
@@ -211,6 +212,12 @@ export default {
       if (!this.$store.state.cuprinsPoeziiSnap) {
         cuprinsPoeziiRef.once('value').then(getSnap)
       }
+    },
+    poezieSnap () {
+      const getSnap = (snap) => {
+        this.$store.commit('setPoezieSnap', snap.val())
+      }
+      poeziiRef.child(this.currentNr).once('value').then(getSnap)
     },
     poeziiSnap () {
       const getSnap = (snap) => {
@@ -223,7 +230,10 @@ export default {
   },
   watch: {
     '$route' () {
-      this.bindPoezieRef()
+      // this.bindPoezieRef()
+      if (!this.$store.state.fullBook) {
+        this.poezieSnap()
+      }
     }
   }
 }

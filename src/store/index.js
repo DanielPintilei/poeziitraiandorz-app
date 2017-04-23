@@ -18,6 +18,7 @@ export const store = new Vuex.Store({
     cuprinsCaieteSnap: null,
     cuprinsPoeziiSnap: null,
     fullBook: false,
+    poezieSnap: {},
     poeziiSnap: []
   },
   getters: {
@@ -85,6 +86,9 @@ export const store = new Vuex.Store({
     },
     setFullBook (state) {
       state.fullBook = true
+    },
+    setPoezieSnap (state, n) {
+      state.poezieSnap = n
     },
     setPoeziiSnap (state, n) {
       state.poeziiSnap = n

@@ -77,7 +77,7 @@ export default {
   line-height 1.3
   white-space pre-wrap
   @media (max-width $breakpointMobileSmall)
-    font-size 1.1em
+    font-size 1.2em
 
 .out-prev
 .out-next

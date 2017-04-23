@@ -6,8 +6,8 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
   state: {
     sidebarLeftToggled: false,
-    sidebarRightToggled: false,
-    currentTheme: 0,
+    sidebarRightToggled: true,
+    currentTheme: 1,
     selectedCaiete: [],
     sortCuprinsAZ: false,
     fontSize: 1,
@@ -19,7 +19,8 @@ export const store = new Vuex.Store({
     cuprinsPoeziiSnap: null,
     fullBook: false,
     poezieSnap: {},
-    poeziiSnap: []
+    poeziiSnap: [],
+    filtersOpen: false
   },
   getters: {
   },
@@ -77,6 +78,9 @@ export const store = new Vuex.Store({
     },
     handleSearchFocus (state, n) {
       state.searchFocused = n
+    },
+    toggleFilters (state) {
+      state.filtersOpen = !state.filtersOpen
     },
     setCuprinsCaieteSnap (state, n) {
       state.cuprinsCaieteSnap = n

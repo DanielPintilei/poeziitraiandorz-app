@@ -30,14 +30,12 @@ export default {
   display flex
   align-items center
   justify-content center
-.line {
-  stroke-dasharray: 200;
-  stroke-dashoffset: 200;
-  animation: loading 2s infinite ease-in;
-}
-@keyframes loading {
-  to {
-    stroke-dashoffset: -200;
-  }
-}
+.line
+  stroke-dasharray 200
+  stroke-dashoffset 200
+  animation loading 2s infinite ease-in
+@keyframes loading
+  to
+    stroke-dashoffset -200
+
 </style>

@@ -27,11 +27,97 @@
       <v-touch
         :swipe-options="{ direction: 'horizontal'}"
         @swiperight="sidebarRightToggle"
-        class="sidebar-right__filters"
+        class="sidebar-right__results"
         :style="{
           backgroundColor: theme.background,
           borderColor: theme.border3
         }">
+        <svg
+          class="sidebar-right__loading"
+          width="300" height="2" viewBox="0 0 300 2">
+          <line
+            :stroke="theme.accent"
+            class="line"
+            x1="0" y1="1" x2="300" y2="1" stroke-width="2" />
+        </svg>
+        <div class="sidebar-right__filters">
+          <div
+            class="sidebar-right__filters-icon-wrapper">
+            <svg
+              @click="toggleFilters"
+              :fill="!$store.state.filtersOpen ? theme.icon2 : theme.accent"
+              class="icon icon-filters"
+              height="24" viewBox="0 0 24 24" width="24">
+              <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"/>
+              <path d="M0 0h24v24H0z" fill="none"/>
+            </svg>
+          </div>
+          <transition name="filters">
+            <div
+              v-if="$store.state.filtersOpen"
+              :style="{ borderColor: theme.border3 }"
+              class="sidebar-right__filter-wrapper">
+              <div class="sidebar-right__filter">
+                <svg
+                  @click=""
+                  class="icon icon-check"
+                  :fill="theme.accent"
+                  width="24" height="24">
+                  <use xlink:href="#iconCheck"></use>
+                  <use xlink:href="#iconCheckOn"></use>
+                </svg>
+                <span class="asd">Titlu</span>
+              </div>
+              <div class="sidebar-right__filter">
+                <svg
+                  @click=""
+                  class="icon icon-check"
+                  :fill="theme.accent"
+                  width="24" height="24">
+                  <use xlink:href="#iconCheck"></use>
+                  <use xlink:href="#iconCheckOn"></use>
+                </svg>
+                <span class="asd">Versuri</span>
+              </div>
+              <div class="sidebar-right__filter">
+                <svg
+                  @click=""
+                  class="icon icon-check"
+                  :fill="theme.accent"
+                  width="24" height="24">
+                  <use xlink:href="#iconCheck"></use>
+                  <use xlink:href="#iconCheckOn"></use>
+                </svg>
+                <span class="asd">Case sensitive</span>
+              </div>
+              <div class="sidebar-right__filter">
+                <svg
+                  @click=""
+                  class="icon icon-check"
+                  :fill="theme.accent"
+                  width="24" height="24">
+                  <use xlink:href="#iconCheck"></use>
+                  <use xlink:href="#iconCheckOn"></use>
+                </svg>
+                <span class="asd">Diacritice sensitive</span>
+              </div>
+              <div class="sidebar-right__filter">
+                <svg
+                  @click=""
+                  class="icon icon-check"
+                  :fill="theme.accent"
+                  width="24" height="24">
+                  <use xlink:href="#iconCheck"></use>
+                  <use xlink:href="#iconCheckOn"></use>
+                </svg>
+                <span class="asd">Fuzzy</span>
+              </div>
+            </div>
+          </transition>
+        </div>
+        <div class="sidebar-right__results-inner">
+
+        </div>
         <!--<input type="checkbox" id="checkbox" v-model="checked">
         <label for="checkbox">{{ checked }}</label>-->
 
@@ -42,7 +128,6 @@
         <label for="two">Two</label>
         <br>
         <span>Picked: {{ picked }}</span>-->
-        <loading :color="theme.accent"></loading>
       </v-touch>
     </div>
   </aside>
@@ -70,6 +155,9 @@ export default {
     },
     focusSearch () {
       document.getElementById('searchInput').focus()
+    },
+    toggleFilters () {
+      this.$store.commit('toggleFilters')
     }
   }
 }
@@ -132,12 +220,58 @@ export default {
 .search-box__icon
   opacity $iconOpacity
 
-.sidebar-right__filters
+.sidebar-right__results
   position relative
   flex-grow: 1
-  padding-top 4px
+  display flex
+  flex-direction column
   padding-bottom 12px
   border-left 1px solid
-  overflow auto
+  overflow-x hidden
+  overflow-y auto
+
+.sidebar-right__loading
+  position absolute
+  top -1px
+.line
+  stroke-dasharray 300
+  stroke-dashoffset 300
+  animation loading 2s infinite ease-in
+@keyframes loading
+  to
+    stroke-dashoffset -300
+
+.sidebar-right__filters
+  flex-shrink 0
+
+.sidebar-right__filters-icon-wrapper
+  display flex
+  padding 15px 22px 0
+
+.icon-filters
+.icon-check
+  margin-right 10px
+
+.sidebar-right__filter-wrapper
+  height 186px
+  padding 0 22px 15px
+  border-bottom 1px solid
+  overflow hidden
+
+.sidebar-right__filter
+  display flex
+  align-items center
+  padding-top 10px
+
+.sidebar-right__results-inner
+  flex-grow 1
+
+.filters-enter-active
+.filters-leave-active
+  transition 0.5s
+.filters-enter
+.filters-leave-to
+  height 0
+  opacity 0
 
 </style>

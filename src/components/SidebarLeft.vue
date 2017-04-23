@@ -171,7 +171,7 @@ export default {
     },
     sortCuprinsAZ () {
       this.$store.commit('toggleSortCuprinsAZ', this.sortCuprinsAZ)
-      this.$emit('setCuprinsPoeziiSnap')
+      if (!this.$store.state.cuprinsPoeziiSnap) this.$emit('setCuprinsPoeziiSnap')
     }
   }
 }

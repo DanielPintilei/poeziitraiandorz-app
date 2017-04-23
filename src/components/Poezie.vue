@@ -364,7 +364,7 @@ export default {
   @media (min-width $breakpointMobile + 1px)
     columns 250px 2
     column-gap 3em
-  & + .loading
+  &:not(:empty) + .loading
     display none
 
 $iconPrevNextSide = 20px

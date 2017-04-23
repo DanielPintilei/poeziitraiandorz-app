@@ -57,7 +57,6 @@
         :themes="themes">
       </navbar>
       <transition name="router-view" mode="out-in">
-          <!--:poezieRef="poezieRef"-->
         <router-view
           :theme="currentTheme"
           class="app__main-view">
@@ -103,10 +102,6 @@ const poeziiRef = db.ref('poezii')
 
 export default {
   name: 'app',
-  // firebase () {
-  //   return {
-  //   }
-  // },
   components: {
     Navbar,
     SidebarLeft,
@@ -177,7 +172,6 @@ export default {
     let metaThemeColor = document.querySelector('meta[name=theme-color]')
     metaThemeColor.setAttribute('content', this.themes[this.$store.state.currentTheme].theme)
 
-    // this.bindPoezieRef()
     this.poezieSnap()
 
     const getSnap = (snap) => {
@@ -200,11 +194,6 @@ export default {
     toggleMore () {
       this.$store.commit('toggleMore')
     },
-    // bindPoezieRef () {
-    //   if (!this.$store.state.fullBook) {
-    //     this.$bindAsObject('poezieRef', poeziiRef.child(this.currentNr))
-    //   }
-    // },
     cuprinsPoeziiSnap () {
       const getSnap = (snap) => {
         this.$store.commit('setCuprinsPoeziiSnap', snap.val())
@@ -230,7 +219,6 @@ export default {
   },
   watch: {
     '$route' () {
-      // this.bindPoezieRef()
       if (!this.$store.state.fullBook) {
         this.poezieSnap()
       }

@@ -53,81 +53,81 @@
             </svg>
           </div>
           <transition name="filters">
+              <!--:style="{ borderColor: theme.border3 }"-->
             <div
               v-if="$store.state.filtersOpen"
-              :style="{ borderColor: theme.border3 }"
               class="sidebar-right__filter-wrapper">
               <div class="sidebar-right__filter">
-                <svg
-                  @click=""
-                  class="icon icon-check"
-                  :fill="theme.accent"
-                  width="24" height="24">
-                  <use xlink:href="#iconCheck"></use>
-                  <use xlink:href="#iconCheckOn"></use>
-                </svg>
-                <span class="asd">Titlu</span>
+                <input type="checkbox" value="checkboxTitlu" id="checkboxTitlu" v-model="filtersCheck">
+                <label for="checkboxTitlu">
+                  <svg
+                    class="icon icon-check"
+                    :fill="theme.accent"
+                    width="24" height="24">
+                    <use class="off" xlink:href="#iconCheck"></use>
+                    <use class="on" xlink:href="#iconCheckOn"></use>
+                  </svg>
+                  <span class="asd">Titlu</span>
+                </label>
               </div>
               <div class="sidebar-right__filter">
-                <svg
-                  @click=""
-                  class="icon icon-check"
-                  :fill="theme.accent"
-                  width="24" height="24">
-                  <use xlink:href="#iconCheck"></use>
-                  <use xlink:href="#iconCheckOn"></use>
-                </svg>
-                <span class="asd">Versuri</span>
+                <input type="checkbox" value="checkboxVersuri" id="checkboxVersuri" v-model="filtersCheck">
+                <label for="checkboxVersuri">
+                  <svg
+                    class="icon icon-check"
+                    :fill="theme.accent"
+                    width="24" height="24">
+                    <use class="off" xlink:href="#iconCheck"></use>
+                    <use class="on" xlink:href="#iconCheckOn"></use>
+                  </svg>
+                  <span class="asd">Versuri</span>
+                </label>
               </div>
               <div class="sidebar-right__filter">
-                <svg
-                  @click=""
-                  class="icon icon-check"
-                  :fill="theme.accent"
-                  width="24" height="24">
-                  <use xlink:href="#iconCheck"></use>
-                  <use xlink:href="#iconCheckOn"></use>
-                </svg>
-                <span class="asd">Case sensitive</span>
+                <input type="checkbox" value="checkboxCase" id="checkboxCase" v-model="filtersCheck">
+                <label for="checkboxCase">
+                  <svg
+                    class="icon icon-check"
+                    :fill="theme.accent"
+                    width="24" height="24">
+                    <use class="off" xlink:href="#iconCheck"></use>
+                    <use class="on" xlink:href="#iconCheckOn"></use>
+                  </svg>
+                  <span class="asd">Case sensitive</span>
+                </label>
               </div>
               <div class="sidebar-right__filter">
-                <svg
-                  @click=""
-                  class="icon icon-check"
-                  :fill="theme.accent"
-                  width="24" height="24">
-                  <use xlink:href="#iconCheck"></use>
-                  <use xlink:href="#iconCheckOn"></use>
-                </svg>
-                <span class="asd">Diacritice sensitive</span>
+                <input type="checkbox" value="checkboxDiacritice" id="checkboxDiacritice" v-model="filtersCheck">
+                <label for="checkboxDiacritice">
+                  <svg
+                    class="icon icon-check"
+                    :fill="theme.accent"
+                    width="24" height="24">
+                    <use class="off" xlink:href="#iconCheck"></use>
+                    <use class="on" xlink:href="#iconCheckOn"></use>
+                  </svg>
+                  <span class="asd">Diacritice sensitive</span>
+                </label>
               </div>
               <div class="sidebar-right__filter">
-                <svg
-                  @click=""
-                  class="icon icon-check"
-                  :fill="theme.accent"
-                  width="24" height="24">
-                  <use xlink:href="#iconCheck"></use>
-                  <use xlink:href="#iconCheckOn"></use>
-                </svg>
-                <span class="asd">Fuzzy</span>
+                <input type="checkbox" value="checkboxFuzzy" id="checkboxFuzzy" v-model="filtersCheck">
+                <label for="checkboxFuzzy">
+                  <svg
+                    class="icon icon-check"
+                    :fill="theme.accent"
+                    width="24" height="24">
+                    <use class="off" xlink:href="#iconCheck"></use>
+                    <use class="on" xlink:href="#iconCheckOn"></use>
+                  </svg>
+                  <span class="asd">Fuzzy</span>
+                </label>
               </div>
             </div>
           </transition>
         </div>
         <div class="sidebar-right__results-inner">
-
+          <!--{{ filtersCheck }}-->
         </div>
-        <!--<input type="checkbox" id="checkbox" v-model="checked">
-        <label for="checkbox">{{ checked }}</label>-->
-
-        <!--<input type="radio" id="one" value="One" v-model="picked">
-        <label for="one">One</label>
-        <br>
-        <input type="radio" id="two" value="Two" v-model="picked">
-        <label for="two">Two</label>
-        <br>
-        <span>Picked: {{ picked }}</span>-->
       </v-touch>
     </div>
   </aside>
@@ -144,6 +144,7 @@ export default {
   },
   data () {
     return {
+      filtersCheck: ['checkboxTitlu', 'checkboxVersuri']
     }
   },
   methods: {
@@ -254,17 +255,37 @@ export default {
 
 .sidebar-right__filter-wrapper
   height 186px
-  padding 0 22px 15px
-  border-bottom 1px solid
+  padding-left 22px
+  padding-right 22px
+  // border-bottom 1px solid
   overflow hidden
 
 .sidebar-right__filter
   display flex
   align-items center
   padding-top 10px
+  // &:last-child
+  //   padding-bottom 15px
+  input
+    display none
+    &:checked + label svg .off
+      display none
+    &:not(:checked) + label svg .on
+      display none
+  label
+    display flex
+    align-items center
+    width 100%
+    &:active svg
+      transform scale(0.9)
+    &:hover
+      cursor pointer
+      & svg
+        opacity 1
 
 .sidebar-right__results-inner
   flex-grow 1
+  padding-top 15px
 
 .filters-enter-active
 .filters-leave-active

@@ -14,12 +14,13 @@ export const store = new Vuex.Store({
     selectEnabled: false,
     showCopyConfirm: false,
     moreOpen: false,
-    searchFocused: false
-    // fullBook: false
-    // poeziiSnap: []
+    searchFocused: false,
+    cuprinsCaieteSnap: null,
+    cuprinsPoeziiSnap: null,
+    fullBook: false,
+    poeziiSnap: []
   },
   getters: {
-
   },
   mutations: {
     toggleSidebarLeft (state) {
@@ -49,7 +50,7 @@ export const store = new Vuex.Store({
     setSelectedCaiete (state, n) {
       state.selectedCaiete = n
     },
-    setSortCuprinsAZ (state, n) {
+    toggleSortCuprinsAZ (state, n) {
       state.sortCuprinsAZ = n
     },
     setSelectedTheme (state, n) {
@@ -75,12 +76,18 @@ export const store = new Vuex.Store({
     },
     handleSearchFocus (state, n) {
       state.searchFocused = n
+    },
+    setCuprinsCaieteSnap (state, n) {
+      state.cuprinsCaieteSnap = n
+    },
+    setCuprinsPoeziiSnap (state, n) {
+      state.cuprinsPoeziiSnap = n
+    },
+    setFullBook (state) {
+      state.fullBook = true
+    },
+    setPoeziiSnap (state, n) {
+      state.poeziiSnap = n
     }
-    // setFullBook (state) {
-    //   state.fullBook = true
-    // }
-    // setPoeziiSnap (state, n) {
-    //   state.poeziiSnap = n
-    // }
   }
 })

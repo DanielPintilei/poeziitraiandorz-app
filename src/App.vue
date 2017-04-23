@@ -43,8 +43,7 @@
     </transition>
     <transition name="sidebar-slide-left">
       <sidebar-left
-        :cuprinsCaieteRef="cuprinsCaieteRef"
-        :cuprinsPoeziiRef="cuprinsPoeziiRef"
+        v-on:setCuprinsPoeziiSnap="cuprinsPoeziiSnap"
         :theme="currentTheme"
         v-show="$store.state.sidebarLeftToggled">
       </sidebar-left>
@@ -52,7 +51,11 @@
     <main
       :style="{ backgroundColor: currentTheme.background2 }"
       class="app__main">
-      <navbar :theme="currentTheme" :themes="themes"></navbar>
+      <navbar
+        v-on:setFullBook="poeziiSnap"
+        :theme="currentTheme"
+        :themes="themes">
+      </navbar>
       <transition name="router-view" mode="out-in">
         <router-view
           :theme="currentTheme"
@@ -64,7 +67,6 @@
     <transition name="sidebar-slide-right">
       <sidebar-right
         :theme="currentTheme"
-        :cuprinsCaieteRef="cuprinsCaieteRef"
         v-show="$store.state.sidebarRightToggled">
       </sidebar-right>
     </transition>
@@ -103,8 +105,6 @@ export default {
   name: 'app',
   firebase () {
     return {
-      cuprinsCaieteRef,
-      cuprinsPoeziiRef
     }
   },
   components: {
@@ -178,6 +178,11 @@ export default {
     metaThemeColor.setAttribute('content', this.themes[this.$store.state.currentTheme].theme)
 
     this.bindPoezieRef()
+
+    const getSnap = (snap) => {
+      this.$store.commit('setCuprinsCaieteSnap', snap.val())
+    }
+    cuprinsCaieteRef.once('value').then(getSnap)
   },
   computed: {
     currentTheme () {
@@ -186,12 +191,6 @@ export default {
     currentNr () {
       return this.$store.state.route.params.nr - 1
     }
-    // poeziiSnap () {
-    //   const getSnap = (snap) => {
-    //     this.$store.commit('setPoeziiSnap', snap.val())
-    //   }
-    //   poeziiRef.once('value').then(getSnap)
-    // }
   },
   methods: {
     closeSidebars () {
@@ -201,9 +200,25 @@ export default {
       this.$store.commit('toggleMore')
     },
     bindPoezieRef () {
-      // if (!this.$store.state.fullBook) {
-      // }
-      this.$bindAsObject('poezieRef', poeziiRef.child(this.currentNr))
+      if (!this.$store.state.fullBook) {
+        this.$bindAsObject('poezieRef', poeziiRef.child(this.currentNr))
+      }
+    },
+    cuprinsPoeziiSnap () {
+      const getSnap = (snap) => {
+        this.$store.commit('setCuprinsPoeziiSnap', snap.val())
+      }
+      if (!this.$store.state.cuprinsPoeziiSnap) {
+        cuprinsPoeziiRef.once('value').then(getSnap)
+      }
+    },
+    poeziiSnap () {
+      const getSnap = (snap) => {
+        this.$store.commit('setPoeziiSnap', snap.val())
+      }
+      if (!this.$store.state.poeziiSnap.length > 0) {
+        poeziiRef.once('value').then(getSnap)
+      }
     }
   },
   watch: {

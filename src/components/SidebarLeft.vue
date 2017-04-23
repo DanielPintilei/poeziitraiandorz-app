@@ -16,7 +16,7 @@
           <use xlink:href="#iconList"></use>
         </svg>
         <div
-          @click="scrollLinkIntoView"
+          @click="handleScrollLinkIntoView"
           class="sort-cuprins">
           <input
             v-model="sortCuprinsAZ"
@@ -47,7 +47,7 @@
         }">
         <div
           v-if="!sortCuprinsAZ"
-          v-for="(caiet, index) in cuprinsCaieteRef"
+          v-for="(caiet, index) in $store.state.cuprinsCaieteSnap"
           class="caiet">
           <input
             type="checkbox"
@@ -93,17 +93,17 @@
           </div>
         </div>
         <div
-          v-if="sortCuprinsAZ"
+          v-if="sortCuprinsAZ && $store.state.cuprinsPoeziiSnap"
           class="cuprinsAZ">
           <router-link
-            v-for="poezie in cuprinsPoeziiRef"
-            :id="+poezie['.key']+1"
+            v-for="(poezie, index) in $store.state.cuprinsPoeziiSnap"
+            :id="index+1"
             :to="{
               name: 'Poezie',
               params: {
                 nr: +poezie.n,
                 titlu: formatTitlu(poezie.t),
-                order: +poezie['.key']+1
+                order: index+1
               }
             }">
             <span
@@ -125,7 +125,7 @@ import Loading from './Loading'
 
 export default {
   name: 'sidebar-left',
-  props: ['theme', 'cuprinsCaieteRef', 'cuprinsPoeziiRef'],
+  props: ['theme'],
   components: {
     Loading
   },
@@ -153,6 +153,16 @@ export default {
       const routeParent = route.parentElement.parentElement.firstElementChild
       if (routeParent && !routeParent.checked) routeParent.click()
       route.scrollIntoView()
+    },
+    handleScrollLinkIntoView () {
+      if (!this.$store.state.cuprinsPoeziiSnap) {
+        let wait = setInterval(() => {
+          if (this.$store.state.cuprinsPoeziiSnap) {
+            clearInterval(wait)
+            this.scrollLinkIntoView()
+          }
+        }, 100)
+      } else this.scrollLinkIntoView()
     }
   },
   watch: {
@@ -160,7 +170,8 @@ export default {
       this.$store.commit('setSelectedCaiete', this.selectedCaiete)
     },
     sortCuprinsAZ () {
-      this.$store.commit('setSortCuprinsAZ', this.sortCuprinsAZ)
+      this.$store.commit('toggleSortCuprinsAZ', this.sortCuprinsAZ)
+      this.$emit('setCuprinsPoeziiSnap')
     }
   }
 }

@@ -20,7 +20,8 @@ export const store = new Vuex.Store({
     fullBook: false,
     poezieSnap: {},
     poeziiSnap: [],
-    filtersOpen: false
+    filtersOpen: true,
+    filtersCheck: ['checkboxTitlu', 'checkboxVersuri']
   },
   getters: {
   },
@@ -81,6 +82,9 @@ export const store = new Vuex.Store({
     },
     toggleFilters (state) {
       state.filtersOpen = !state.filtersOpen
+    },
+    setFiltersCheck (state, n) {
+      state.filtersCheck = n
     },
     setCuprinsCaieteSnap (state, n) {
       state.cuprinsCaieteSnap = n

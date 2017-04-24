@@ -58,8 +58,12 @@
               v-if="$store.state.filtersOpen"
               class="sidebar-right__filter-wrapper">
               <div class="sidebar-right__filter">
-                <input type="checkbox" value="checkboxTitlu" id="checkboxTitlu" v-model="filtersCheck">
-                <label for="checkboxTitlu">
+                <input
+                  type="checkbox"
+                  value="checkboxTitlu" id="checkboxTitlu" v-model="filtersCheck">
+                <label
+                  @click="handleCheckTitlu"
+                  for="checkboxTitlu">
                   <svg
                     class="icon icon-check"
                     :fill="theme.accent"
@@ -71,8 +75,12 @@
                 </label>
               </div>
               <div class="sidebar-right__filter">
-                <input type="checkbox" value="checkboxVersuri" id="checkboxVersuri" v-model="filtersCheck">
-                <label for="checkboxVersuri">
+                <input
+                  type="checkbox"
+                  value="checkboxVersuri" id="checkboxVersuri" v-model="filtersCheck">
+                <label
+                  @click="handleCheckVersuri"
+                  for="checkboxVersuri">
                   <svg
                     class="icon icon-check"
                     :fill="theme.accent"
@@ -84,7 +92,9 @@
                 </label>
               </div>
               <div class="sidebar-right__filter">
-                <input type="checkbox" value="checkboxCase" id="checkboxCase" v-model="filtersCheck">
+                <input
+                  type="checkbox"
+                  value="checkboxCase" id="checkboxCase" v-model="filtersCheck">
                 <label for="checkboxCase">
                   <svg
                     class="icon icon-check"
@@ -97,7 +107,9 @@
                 </label>
               </div>
               <div class="sidebar-right__filter">
-                <input type="checkbox" value="checkboxDiacritice" id="checkboxDiacritice" v-model="filtersCheck">
+                <input
+                  type="checkbox"
+                  value="checkboxDiacritice" id="checkboxDiacritice" v-model="filtersCheck">
                 <label for="checkboxDiacritice">
                   <svg
                     class="icon icon-check"
@@ -110,7 +122,9 @@
                 </label>
               </div>
               <div class="sidebar-right__filter">
-                <input type="checkbox" value="checkboxFuzzy" id="checkboxFuzzy" v-model="filtersCheck">
+                <input
+                  type="checkbox"
+                  value="checkboxFuzzy" id="checkboxFuzzy" v-model="filtersCheck">
                 <label for="checkboxFuzzy">
                   <svg
                     class="icon icon-check"
@@ -126,7 +140,15 @@
           </transition>
         </div>
         <div class="sidebar-right__results-inner">
-          <!--{{ filtersCheck }}-->
+          filtersCheck
+          <br>
+          {{ filtersCheck }}
+          <br>
+          <br>
+          <br>
+          $store
+          <br>
+          {{ $store.state.filtersCheck }}
         </div>
       </v-touch>
     </div>
@@ -144,7 +166,7 @@ export default {
   },
   data () {
     return {
-      filtersCheck: ['checkboxTitlu', 'checkboxVersuri']
+      filtersCheck: this.$store.state.filtersCheck
     }
   },
   methods: {
@@ -159,6 +181,22 @@ export default {
     },
     toggleFilters () {
       this.$store.commit('toggleFilters')
+    },
+    commitFilters () {
+      this.$store.commit('setFiltersCheck', this.filtersCheck)
+    },
+    handleCheckTitlu (e) {
+      if (this.filtersCheck.includes('checkboxTitlu') && !this.filtersCheck.includes('checkboxVersuri')) e.preventDefault()
+      else this.commitFilters()
+    },
+    handleCheckVersuri (e) {
+      if (this.filtersCheck.includes('checkboxVersuri') && !this.filtersCheck.includes('checkboxTitlu')) e.preventDefault()
+      else this.commitFilters()
+    }
+  },
+  watch: {
+    filtersCheck () {
+      this.commitFilters()
     }
   }
 }
@@ -257,13 +295,13 @@ export default {
   height 186px
   padding-left 22px
   padding-right 22px
-  // border-bottom 1px solid
   overflow hidden
+  // border-bottom 1px solid
 
 .sidebar-right__filter
   display flex
   align-items center
-  padding-top 10px
+  margin-top 10px
   // &:last-child
   //   padding-bottom 15px
   input
@@ -289,7 +327,7 @@ export default {
 
 .filters-enter-active
 .filters-leave-active
-  transition 0.5s
+  transition height $sidebarDuration $sidebarTiming, opacity $sidebarDuration $sidebarTiming
 .filters-enter
 .filters-leave-to
   height 0

@@ -55,6 +55,7 @@
           <transition name="filters">
               <!--:style="{ borderColor: theme.border3 }"-->
             <div
+              :style="{color: theme.text2}"
               v-if="$store.state.filtersOpen"
               class="sidebar-right__filter-wrapper">
               <div class="sidebar-right__filter">
@@ -71,7 +72,7 @@
                     <use class="off" xlink:href="#iconCheck"></use>
                     <use class="on" xlink:href="#iconCheckOn"></use>
                   </svg>
-                  <span class="asd">Titlu</span>
+                  <span>Titlu</span>
                 </label>
               </div>
               <div class="sidebar-right__filter">
@@ -88,7 +89,7 @@
                     <use class="off" xlink:href="#iconCheck"></use>
                     <use class="on" xlink:href="#iconCheckOn"></use>
                   </svg>
-                  <span class="asd">Versuri</span>
+                  <span>Versuri</span>
                 </label>
               </div>
               <div class="sidebar-right__filter">
@@ -103,7 +104,7 @@
                     <use class="off" xlink:href="#iconCheck"></use>
                     <use class="on" xlink:href="#iconCheckOn"></use>
                   </svg>
-                  <span class="asd">Case sensitive</span>
+                  <span>Case sensitive</span>
                 </label>
               </div>
               <div class="sidebar-right__filter">
@@ -118,7 +119,7 @@
                     <use class="off" xlink:href="#iconCheck"></use>
                     <use class="on" xlink:href="#iconCheckOn"></use>
                   </svg>
-                  <span class="asd">Diacritice sensitive</span>
+                  <span>Diacritice sensitive</span>
                 </label>
               </div>
               <div class="sidebar-right__filter">
@@ -133,22 +134,13 @@
                     <use class="off" xlink:href="#iconCheck"></use>
                     <use class="on" xlink:href="#iconCheckOn"></use>
                   </svg>
-                  <span class="asd">Fuzzy</span>
+                  <span>Fuzzy</span>
                 </label>
               </div>
             </div>
           </transition>
         </div>
         <div class="sidebar-right__results-inner">
-          filtersCheck
-          <br>
-          {{ filtersCheck }}
-          <br>
-          <br>
-          <br>
-          $store
-          <br>
-          {{ $store.state.filtersCheck }}
         </div>
       </v-touch>
     </div>
@@ -295,6 +287,7 @@ export default {
   height 186px
   padding-left 22px
   padding-right 22px
+  font-size 15px
   overflow hidden
   // border-bottom 1px solid
 

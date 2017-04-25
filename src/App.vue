@@ -135,7 +135,8 @@ export default {
           icon: '#212121',
           icon2: '#212121',
           confirm: '#FFFF00',
-          confirm2: '#757575'
+          confirm2: '#757575',
+          rule: '#e6e6e6'
         },
         {
           theme: '#ecce93',
@@ -153,7 +154,8 @@ export default {
           icon: '#fff',
           icon2: '#fff',
           confirm: '#C6FF00',
-          confirm2: '#212121'
+          confirm2: '#212121',
+          rule: '#333'
         },
         {
           theme: '#393a3e',
@@ -162,7 +164,7 @@ export default {
           text2: '#757575',
           text3: '#dedede',
           border: '#393a3e',
-          border2: '#756b57',
+          border2: '#605c52',
           border3: '#beb6a7',
           background: '#fff4d7',
           backdrop: '#fff4d7',
@@ -171,7 +173,8 @@ export default {
           icon: '#fff',
           icon2: '#757575',
           confirm: '#18FFFF',
-          confirm2: '#757575'
+          confirm2: '#757575',
+          rule: '#eee0ba'
         }
       ]
     }

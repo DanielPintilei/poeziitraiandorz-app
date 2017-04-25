@@ -104,7 +104,7 @@
                     <use class="off" xlink:href="#iconCheck"></use>
                     <use class="on" xlink:href="#iconCheckOn"></use>
                   </svg>
-                  <span>Case sensitive</span>
+                  <span>Exact</span>
                 </label>
               </div>
               <div class="sidebar-right__filter">
@@ -119,7 +119,7 @@
                     <use class="off" xlink:href="#iconCheck"></use>
                     <use class="on" xlink:href="#iconCheckOn"></use>
                   </svg>
-                  <span>Diacritice sensitive</span>
+                  <span>Majuscule</span>
                 </label>
               </div>
               <div class="sidebar-right__filter">
@@ -134,7 +134,7 @@
                     <use class="off" xlink:href="#iconCheck"></use>
                     <use class="on" xlink:href="#iconCheckOn"></use>
                   </svg>
-                  <span>Fuzzy</span>
+                  <span>Diacritice</span>
                 </label>
               </div>
             </div>
@@ -267,8 +267,8 @@ export default {
 .line
   stroke-dasharray 300
   stroke-dashoffset 300
-  animation loading 2s infinite ease-in
-@keyframes loading
+  animation searchLoading 2s infinite ease-in
+@keyframes searchLoading
   to
     stroke-dashoffset -300
 

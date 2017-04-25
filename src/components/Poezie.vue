@@ -11,19 +11,28 @@
         :style="{fontSize: fontSizeREM}"
         :class="{select: $store.state.selectEnabled}"
         class="poezie__main">
-        <h1 class="poezie__titlu">
-          <template v-if="$store.state.fullBook && $store.state.poeziiSnap[nr-1]">
+        <template v-if="$store.state.fullBook && $store.state.poeziiSnap[nr-1]">
+          <h1 class="poezie__titlu">
             <!--full
             {{ $store.state.poeziiSnap[nr-1].n }}-->
             {{ $store.state.poeziiSnap[nr-1].t }}
-          </template>
-          <template v-if="$store.state.poezieSnap && !$store.state.poeziiSnap.length > 0">
+          </h1>
+          <p class="poezie__desc">{{ $store.state.poeziiSnap[nr-1].d }}</p>
+          <pre
+            :style="{columnRuleColor: theme.rule}"
+            class="poezie__strofe">{{ $store.state.poeziiSnap[nr-1].s }}</pre>
+        </template>
+        <template v-if="$store.state.poezieSnap && !$store.state.poeziiSnap.length > 0">
+          <h1 class="poezie__titlu">
             <!--single
             {{ $store.state.poezieSnap.n }}-->
             {{ $store.state.poezieSnap.t }}
-          </template>
-        </h1>
-        <pre class="poezie__strofe"><template v-if="$store.state.fullBook && $store.state.poeziiSnap[nr-1]">{{ $store.state.poeziiSnap[nr-1].s }}</template><template v-if="$store.state.poezieSnap && !$store.state.poeziiSnap.length > 0">{{ $store.state.poezieSnap.s }}</template></pre>
+          </h1>
+          <p class="poezie__desc">{{ $store.state.poezieSnap.d }}</p>
+          <pre
+            :style="{columnRuleColor: theme.rule}"
+            class="poezie__strofe">{{ $store.state.poezieSnap.s }}</pre>
+        </template>
         <loading class="loading" :color="theme.accent"></loading>
         <br>
         <span class="poezie__author">—Traian Dorz</span>
@@ -342,17 +351,28 @@ export default {
   @media (min-width $breakpointMobile + 1px)
     margin 0 0 1.2em
 
+.poezie__desc
 .poezie__strofe
   margin 0
   font-family $font2
   font-size 1.063em
   line-height 1.3
-  white-space pre-wrap
   @media (max-width $breakpointMobileSmall)
     font-size 1em
+
+.poezie__desc
+  margin-bottom 1.5em
+  font-style italic
+  @media (max-width $breakpointMobile)
+    max-width 400px
+
+.poezie__strofe
+  white-space pre-wrap
   @media (min-width $breakpointMobile + 1px)
     columns 250px 2
-    column-gap 3em
+    // column-gap 3em
+    column-gap 6em
+    column-rule 1px solid
   &:not(:empty) + .loading
     display none
 

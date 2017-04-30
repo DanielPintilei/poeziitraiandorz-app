@@ -3,6 +3,7 @@
     :swipe-options="{ direction: 'horizontal'}"
     @swipeleft="nextPoezie"
     @swiperight="prevPoezie"
+    id="poezieParent"
     class="poezie">
     <transition :name="poezieTransitionName" mode="out-in">
       <article
@@ -248,6 +249,9 @@ export default {
         this.nextPoezie()
       }
     },
+    scrollIntoViewPoezie () {
+      document.getElementById('poezieParent').scrollTop = 0
+    },
     toggleZoomMenu () {
       this.zoomMenuOpen = !this.zoomMenuOpen
     },
@@ -271,8 +275,9 @@ export default {
     '$route' (to, from) {
       const toDepth = to.params.order === undefined ? to.params.nr : to.params.order
       const fromDepth = from.params.order === undefined ? from.params.nr : from.params.order
-
       this.poezieTransitionName = toDepth < fromDepth ? 'slide-right-poezie' : 'slide-left-poezie'
+
+      this.scrollIntoViewPoezie()
 
       this.currentURL = location.href
     }

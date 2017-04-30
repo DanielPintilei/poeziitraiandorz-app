@@ -143,7 +143,7 @@ export default {
       this.$store.commit('toggleSidebarLeft')
     },
     tapPoezie () {
-      const tapMQ = window.matchMedia('(max-width: 900px)')
+      const tapMQ = window.matchMedia('(max-width: 1100px)')
       if (tapMQ.matches) {
         this.sidebarLeftToggle()
       }
@@ -267,11 +267,12 @@ a
   cursor pointer
   &:active .icon-caiet
     transform scale(0.9)
-  &:hover
-    background-color $linkHoverBackground
-    .icon-caret
-    .icon-caiet
-      opacity 1
+  @media (min-width $breakpointMobile + 1px)
+    &:hover
+      background-color $linkHoverBackground
+      .icon-caret
+      .icon-caiet
+        opacity 1
 
 .icon-caret
   width 22px
@@ -286,16 +287,18 @@ a
 .link-span
   display flex
   padding 5px 20px 6px 18px
-  &:hover
-    background-color $linkHoverBackground
+  @media (min-width $breakpointMobile + 1px)
+    &:hover
+      background-color $linkHoverBackground
   & span:first-child
     flex-shrink 0
     width 40px
     opacity 0.3
   .router-link-active &
     background-color $linkSelectedBackground
-    &:hover
-      background-color $linkSelectedBackground
+    @media (min-width $breakpointMobile + 1px)
+      &:hover
+        background-color $linkSelectedBackground
     & span:first-child
       opacity 0.5
 

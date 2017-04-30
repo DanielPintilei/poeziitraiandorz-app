@@ -244,6 +244,9 @@ export default {
   outline-offset -2px
   &::placeholder
     opacity 0.5
+    :focus&
+    :active&
+      opacity 0
   &::-webkit-search-cancel-button
   &::-webkit-search-decoration
     -webkit-appearance none

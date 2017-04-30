@@ -5,18 +5,13 @@
       @click="setSelectedTheme(index)"
       :style="{ backgroundColor: theme.background }"
       class="swatch">
-      <div
-        class="swatch__inner"
-        :style="{ backgroundColor: index === currentTheme ? theme.accent : '' }">
-        <svg
-          v-if="index === currentTheme"
-          :fill="theme.background"
-          class="swatch__check"
-          height="24" viewBox="0 0 24 24" width="24">
-          <path d="M0 0h24v24H0z" fill="none"/>
-          <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
-        </svg>
-      </div>
+      <svg
+        v-if="index === currentTheme"
+        :fill="theme.accent"
+        class="swatch__check"
+        height="24" width="24">
+        <use xlink:href="#iconCheckOn"></use>
+      </svg>
     </div>
   </div>
 </template>
@@ -77,18 +72,8 @@ export default {
   &:active
     transform scale(0.9)
 
-.swatch__inner
-  display flex
-  align-items center
-  justify-content center
-  width 20px
-  height 20px
-  border-radius 3px
-
 .swatch__check
-  width 18px
-  height 18px
-  animation swatch-check 0.2s forwards
+  animation swatch-check 0.08s
 @keyframes swatch-check
   from
     transform scale(0)

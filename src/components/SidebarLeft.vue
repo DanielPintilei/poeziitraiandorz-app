@@ -16,7 +16,7 @@
           <use xlink:href="#iconList"></use>
         </svg>
         <div
-          @click="handleScrollLinkIntoView"
+          @click="handleScrollSortedLinkIntoView"
           class="sort-cuprins">
           <input
             v-model="sortCuprinsAZ"
@@ -93,10 +93,10 @@
           </div>
         </div>
         <div
-          v-if="sortCuprinsAZ && $store.state.cuprinsPoeziiSnap"
+          v-if="sortCuprinsAZ && $store.state.cuprinsPoeziiSort"
           class="cuprinsAZ">
           <router-link
-            v-for="(poezie, index) in $store.state.cuprinsPoeziiSnap"
+            v-for="(poezie, index) in $store.state.cuprinsPoeziiSort"
             :id="index+1"
             :to="{
               name: 'Poezie',
@@ -154,10 +154,10 @@ export default {
       if (routeParent && !routeParent.checked) routeParent.click()
       route.scrollIntoView()
     },
-    handleScrollLinkIntoView () {
-      if (!this.$store.state.cuprinsPoeziiSnap) {
+    handleScrollSortedLinkIntoView () {
+      if (!this.$store.state.cuprinsPoeziiSort) {
         let wait = setInterval(() => {
-          if (this.$store.state.cuprinsPoeziiSnap) {
+          if (this.$store.state.cuprinsPoeziiSort) {
             clearInterval(wait)
             this.scrollLinkIntoView()
           }
@@ -171,7 +171,7 @@ export default {
     },
     sortCuprinsAZ () {
       this.$store.commit('toggleSortCuprinsAZ', this.sortCuprinsAZ)
-      if (!this.$store.state.cuprinsPoeziiSnap) this.$emit('setCuprinsPoeziiSnap')
+      if (!this.$store.state.cuprinsPoeziiSort) this.$emit('setCuprinsPoeziiSort')
     }
   }
 }

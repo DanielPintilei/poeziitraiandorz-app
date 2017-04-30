@@ -113,6 +113,7 @@ export default {
   methods: {
     sidebarLeftToggle () {
       this.$store.commit('toggleSidebarLeft')
+      if (!this.$store.state.cuprinsCaieteSnap) this.$emit('setCuprinsCaiete')
     },
     sidebarRightToggle () {
       this.$store.commit('toggleSidebarRight')

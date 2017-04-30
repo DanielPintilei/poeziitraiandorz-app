@@ -8,15 +8,15 @@ export const store = new Vuex.Store({
     sidebarLeftToggled: false,
     sidebarRightToggled: false,
     currentTheme: 0,
-    selectedCaiete: [],
-    sortCuprinsAZ: false,
     fontSize: 1,
     selectEnabled: false,
     showCopyConfirm: false,
     moreOpen: false,
     searchFocused: false,
+    selectedCaiete: [],
+    sortCuprinsAZ: false,
     cuprinsCaieteSnap: null,
-    cuprinsPoeziiSnap: null,
+    cuprinsPoeziiSort: null,
     fullBook: false,
     poezieSnap: {},
     poeziiSnap: [],
@@ -27,16 +27,26 @@ export const store = new Vuex.Store({
   },
   mutations: {
     toggleSidebarLeft (state) {
-      const route = document.querySelector('.router-link-active')
-      const routeParent = route.parentElement.parentElement.firstElementChild
+      const scrollLinkIntoView = () => {
+        const route = document.querySelector('.router-link-active')
+        const routeParent = route.parentElement.parentElement.firstElementChild
+        if (routeParent && !routeParent.checked) routeParent.click()
+        route.scrollIntoView()
+      }
       const waitToggle = new Promise((resolve) => {
         state.sidebarLeftToggled = !state.sidebarLeftToggled
         resolve()
       })
       waitToggle.then(() => {
         if (state.sidebarLeftToggled) {
-          if (routeParent && !routeParent.checked) routeParent.click()
-          route.scrollIntoView()
+          if (!state.cuprinsCaieteSnap) {
+            let wait = setInterval(() => {
+              if (state.cuprinsCaieteSnap) {
+                clearInterval(wait)
+                scrollLinkIntoView()
+              }
+            }, 100)
+          } else scrollLinkIntoView()
         }
       })
     },
@@ -89,8 +99,8 @@ export const store = new Vuex.Store({
     setCuprinsCaieteSnap (state, n) {
       state.cuprinsCaieteSnap = n
     },
-    setCuprinsPoeziiSnap (state, n) {
-      state.cuprinsPoeziiSnap = n
+    setCuprinsPoeziiSort (state, n) {
+      state.cuprinsPoeziiSort = n
     },
     setFullBook (state) {
       state.fullBook = true

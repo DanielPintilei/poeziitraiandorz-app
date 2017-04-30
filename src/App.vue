@@ -51,7 +51,7 @@
     </transition>
     <transition name="sidebar-slide-left">
       <sidebar-left
-        v-on:setCuprinsPoeziiSnap="cuprinsPoeziiSnap"
+        v-on:setCuprinsPoeziiSort="cuprinsPoeziiSort"
         :theme="currentTheme"
         v-show="$store.state.sidebarLeftToggled">
       </sidebar-left>
@@ -60,6 +60,7 @@
       :style="{ backgroundColor: currentTheme.background2 }"
       class="app__main">
       <navbar
+        v-on:setCuprinsCaiete="cuprinsCaieteSnap"
         v-on:setFullBook="poeziiSnap"
         :theme="currentTheme"
         :themes="themes">
@@ -105,7 +106,6 @@ import More from './components/More'
 const app = Firebase.initializeApp({databaseURL: 'https://poeziitraiandorz.firebaseio.com'})
 const db = app.database()
 const cuprinsCaieteRef = db.ref('cuprinsCaiete')
-const cuprinsPoeziiRef = db.ref('cuprinsPoezii')
 const poeziiRef = db.ref('poezii')
 
 export default {
@@ -184,11 +184,6 @@ export default {
     metaThemeColor.setAttribute('content', this.themes[this.$store.state.currentTheme].theme)
 
     this.poezieSnap()
-
-    const getSnap = (snap) => {
-      this.$store.commit('setCuprinsCaieteSnap', snap.val())
-    }
-    cuprinsCaieteRef.once('value').then(getSnap)
   },
   computed: {
     currentTheme () {
@@ -205,11 +200,23 @@ export default {
     toggleMore () {
       this.$store.commit('toggleMore')
     },
-    cuprinsPoeziiSnap () {
+    cuprinsCaieteSnap () {
       const getSnap = (snap) => {
-        this.$store.commit('setCuprinsPoeziiSnap', snap.val())
+        this.$store.commit('setCuprinsCaieteSnap', snap.val())
       }
-      cuprinsPoeziiRef.once('value').then(getSnap)
+      cuprinsCaieteRef.once('value').then(getSnap)
+    },
+    cuprinsPoeziiSort () {
+      let cuprinsPoezii = []
+      const sortCuprins = () => {
+        for (const caiet of this.$store.state.cuprinsCaieteSnap) {
+          for (const poezie of caiet.p) {
+            cuprinsPoezii.push(poezie)
+          }
+        }
+        return cuprinsPoezii.sort((a, b) => a.t.localeCompare(b.t, 'ro'))
+      }
+      this.$store.commit('setCuprinsPoeziiSort', sortCuprins())
     },
     poezieSnap () {
       const getSnap = (snap) => {

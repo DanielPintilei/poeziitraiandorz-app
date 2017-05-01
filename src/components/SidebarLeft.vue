@@ -172,7 +172,7 @@ export default {
     },
     sortCuprinsAZ () {
       this.$store.commit('toggleSortCuprinsAZ', this.sortCuprinsAZ)
-      if (!this.$store.state.cuprinsPoeziiSort) this.$emit('setCuprinsPoeziiSort')
+      // if (!this.$store.state.cuprinsPoeziiSort) this.$emit('setCuprinsPoeziiSort')
     }
   }
 }

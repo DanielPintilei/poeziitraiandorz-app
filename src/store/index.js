@@ -12,18 +12,18 @@ export const store = new Vuex.Store({
     selectEnabled: false,
     showCopyConfirm: false,
     moreOpen: false,
-    searchFocused: false,
+    // searchFocused: false,
     selectedCaiete: [],
-    sortCuprinsAZ: false,
+    // sortCuprinsAZ: false,
     cuprinsCaieteSnap: false,
-    fullBook: false,
-    poezieSnap: {},
-    poeziiSnap: false,
-    filtersOpen: true,
-    filtersCheck: ['checkboxTitlu', 'checkboxVersuri']
+    // fullBook: false,
+    poezieSnap: {}
+    // poeziiSnap: false,
+    // filtersOpen: true,
+    // filtersCheck: ['checkboxTitlu', 'checkboxVersuri']
   },
-  getters: {
-  },
+  // getters: {
+  // },
   mutations: {
     toggleSidebarLeft (state) {
       const scrollLinkIntoView = () => {
@@ -62,9 +62,9 @@ export const store = new Vuex.Store({
     setSelectedCaiete (state, n) {
       state.selectedCaiete = n
     },
-    toggleSortCuprinsAZ (state, n) {
-      state.sortCuprinsAZ = n
-    },
+    // toggleSortCuprinsAZ (state, n) {
+    //   state.sortCuprinsAZ = n
+    // },
     setSelectedTheme (state, n) {
       state.currentTheme = n
     },
@@ -86,24 +86,24 @@ export const store = new Vuex.Store({
         state.showCopyConfirm = false
       }, 3000)
     },
-    handleSearchFocus (state, n) {
-      state.searchFocused = n
-    },
-    toggleFilters (state) {
-      state.filtersOpen = !state.filtersOpen
-    },
-    setFiltersCheck (state, n) {
-      state.filtersCheck = n
-    },
+    // handleSearchFocus (state, n) {
+    //   state.searchFocused = n
+    // },
+    // toggleFilters (state) {
+    //   state.filtersOpen = !state.filtersOpen
+    // },
+    // setFiltersCheck (state, n) {
+    //   state.filtersCheck = n
+    // },
     setCuprinsCaieteSnap (state, n) {
       state.cuprinsCaieteSnap = true
     },
-    setPoeziiSnap (state, n) {
-      state.poeziiSnap = true
-    },
-    setFullBook (state) {
-      state.fullBook = true
-    },
+    // setPoeziiSnap (state, n) {
+    //   state.poeziiSnap = true
+    // },
+    // setFullBook (state) {
+    //   state.fullBook = true
+    // },
     setPoezieSnap (state, n) {
       state.poezieSnap = n
     }

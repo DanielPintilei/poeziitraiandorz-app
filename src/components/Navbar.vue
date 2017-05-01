@@ -117,8 +117,8 @@ export default {
     },
     sidebarRightToggle () {
       this.$store.commit('toggleSidebarRight')
-      this.$store.commit('setFullBook')
-      if (!this.$store.state.poeziiSnap) this.$emit('setFullBook')
+      // this.$store.commit('setFullBook')
+      // if (!this.$store.state.poeziiSnap) this.$emit('setFullBook')
     },
     toggleThemePicker () {
       this.themePickerToggled = !this.themePickerToggled

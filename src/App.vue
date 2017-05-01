@@ -50,10 +50,10 @@
       </div>
     </transition>
     <transition name="sidebar-slide-left">
+        <!--v-on:setCuprinsPoeziiSort="getCuprinsPoeziiSort"-->
       <sidebar-left
         :cuprinsCaieteSnap="cuprinsCaieteSnap"
         :cuprinsPoeziiSort="cuprinsPoeziiSort"
-        v-on:setCuprinsPoeziiSort="getCuprinsPoeziiSort"
         :theme="currentTheme"
         v-show="$store.state.sidebarLeftToggled">
       </sidebar-left>
@@ -61,15 +61,15 @@
     <main
       :style="{ backgroundColor: currentTheme.background2 }"
       class="app__main">
+        <!--v-on:setFullBook="getPoeziiSnap"-->
       <navbar
         v-on:setCuprinsCaiete="getCuprinsCaieteSnap"
-        v-on:setFullBook="getPoeziiSnap"
         :theme="currentTheme"
         :themes="themes">
       </navbar>
       <transition name="router-view" mode="out-in">
+          <!--:poeziiSnap="poeziiSnap"-->
         <router-view
-          :poeziiSnap="poeziiSnap"
           :theme="currentTheme"
           class="app__main-view">
         </router-view>
@@ -123,7 +123,7 @@ export default {
     return {
       cuprinsCaieteSnap: null,
       cuprinsPoeziiSort: null,
-      poeziiSnap: [],
+      // poeziiSnap: [],
       themes: [
         {
           theme: '#ecce93',
@@ -213,28 +213,28 @@ export default {
       }
       cuprinsCaieteRef.once('value').then(getSnap)
     },
-    getCuprinsPoeziiSort () {
-      let cuprinsPoezii = []
-      for (const caiet of this.cuprinsCaieteSnap) {
-        for (const poezie of caiet.p) {
-          cuprinsPoezii.push(poezie)
-        }
-      }
-      this.cuprinsPoeziiSort = cuprinsPoezii.sort((a, b) => a.t.localeCompare(b.t, 'ro'))
-    },
+    // getCuprinsPoeziiSort () {
+    //   let cuprinsPoezii = []
+    //   for (const caiet of this.cuprinsCaieteSnap) {
+    //     for (const poezie of caiet.p) {
+    //       cuprinsPoezii.push(poezie)
+    //     }
+    //   }
+    //   this.cuprinsPoeziiSort = cuprinsPoezii.sort((a, b) => a.t.localeCompare(b.t, 'ro'))
+    // },
     poezieSnap () {
       const getSnap = (snap) => {
         this.$store.commit('setPoezieSnap', snap.val())
       }
       poeziiRef.child(this.currentNr).once('value').then(getSnap)
-    },
-    getPoeziiSnap () {
-      const getSnap = (snap) => {
-        this.poeziiSnap = snap.val()
-        this.$store.commit('setPoeziiSnap')
-      }
-      poeziiRef.once('value').then(getSnap)
     }
+    // getPoeziiSnap () {
+    //   const getSnap = (snap) => {
+    //     this.poeziiSnap = snap.val()
+    //     this.$store.commit('setPoeziiSnap')
+    //   }
+    //   poeziiRef.once('value').then(getSnap)
+    // }
   },
   watch: {
     '$route' () {

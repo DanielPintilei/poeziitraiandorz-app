@@ -5,17 +5,20 @@
     @swiperight="prevPoezie"
     id="poezieParent"
     class="poezie">
-    <transition :name="poezieTransitionName" mode="out-in">
+    <transition
+      v-on:after-leave="afterLeave"
+      :name="poezieTransitionName"
+      mode="out-in">
       <article
         :key="nr"
         id="poezie"
         :style="{fontSize: fontSizeREM}"
         :class="{select: $store.state.selectEnabled}"
         class="poezie__main">
-        <template v-if="$store.state.fullBook && poeziiSnap[nr-1]">
+        <!--<template v-if="$store.state.fullBook && poeziiSnap[nr-1]">
           <h1 class="poezie__titlu">
-            <!--full
-            {{ poeziiSnap[nr-1].n }}-->
+            <!-0-full
+            {{ poeziiSnap[nr-1].n }}-0->
             {{ poeziiSnap[nr-1].t }}
           </h1>
           <p class="poezie__desc">{{ poeziiSnap[nr-1].d }}</p>
@@ -24,6 +27,17 @@
             class="poezie__strofe">{{ poeziiSnap[nr-1].s }}</pre>
         </template>
         <template v-if="$store.state.poezieSnap && !poeziiSnap.length > 0">
+          <h1 class="poezie__titlu">
+            <!-0-single
+            {{ $store.state.poezieSnap.n }}-0->
+            {{ $store.state.poezieSnap.t }}
+          </h1>
+          <p class="poezie__desc">{{ $store.state.poezieSnap.d }}</p>
+          <pre
+            :style="{columnRuleColor: theme.rule}"
+            class="poezie__strofe">{{ $store.state.poezieSnap.s }}</pre>
+        </template>-->
+        <template v-if="$store.state.poezieSnap">
           <h1 class="poezie__titlu">
             <!--single
             {{ $store.state.poezieSnap.n }}-->
@@ -181,7 +195,8 @@ import Loading from './Loading'
 
 export default {
   name: 'poezie',
-  props: ['theme', 'nr', 'poeziiSnap'],
+  // props: ['theme', 'nr', 'poeziiSnap'],
+  props: ['theme', 'nr'],
   components: {
     Loading
   },
@@ -251,9 +266,6 @@ export default {
         this.nextPoezie()
       }
     },
-    scrollIntoViewPoezie () {
-      document.getElementById('poezieParent').scrollTop = 0
-    },
     toggleZoomMenu () {
       this.zoomMenuOpen = !this.zoomMenuOpen
     },
@@ -271,6 +283,9 @@ export default {
     },
     enableSelect () {
       this.$store.commit('setSelectEnabled', true)
+    },
+    afterLeave () {
+      document.getElementById('poezieParent').scrollTop = 0
     }
   },
   watch: {
@@ -278,8 +293,6 @@ export default {
       const toDepth = to.params.order === undefined ? to.params.nr : to.params.order
       const fromDepth = from.params.order === undefined ? from.params.nr : from.params.order
       this.poezieTransitionName = toDepth < fromDepth ? 'slide-right-poezie' : 'slide-left-poezie'
-
-      this.scrollIntoViewPoezie()
 
       this.currentURL = location.href
     }

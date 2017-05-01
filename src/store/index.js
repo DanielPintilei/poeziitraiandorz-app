@@ -15,11 +15,10 @@ export const store = new Vuex.Store({
     searchFocused: false,
     selectedCaiete: [],
     sortCuprinsAZ: false,
-    cuprinsCaieteSnap: null,
-    cuprinsPoeziiSort: null,
+    cuprinsCaieteSnap: false,
     fullBook: false,
     poezieSnap: {},
-    poeziiSnap: [],
+    poeziiSnap: false,
     filtersOpen: true,
     filtersCheck: ['checkboxTitlu', 'checkboxVersuri']
   },
@@ -97,19 +96,16 @@ export const store = new Vuex.Store({
       state.filtersCheck = n
     },
     setCuprinsCaieteSnap (state, n) {
-      state.cuprinsCaieteSnap = n
+      state.cuprinsCaieteSnap = true
     },
-    setCuprinsPoeziiSort (state, n) {
-      state.cuprinsPoeziiSort = n
+    setPoeziiSnap (state, n) {
+      state.poeziiSnap = true
     },
     setFullBook (state) {
       state.fullBook = true
     },
     setPoezieSnap (state, n) {
       state.poezieSnap = n
-    },
-    setPoeziiSnap (state, n) {
-      state.poeziiSnap = n
     }
   }
 })

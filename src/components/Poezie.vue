@@ -12,18 +12,18 @@
         :style="{fontSize: fontSizeREM}"
         :class="{select: $store.state.selectEnabled}"
         class="poezie__main">
-        <template v-if="$store.state.fullBook && $store.state.poeziiSnap[nr-1]">
+        <template v-if="$store.state.fullBook && poeziiSnap[nr-1]">
           <h1 class="poezie__titlu">
             <!--full
-            {{ $store.state.poeziiSnap[nr-1].n }}-->
-            {{ $store.state.poeziiSnap[nr-1].t }}
+            {{ poeziiSnap[nr-1].n }}-->
+            {{ poeziiSnap[nr-1].t }}
           </h1>
-          <p class="poezie__desc">{{ $store.state.poeziiSnap[nr-1].d }}</p>
+          <p class="poezie__desc">{{ poeziiSnap[nr-1].d }}</p>
           <pre
             :style="{columnRuleColor: theme.rule}"
-            class="poezie__strofe">{{ $store.state.poeziiSnap[nr-1].s }}</pre>
+            class="poezie__strofe">{{ poeziiSnap[nr-1].s }}</pre>
         </template>
-        <template v-if="$store.state.poezieSnap && !$store.state.poeziiSnap.length > 0">
+        <template v-if="$store.state.poezieSnap && !poeziiSnap.length > 0">
           <h1 class="poezie__titlu">
             <!--single
             {{ $store.state.poezieSnap.n }}-->
@@ -42,6 +42,7 @@
       </article>
     </transition>
     <div
+      v-if="$store.state.cuprinsCaieteSnap"
       @click="prevPoezie"
       class="button-prev">
       <svg
@@ -52,6 +53,7 @@
       </svg>
     </div>
     <div
+      v-if="$store.state.cuprinsCaieteSnap"
       @click="nextPoezie"
       class="button-next">
       <svg
@@ -179,7 +181,7 @@ import Loading from './Loading'
 
 export default {
   name: 'poezie',
-  props: ['theme', 'nr', 'titlu'],
+  props: ['theme', 'nr', 'poeziiSnap'],
   components: {
     Loading
   },

@@ -292,14 +292,12 @@ export default {
   padding-right 22px
   font-size 15px
   overflow hidden
-  // border-bottom 1px solid
 
 .sidebar-right__filter
   display flex
   align-items center
   margin-top 10px
-  // &:last-child
-  //   padding-bottom 15px
+
   input
     display none
     &:checked + label svg .off

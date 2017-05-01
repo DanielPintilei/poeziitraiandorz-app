@@ -16,6 +16,7 @@
           <use xlink:href="#iconList"></use>
         </svg>
         <div
+          style="display: none"
           @click="handleScrollSortedLinkIntoView"
           class="sort-cuprins">
           <input
@@ -47,7 +48,7 @@
         }">
         <div
           v-if="!sortCuprinsAZ"
-          v-for="(caiet, index) in $store.state.cuprinsCaieteSnap"
+          v-for="(caiet, index) in cuprinsCaieteSnap"
           class="caiet">
           <input
             type="checkbox"
@@ -93,10 +94,10 @@
           </div>
         </div>
         <div
-          v-if="sortCuprinsAZ && $store.state.cuprinsPoeziiSort"
+          v-if="sortCuprinsAZ && cuprinsPoeziiSort"
           class="cuprinsAZ">
           <router-link
-            v-for="(poezie, index) in $store.state.cuprinsPoeziiSort"
+            v-for="(poezie, index) in cuprinsPoeziiSort"
             :id="index+1"
             :to="{
               name: 'Poezie',
@@ -125,7 +126,7 @@ import Loading from './Loading'
 
 export default {
   name: 'sidebar-left',
-  props: ['theme'],
+  props: ['theme', 'cuprinsCaieteSnap', 'cuprinsPoeziiSort'],
   components: {
     Loading
   },
@@ -155,9 +156,9 @@ export default {
       route.scrollIntoView()
     },
     handleScrollSortedLinkIntoView () {
-      if (!this.$store.state.cuprinsPoeziiSort) {
+      if (!this.cuprinsPoeziiSort) {
         let wait = setInterval(() => {
-          if (this.$store.state.cuprinsPoeziiSort) {
+          if (this.cuprinsPoeziiSort) {
             clearInterval(wait)
             this.scrollLinkIntoView()
           }

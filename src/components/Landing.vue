@@ -1,6 +1,5 @@
 <template>
   <div class="landing">
-    în lucru
   </div>
 </template>
 

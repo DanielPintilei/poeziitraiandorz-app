@@ -86,7 +86,7 @@
               <span
                 @click="tapPoezie"
                 class="link-span">
-                <span>{{poezie.n}}</span>
+                <span class="link-span__nr">{{poezie.n}}</span>
                 <span>{{poezie.t}}</span>
               </span>
             </router-link>
@@ -109,7 +109,7 @@
             <span
               @click="tapPoezie"
               class="link-span">
-              <span>{{poezie.n}}</span>
+              <span class="link-span__nr">{{poezie.n}}</span>
               <span>{{poezie.t}}</span>
             </span>
           </router-link>
@@ -290,17 +290,18 @@ a
   @media (min-width $breakpointMobile + 1px)
     &:hover
       background-color $linkHoverBackground
-  & span:first-child
-    flex-shrink 0
-    width 40px
-    opacity 0.3
   .router-link-active &
     background-color $linkSelectedBackground
     @media (min-width $breakpointMobile + 1px)
       &:hover
         background-color $linkSelectedBackground
-    & span:first-child
-      opacity 0.5
+
+.link-span__nr
+  flex-shrink 0
+  width 45px
+  opacity 0.3
+  .router-link-active &
+    opacity 0.5
 
 .loading
   .caiet + &

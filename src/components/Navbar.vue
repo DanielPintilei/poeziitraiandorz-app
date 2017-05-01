@@ -69,6 +69,7 @@
         </transition>
       </div>
       <div
+        style="display: none"
         :class="{toggled: $store.state.sidebarRightToggled}"
         class="navbar__icons-toggle navbar__icons-toggle--right">
         <svg
@@ -81,7 +82,6 @@
           <path d="M0-.25h24v24H0z" fill="none"/>
         </svg>
         <svg
-          style="visibility: hidden"
           @click="sidebarRightToggle"
           v-show="!$store.state.sidebarRightToggled"
           :fill="theme.icon"

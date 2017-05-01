@@ -75,12 +75,12 @@
         </router-view>
       </transition>
     </main>
-    <transition name="sidebar-slide-right">
+    <!--<transition name="sidebar-slide-right">
       <sidebar-right
         :theme="currentTheme"
         v-show="$store.state.sidebarRightToggled">
       </sidebar-right>
-    </transition>
+    </transition>-->
     <transition name="backdrop">
       <div
         @click="toggleMore"
@@ -103,7 +103,7 @@ import Firebase from 'firebase'
 
 import Navbar from './components/Navbar'
 import SidebarLeft from './components/SidebarLeft'
-import SidebarRight from './components/SidebarRight'
+// import SidebarRight from './components/SidebarRight'
 import More from './components/More'
 
 const app = Firebase.initializeApp({databaseURL: 'https://poeziitraiandorz.firebaseio.com'})
@@ -116,7 +116,7 @@ export default {
   components: {
     Navbar,
     SidebarLeft,
-    SidebarRight,
+    // SidebarRight,
     More
   },
   data () {
@@ -207,11 +207,23 @@ export default {
       this.$store.commit('toggleMore')
     },
     getCuprinsCaieteSnap () {
-      const getSnap = (snap) => {
-        this.cuprinsCaieteSnap = snap.val()
+      const parseSnap = () => {
+        this.cuprinsCaieteSnap = JSON.parse(localStorage.getItem('poezii'))
+      }
+      const setStore = () => {
         this.$store.commit('setCuprinsCaieteSnap')
       }
-      cuprinsCaieteRef.once('value').then(getSnap)
+      if (!localStorage.getItem('poezii')) {
+        const getSnap = (snap) => {
+          localStorage.setItem('poezii', JSON.stringify(snap.val()))
+          parseSnap()
+          setStore()
+        }
+        cuprinsCaieteRef.once('value').then(getSnap)
+      } else {
+        parseSnap()
+        setStore()
+      }
     },
     // getCuprinsPoeziiSort () {
     //   let cuprinsPoezii = []
@@ -372,35 +384,35 @@ body
   to
     transform translateX(- $sidebarLeftWidth)
 
-.sidebar-slide-right-enter-active
-  @media (max-width $breakpointMobile)
-    animation slide-right-in $sidebarDuration $sidebarTiming
-  @media (min-width $breakpointMobile + 1px)
-    animation width-right-in $sidebarDuration $sidebarTiming
-.sidebar-slide-right-leave-active
-  @media (max-width $breakpointMobile)
-    animation slide-right-out $sidebarDuration $sidebarTiming
-  @media (min-width $breakpointMobile + 1px)
-    animation width-right-out $sidebarDuration $sidebarTiming
-@keyframes width-right-in
-  from
-    width 0
-  to
-    width $sidebarRightWidth
-@keyframes width-right-out
-  from
-    width $sidebarRightWidth
-  to
-    width 0
-@keyframes slide-right-in
-  from
-    transform translateX($sidebarRightWidth)
-  to
-    transform translateX(0)
-@keyframes slide-right-out
-  from
-    transform translateX(0)
-  to
-    transform translateX($sidebarRightWidth)
+// .sidebar-slide-right-enter-active
+//   @media (max-width $breakpointMobile)
+//     animation slide-right-in $sidebarDuration $sidebarTiming
+//   @media (min-width $breakpointMobile + 1px)
+//     animation width-right-in $sidebarDuration $sidebarTiming
+// .sidebar-slide-right-leave-active
+//   @media (max-width $breakpointMobile)
+//     animation slide-right-out $sidebarDuration $sidebarTiming
+//   @media (min-width $breakpointMobile + 1px)
+//     animation width-right-out $sidebarDuration $sidebarTiming
+// @keyframes width-right-in
+//   from
+//     width 0
+//   to
+//     width $sidebarRightWidth
+// @keyframes width-right-out
+//   from
+//     width $sidebarRightWidth
+//   to
+//     width 0
+// @keyframes slide-right-in
+//   from
+//     transform translateX($sidebarRightWidth)
+//   to
+//     transform translateX(0)
+// @keyframes slide-right-out
+//   from
+//     transform translateX(0)
+//   to
+//     transform translateX($sidebarRightWidth)
 
 </style>

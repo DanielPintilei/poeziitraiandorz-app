@@ -15,8 +15,7 @@
           width="24" height="24">
           <use xlink:href="#iconList"></use>
         </svg>
-        <div
-          style="display: none"
+        <!--<div
           @click="handleScrollSortedLinkIntoView"
           class="sort-cuprins">
           <input
@@ -35,7 +34,7 @@
               <path d="M14.94 4.66h-4.72l2.36-2.36zm-4.69 14.71h4.66l-2.33 2.33zM6.1 6.27L1.6 17.73h1.84l.92-2.45h5.11l.92 2.45h1.84L7.74 6.27H6.1zm-1.13 7.37l1.94-5.18 1.94 5.18H4.97zm10.76 2.5h6.12v1.59h-8.53v-1.29l5.92-8.56h-5.88v-1.6h8.3v1.26l-5.93 8.6z"/>
             </svg>
           </label>
-        </div>
+        </div>-->
       </div>
       <v-touch
         :swipe-options="{ direction: 'horizontal'}"
@@ -93,7 +92,7 @@
             </router-link>
           </div>
         </div>
-        <div
+        <!--<div
           v-if="sortCuprinsAZ && cuprinsPoeziiSort"
           class="cuprinsAZ">
           <router-link
@@ -114,7 +113,7 @@
               <span>{{poezie.t}}</span>
             </span>
           </router-link>
-        </div>
+        </div>-->
         <loading class="loading" :color="theme.accent"></loading>
       </v-touch>
     </div>
@@ -154,26 +153,26 @@ export default {
       const routeParent = route.parentElement.parentElement.firstElementChild
       if (routeParent && !routeParent.checked) routeParent.click()
       route.scrollIntoView()
-    },
-    handleScrollSortedLinkIntoView () {
-      if (!this.cuprinsPoeziiSort) {
-        let wait = setInterval(() => {
-          if (this.cuprinsPoeziiSort) {
-            clearInterval(wait)
-            this.scrollLinkIntoView()
-          }
-        }, 100)
-      } else this.scrollLinkIntoView()
     }
+    // handleScrollSortedLinkIntoView () {
+    //   if (!this.cuprinsPoeziiSort) {
+    //     let wait = setInterval(() => {
+    //       if (this.cuprinsPoeziiSort) {
+    //         clearInterval(wait)
+    //         this.scrollLinkIntoView()
+    //       }
+    //     }, 100)
+    //   } else this.scrollLinkIntoView()
+    // }
   },
   watch: {
     selectedCaiete () {
       this.$store.commit('setSelectedCaiete', this.selectedCaiete)
-    },
-    sortCuprinsAZ () {
-      this.$store.commit('toggleSortCuprinsAZ', this.sortCuprinsAZ)
-      // if (!this.$store.state.cuprinsPoeziiSort) this.$emit('setCuprinsPoeziiSort')
     }
+    // sortCuprinsAZ () {
+    //   this.$store.commit('toggleSortCuprinsAZ', this.sortCuprinsAZ)
+    //   if (!this.$store.state.cuprinsPoeziiSort) this.$emit('setCuprinsPoeziiSort')
+    // }
   }
 }
 </script>

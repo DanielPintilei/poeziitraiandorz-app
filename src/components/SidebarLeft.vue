@@ -15,26 +15,6 @@
           width="24" height="24">
           <use xlink:href="#iconList"></use>
         </svg>
-        <!--<div
-          @click="handleScrollSortedLinkIntoView"
-          class="sort-list">
-          <input
-            v-model="sortCuprinsAZ"
-            type="checkbox"
-            id="checkboxSortCuprins"
-            class="sort-list__checkbox">
-          <label
-            for="checkboxSortCuprins"
-            class="sort-list__label">
-            <svg
-              :fill="!sortCuprinsAZ ? theme.icon : theme.accent"
-              class="icon icon-sort-list"
-              height="24" viewBox="0 0 24 24" width="24">
-              <path d="M0 0h24v24H0V0zm0 0h24v24H0V0zm.75.75h22.5v22.5H.75z" fill="none"/>
-              <path d="M14.94 4.66h-4.72l2.36-2.36zm-4.69 14.71h4.66l-2.33 2.33zM6.1 6.27L1.6 17.73h1.84l.92-2.45h5.11l.92 2.45h1.84L7.74 6.27H6.1zm-1.13 7.37l1.94-5.18 1.94 5.18H4.97zm10.76 2.5h6.12v1.59h-8.53v-1.29l5.92-8.56h-5.88v-1.6h8.3v1.26l-5.93 8.6z"/>
-            </svg>
-          </label>
-        </div>-->
       </div>
       <v-touch
         :swipe-options="{ direction: 'horizontal'}"
@@ -45,17 +25,16 @@
           backgroundColor: theme.background,
           borderColor: theme.border3
         }">
-          <!--v-if="!sortCuprinsAZ"-->
         <div
           v-for="(folder, index) in folderListSnap"
           class="folder">
           <input
-            type="checkbox"
+            type="radio"
             :id="`folder${index}`"
-            :value="index"
-            v-model="selectedFolders"
-            class="folder__checkbox">
+            name="folder"
+            class="folder__radio">
           <label
+            @click="handleFolderClick(`folder${index}`)"
             :for="`folder${index}`"
             class="folder__title">
             <svg
@@ -92,28 +71,6 @@
             </router-link>
           </div>
         </div>
-        <!--<div
-          v-if="sortCuprinsAZ && listPoemsSort"
-          class="listAZ">
-          <router-link
-            v-for="(poem, index) in listPoemsSort"
-            :id="index+1"
-            :to="{
-              name: 'Poem',
-              params: {
-                nr: +poem.n,
-                title: formatTitle(poem.t),
-                order: index+1
-              }
-            }">
-            <span
-              @click="tapPoemLink"
-              class="link-span">
-              <span class="link-span__nr">{{poem.n}}</span>
-              <span>{{poem.t}}</span>
-            </span>
-          </router-link>
-        </div>-->
         <loading class="loading" :color="theme.accent"></loading>
       </v-touch>
     </div>
@@ -125,17 +82,9 @@ import Loading from './Loading'
 
 export default {
   name: 'sidebar-left',
-  // props: ['theme', 'folderListSnap', 'listPoemsSort'],
   props: ['theme', 'folderListSnap'],
   components: {
     Loading
-  },
-  data () {
-    return {
-      selectedFolders: this.$store.state.lastSelectedFolder
-      // selectedFolders: [+localStorage.getItem('selectedFolders')] || 0
-      // sortCuprinsAZ: this.$store.state.sortCuprinsAZ
-    }
   },
   methods: {
     formatTitle (title) {
@@ -144,37 +93,19 @@ export default {
     toggleSidebarLeft () {
       this.$store.commit('toggleSidebarLeft')
     },
+    handleFolderClick (folder) {
+      if (document.getElementById(folder).checked) {
+        setTimeout(() => {
+          document.getElementById(folder).checked = false
+        }, 100)
+      }
+    },
     tapPoemLink () {
       const tapMQ = window.matchMedia('(max-width: 1100px)')
       if (tapMQ.matches) {
         this.toggleSidebarLeft()
       }
     }
-    // scrollLinkIntoView () {
-    //   const route = document.querySelector('.router-link-active')
-    //   const routeParent = route.parentElement.parentElement.firstElementChild
-    //   if (routeParent && !routeParent.checked) routeParent.click()
-    //   route.scrollIntoView()
-    // },
-    // handleScrollSortedLinkIntoView () {
-    //   if (!this.listPoemsSort) {
-    //     let wait = setInterval(() => {
-    //       if (this.listPoemsSort) {
-    //         clearInterval(wait)
-    //         this.scrollLinkIntoView()
-    //       }
-    //     }, 100)
-    //   } else this.scrollLinkIntoView()
-    // }
-  },
-  watch: {
-    selectedFolders () {
-      this.$store.commit('setLastSelectedFolder', this.selectedFolders)
-    }
-    // sortCuprinsAZ () {
-    //   this.$store.commit('toggleSortCuprinsAZ', this.sortCuprinsAZ)
-    //   if (!this.$store.state.listPoemsSort) this.$emit('setCuprinsPoemsSort')
-    // }
   }
 }
 </script>
@@ -224,7 +155,7 @@ $iconSortHeight = 24px
 .sort-list
   height $iconSortHeight
 
-.sort-list__checkbox
+.sort-list__radio
   display none
   &:checked + .sort-list__label .icon-sort-list
     opacity 1
@@ -250,7 +181,7 @@ a
   text-decoration none
   line-height 1.2
 
-.folder__checkbox
+.folder__radio
   display none
   &:not(:checked) + .folder__title + .poems
     display none

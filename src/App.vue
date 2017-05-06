@@ -50,8 +50,6 @@
       </div>
     </transition>
     <transition name="sidebar-slide-left">
-        <!--v-on:setCuprinsPoeziiSort="getCuprinsPoeziiSort"-->
-        <!--:cuprinsPoeziiSort="cuprinsPoeziiSort"-->
       <sidebar-left
         :folderListSnap="folderListSnap"
         :theme="selectedTheme"
@@ -193,7 +191,12 @@ export default {
     this.poemSnap()
   },
   mounted () {
-    if (this.$store.state.sidebarLeftToggled) this.getFolderListSnap()
+    if (localStorage.getItem('sidebarLeftToggled') === 'true') {
+      this.$store.commit('toggleSidebarLeft')
+      this.getFolderListSnap()
+    }
+    const lastRoute = localStorage.getItem('lastRoute')
+    if (lastRoute) this.$router.push(lastRoute)
   },
   computed: {
     selectedTheme () {
@@ -229,15 +232,6 @@ export default {
         setStore()
       }
     },
-    // getCuprinsPoeziiSort () {
-    //   let cuprinsPoezii = []
-    //   for (const caiet of this.folderListSnap) {
-    //     for (const poem of caiet.p) {
-    //       cuprinsPoezii.push(poem)
-    //     }
-    //   }
-    //   this.cuprinsPoeziiSort = cuprinsPoezii.sort((a, b) => a.t.localeCompare(b.t, 'ro'))
-    // },
     poemSnap () {
       const getSnap = (snap) => {
         this.$store.commit('setSelectedPoem', snap.val())
@@ -257,6 +251,7 @@ export default {
       if (!this.$store.state.fullBook) {
         this.poemSnap()
       }
+      localStorage.setItem('lastRoute', this.$store.state.route.path)
     }
   }
 }

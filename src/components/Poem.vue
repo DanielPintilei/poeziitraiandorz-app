@@ -230,9 +230,6 @@ export default {
     fontSizeREM () {
       return `${this.$store.state.selectedFontSize}rem`
     }
-    // fontSize () {
-    //   return this.$store.state.selectedFontSize
-    // }
   },
   methods: {
     checkFolder (poemLink) {
@@ -289,8 +286,8 @@ export default {
   },
   watch: {
     '$route' (to, from) {
-      const toDepth = to.params.order === undefined ? to.params.nr : to.params.order
-      const fromDepth = from.params.order === undefined ? from.params.nr : from.params.order
+      const toDepth = to.params.nr
+      const fromDepth = from.params.nr
       this.poemTransitionName = toDepth < fromDepth ? 'slide-right-poem' : 'slide-left-poem'
       this.currentURL = location.href
     }

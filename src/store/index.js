@@ -3,26 +3,22 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-const sidebarLeftToggled = localStorage.getItem('sidebarLeftToggled') === 'true' || false
 const sidebarRightToggled = localStorage.getItem('sidebarRightToggled') === 'true' || false
 const selectedTheme = +localStorage.getItem('selectedTheme') || 0
 const selectedFontSize = +localStorage.getItem('selectedFontSize') || 1
-const lastSelectedFolder = [+localStorage.getItem('lastSelectedFolder')] || []
 
 export const store = new Vuex.Store({
   state: {
-    sidebarLeftToggled,
+    sidebarLeftToggled: false,
     sidebarRightToggled,
     selectedTheme,
     selectedFontSize,
-    lastSelectedFolder,
     folderListLoaded: false,
     selectedPoem: {},
     selectEnabled: false,
     copyConfirmShown: false,
     moreOpen: false
     // searchFocused: false,
-    // sortCuprinsAZ: false,
     // fullBook: false,
     // poeziiSnap: false,
     // filtersOpen: true,
@@ -82,11 +78,6 @@ export const store = new Vuex.Store({
         localStorage.setItem('selectedFontSize', state.selectedFontSize)
       }
     },
-    setLastSelectedFolder (state, folderArray) {
-      let folder = folderArray[folderArray.length - 1]
-      state.lastSelectedFolder = folder
-      localStorage.setItem('lastSelectedFolder', folder)
-    },
     setFolderListLoaded (state) {
       state.folderListLoaded = true
     },
@@ -105,9 +96,6 @@ export const store = new Vuex.Store({
     toggleMore (state) {
       state.moreOpen = !state.moreOpen
     }
-    // toggleSortCuprinsAZ (state, n) {
-    //   state.sortCuprinsAZ = n
-    // },
     // handleSearchFocus (state, n) {
     //   state.searchFocused = n
     // },

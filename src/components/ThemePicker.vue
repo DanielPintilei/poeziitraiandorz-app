@@ -6,7 +6,7 @@
       :style="{ backgroundColor: theme.background }"
       class="swatch">
       <svg
-        v-if="index === currentTheme"
+        v-if="index === $store.state.selectedTheme"
         :fill="theme.accent"
         class="swatch__check"
         height="24" width="24">
@@ -20,31 +20,18 @@
 export default {
   name: 'theme-picker',
   props: ['themes'],
-  data () {
-    return {
-    }
-  },
-  computed: {
-    currentTheme () {
-      return this.$store.state.currentTheme
-    }
-  },
   methods: {
-    setSelectedTheme (n) {
-      this.$store.commit('setSelectedTheme', n)
-
-      const currentTheme = this.themes[this.$store.state.currentTheme]
-
-      document.querySelector('meta[name=theme-color]').setAttribute('content', currentTheme.theme)
-
-      document.body.style.setProperty('--themeBG', currentTheme.background)
+    setSelectedTheme (themeIndex) {
+      this.$store.commit('setSelectedTheme', themeIndex)
+      const selectedTheme = this.themes[this.$store.state.selectedTheme]
+      document.querySelector('meta[name=theme-color]').setAttribute('content', selectedTheme.theme)
+      document.body.style.setProperty('--themeBG', selectedTheme.background)
     }
   }
 }
 </script>
 
 <style scoped lang="stylus">
-
 .theme-picker
   display flex
   flex-wrap wrap

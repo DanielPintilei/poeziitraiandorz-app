@@ -12,11 +12,7 @@
 <script>
 export default {
   name: 'wrapper',
-  props: ['color'],
-  data () {
-    return {
-    }
-  }
+  props: ['color']
 }
 </script>
 
@@ -30,6 +26,7 @@ export default {
   display flex
   align-items center
   justify-content center
+
 .line
   stroke-dasharray 200
   stroke-dashoffset 200

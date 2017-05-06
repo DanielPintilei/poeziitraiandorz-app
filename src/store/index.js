@@ -3,27 +3,31 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
+const sidebarLeftToggled = localStorage.getItem('sidebarLeftToggled') === 'true' || false
+const sidebarRightToggled = localStorage.getItem('sidebarRightToggled') === 'true' || false
+const selectedTheme = +localStorage.getItem('selectedTheme') || 0
+const selectedFontSize = +localStorage.getItem('selectedFontSize') || 1
+const lastSelectedFolder = [+localStorage.getItem('lastSelectedFolder')] || []
+
 export const store = new Vuex.Store({
   state: {
-    sidebarLeftToggled: false,
-    sidebarRightToggled: false,
-    currentTheme: 0,
-    fontSize: 1,
+    sidebarLeftToggled,
+    sidebarRightToggled,
+    selectedTheme,
+    selectedFontSize,
+    lastSelectedFolder,
+    folderListLoaded: false,
+    selectedPoem: {},
     selectEnabled: false,
-    showCopyConfirm: false,
-    moreOpen: false,
+    copyConfirmShown: false,
+    moreOpen: false
     // searchFocused: false,
-    selectedCaiete: [],
     // sortCuprinsAZ: false,
-    cuprinsCaieteSnap: false,
     // fullBook: false,
-    poezieSnap: {}
     // poeziiSnap: false,
     // filtersOpen: true,
     // filtersCheck: ['checkboxTitlu', 'checkboxVersuri']
   },
-  // getters: {
-  // },
   mutations: {
     toggleSidebarLeft (state) {
       const scrollLinkIntoView = () => {
@@ -32,15 +36,15 @@ export const store = new Vuex.Store({
         if (routeParent && !routeParent.checked) routeParent.click()
         route.scrollIntoView()
       }
-      const waitToggle = new Promise((resolve) => {
+      const waitForToggle = new Promise((resolve) => {
         state.sidebarLeftToggled = !state.sidebarLeftToggled
         resolve()
       })
-      waitToggle.then(() => {
+      waitForToggle.then(() => {
         if (state.sidebarLeftToggled) {
-          if (!state.cuprinsCaieteSnap) {
+          if (!state.folderListLoaded) {
             let wait = setInterval(() => {
-              if (state.cuprinsCaieteSnap) {
+              if (state.folderListLoaded) {
                 clearInterval(wait)
                 scrollLinkIntoView()
               }
@@ -48,44 +52,62 @@ export const store = new Vuex.Store({
           } else scrollLinkIntoView()
         }
       })
+      localStorage.setItem('sidebarLeftToggled', state.sidebarLeftToggled)
     },
     toggleSidebarRight (state) {
       state.sidebarRightToggled = !state.sidebarRightToggled
+      localStorage.setItem('sidebarRightToggled', state.sidebarRightToggled)
     },
     closeSidebars (state) {
       state.sidebarRightToggled = false
       state.sidebarLeftToggled = false
     },
+    setSelectedTheme (state, theme) {
+      state.selectedTheme = theme
+      localStorage.setItem('selectedTheme', theme)
+    },
+    zoomReset (state) {
+      state.selectedFontSize = 1
+      localStorage.setItem('selectedFontSize', 1)
+    },
+    zoomOut (state) {
+      if (state.selectedFontSize > 0.9) {
+        state.selectedFontSize -= 0.06
+        localStorage.setItem('selectedFontSize', state.selectedFontSize)
+      }
+    },
+    zoomIn (state) {
+      if (state.selectedFontSize < 1.1) {
+        state.selectedFontSize += 0.06
+        localStorage.setItem('selectedFontSize', state.selectedFontSize)
+      }
+    },
+    setLastSelectedFolder (state, folderArray) {
+      let folder = folderArray[folderArray.length - 1]
+      state.lastSelectedFolder = folder
+      localStorage.setItem('lastSelectedFolder', folder)
+    },
+    setFolderListLoaded (state) {
+      state.folderListLoaded = true
+    },
+    setSelectedPoem (state, poem) {
+      state.selectedPoem = poem
+    },
+    setSelectEnabled (state, boolean) {
+      state.selectEnabled = boolean
+    },
+    toggleCopyConfirm (state) {
+      state.copyConfirmShown = true
+      setTimeout(() => {
+        state.copyConfirmShown = false
+      }, 3000)
+    },
     toggleMore (state) {
       state.moreOpen = !state.moreOpen
-    },
-    setSelectedCaiete (state, n) {
-      state.selectedCaiete = n
-    },
+    }
     // toggleSortCuprinsAZ (state, n) {
     //   state.sortCuprinsAZ = n
     // },
-    setSelectedTheme (state, n) {
-      state.currentTheme = n
-    },
-    zoomReset (state) {
-      state.fontSize = 1
-    },
-    zoomOut (state) {
-      if (state.fontSize > 0.9) state.fontSize -= 0.06
-    },
-    zoomIn (state) {
-      if (state.fontSize < 1.1) state.fontSize += 0.06
-    },
-    setSelectEnabled (state, n) {
-      state.selectEnabled = n
-    },
-    toggleCopyConfirm (state) {
-      state.showCopyConfirm = true
-      setTimeout(function () {
-        state.showCopyConfirm = false
-      }, 3000)
-    },
     // handleSearchFocus (state, n) {
     //   state.searchFocused = n
     // },
@@ -95,17 +117,11 @@ export const store = new Vuex.Store({
     // setFiltersCheck (state, n) {
     //   state.filtersCheck = n
     // },
-    setCuprinsCaieteSnap (state, n) {
-      state.cuprinsCaieteSnap = true
-    },
     // setPoeziiSnap (state, n) {
     //   state.poeziiSnap = true
     // },
     // setFullBook (state) {
     //   state.fullBook = true
     // },
-    setPoezieSnap (state, n) {
-      state.poezieSnap = n
-    }
   }
 })

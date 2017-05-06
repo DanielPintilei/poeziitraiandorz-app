@@ -50,16 +50,11 @@
 <script>
 export default {
   name: 'landing',
-  props: ['theme'],
-  data () {
-    return {
-    }
-  }
+  props: ['theme']
 }
 </script>
 
 <style scoped lang="stylus">
-
 .more
   position absolute
   top 50%

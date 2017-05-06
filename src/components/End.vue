@@ -26,25 +26,20 @@
 
 <script>
 export default {
-  name: 'sfarsit',
+  name: 'end',
   props: ['theme'],
-  data () {
-    return {
-    }
-  },
   created () {
-    window.addEventListener('keyup', this.keyboardNavPoezie)
+    window.addEventListener('keyup', this.handleArrowLeft)
   },
   beforeDestroy () {
-    window.removeEventListener('keyup', this.keyboardNavPoezie)
+    window.removeEventListener('keyup', this.handleArrowLeft)
   },
   methods: {
     goBack () {
       this.$router.go(-1)
     },
-    keyboardNavPoezie (e) {
-      const searchFocus = this.$store.state.searchFocused
-      if (e.key === 'ArrowLeft' && !searchFocus) {
+    handleArrowLeft (e) {
+      if (e.key === 'ArrowLeft' && !this.$store.state.searchFocused) {
         this.goBack()
       }
     }

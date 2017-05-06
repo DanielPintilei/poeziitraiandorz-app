@@ -4,9 +4,9 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 import Landing from 'components/Landing'
-import Inceput from 'components/Inceput'
-import Sfarsit from 'components/Sfarsit'
-import Poezie from 'components/Poezie'
+import Beginning from 'components/Beginning'
+import End from 'components/End'
+import Poem from 'components/Poem'
 
 export default new Router({
   routes: [
@@ -15,17 +15,17 @@ export default new Router({
       component: Landing
     },
     {
-      path: '/inceput',
-      component: Inceput
+      path: '/beginning',
+      component: Beginning
     },
     {
-      path: '/sfarsit',
-      component: Sfarsit
+      path: '/end',
+      component: End
     },
     {
-      path: '/:nr-:titlu',
-      name: 'Poezie',
-      component: Poezie,
+      path: '/:nr-:title',
+      name: 'Poem',
+      component: Poem,
       props: true
     }
   ]

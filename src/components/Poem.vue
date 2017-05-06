@@ -1,63 +1,63 @@
 <template>
   <v-touch
     :swipe-options="{ direction: 'horizontal'}"
-    @swipeleft="nextPoezie"
-    @swiperight="prevPoezie"
-    id="poezieParent"
-    class="poezie">
+    @swipeleft="nextPoem"
+    @swiperight="prevPoem"
+    id="poemParent"
+    class="poem">
     <transition
       v-on:after-leave="afterLeave"
-      :name="poezieTransitionName"
+      :name="poemTransitionName"
       mode="out-in">
       <article
         :key="nr"
-        id="poezie"
+        id="poem"
         :style="{fontSize: fontSizeREM}"
         :class="{select: $store.state.selectEnabled}"
-        class="poezie__main">
+        class="poem__main">
         <!--<template v-if="$store.state.fullBook && poeziiSnap[nr-1]">
-          <h1 class="poezie__titlu">
+          <h1 class="poem__title">
             <!-0-full
             {{ poeziiSnap[nr-1].n }}-0->
             {{ poeziiSnap[nr-1].t }}
           </h1>
-          <p class="poezie__desc">{{ poeziiSnap[nr-1].d }}</p>
+          <p class="poem__desc">{{ poeziiSnap[nr-1].d }}</p>
           <pre
             :style="{columnRuleColor: theme.rule}"
-            class="poezie__strofe">{{ poeziiSnap[nr-1].s }}</pre>
+            class="poem__blocks">{{ poeziiSnap[nr-1].s }}</pre>
         </template>
-        <template v-if="$store.state.poezieSnap && !poeziiSnap.length > 0">
-          <h1 class="poezie__titlu">
+        <template v-if="$store.state.poemSnap && !poeziiSnap.length > 0">
+          <h1 class="poem__title">
             <!-0-single
-            {{ $store.state.poezieSnap.n }}-0->
-            {{ $store.state.poezieSnap.t }}
+            {{ $store.state.poemSnap.n }}-0->
+            {{ $store.state.poemSnap.t }}
           </h1>
-          <p class="poezie__desc">{{ $store.state.poezieSnap.d }}</p>
+          <p class="poem__desc">{{ $store.state.poemSnap.d }}</p>
           <pre
             :style="{columnRuleColor: theme.rule}"
-            class="poezie__strofe">{{ $store.state.poezieSnap.s }}</pre>
+            class="poem__blocks">{{ $store.state.poemSnap.s }}</pre>
         </template>-->
-        <template v-if="$store.state.poezieSnap">
-          <h1 class="poezie__titlu">
+        <template v-if="$store.state.selectedPoem">
+          <h1 class="poem__title">
             <!--single
-            {{ $store.state.poezieSnap.n }}-->
-            {{ $store.state.poezieSnap.t }}
+            {{ $store.state.selectedPoem.n }}-->
+            {{ $store.state.selectedPoem.t }}
           </h1>
-          <p class="poezie__desc">{{ $store.state.poezieSnap.d }}</p>
+          <p class="poem__desc">{{ $store.state.selectedPoem.d }}</p>
           <pre
             :style="{columnRuleColor: theme.rule}"
-            class="poezie__strofe">{{ $store.state.poezieSnap.s }}</pre>
+            class="poem__blocks">{{ $store.state.selectedPoem.s }}</pre>
         </template>
         <loading class="loading" :color="theme.accent"></loading>
         <br>
-        <span class="poezie__author">—Traian Dorz</span>
+        <span class="poem__author">—Traian Dorz</span>
         <br>
-        <span class="poezie__url" id="currentURL">{{ currentURL }}</span>
+        <span class="poem__url" id="currentURL">{{ currentURL }}</span>
       </article>
     </transition>
     <div
-      v-if="$store.state.cuprinsCaieteSnap"
-      @click="prevPoezie"
+      v-if="$store.state.folderListLoaded"
+      @click="prevPoem"
       class="button-prev">
       <svg
         class="icon"
@@ -67,8 +67,8 @@
       </svg>
     </div>
     <div
-      v-if="$store.state.cuprinsCaieteSnap"
-      @click="nextPoezie"
+      v-if="$store.state.folderListLoaded"
+      @click="nextPoem"
       class="button-next">
       <svg
         class="icon"
@@ -78,10 +78,10 @@
       </svg>
     </div>
     <div
-      class="poezie__share"
+      class="poem__share"
       :style="{backgroundColor: theme.background}">
       <svg
-        data-clipboard-target="#poezie"
+        data-clipboard-target="#poem"
         @click="enableSelect"
         class="icon icon-copy"
         :fill="theme.icon2"
@@ -101,7 +101,7 @@
     </div>
     <transition name="pop">
       <div
-        v-if="$store.state.showCopyConfirm"
+        v-if="$store.state.copyConfirmShown"
         :style="{backgroundColor: theme.confirm, color: theme.confirm2}"
         class="copy-confirm">
         <span >Copiat</span>
@@ -141,7 +141,7 @@
         </div>
       </social-sharing>
     </transition>
-    <div class="poezie__zoom" :style="{backgroundColor: theme.background}">
+    <div class="poem__zoom" :style="{backgroundColor: theme.background}">
       <transition name="slide-zoom-3">
         <svg
           @click="zoomReset"
@@ -194,7 +194,7 @@ import Clipboard from 'clipboard'
 import Loading from './Loading'
 
 export default {
-  name: 'poezie',
+  name: 'poem',
   // props: ['theme', 'nr', 'poeziiSnap'],
   props: ['theme', 'nr'],
   components: {
@@ -204,7 +204,7 @@ export default {
     return {
       zoomMenuOpen: false,
       shareMenuOpen: false,
-      poezieTransitionName: '',
+      poemTransitionName: '',
       currentURL: ''
     }
   },
@@ -212,7 +212,6 @@ export default {
     this.currentURL = location.href
     const clipboard = new Clipboard('.icon-copy')
     clipboard.on('success', (e) => {
-      // console.info('Text:', e.text)
       e.clearSelection()
       this.$store.commit('setSelectEnabled', false)
       this.$store.commit('toggleCopyConfirm')
@@ -222,48 +221,48 @@ export default {
     })
   },
   created () {
-    window.addEventListener('keyup', this.keyboardNavPoezie)
+    window.addEventListener('keyup', this.handlePoemKeyNav)
   },
   beforeDestroy () {
-    window.removeEventListener('keyup', this.keyboardNavPoezie)
+    window.removeEventListener('keyup', this.handlePoemKeyNav)
   },
   computed: {
     fontSizeREM () {
-      return `${this.$store.state.fontSize}rem`
-    },
-    fontSize () {
-      return this.$store.state.fontSize
+      return `${this.$store.state.selectedFontSize}rem`
     }
+    // fontSize () {
+    //   return this.$store.state.selectedFontSize
+    // }
   },
   methods: {
-    checkCaiet (poezie) {
-      const routeParent = poezie.parentElement.parentElement.firstElementChild
+    checkFolder (poemLink) {
+      const routeParent = poemLink.parentElement.parentElement.firstElementChild
       if (routeParent && !routeParent.checked) routeParent.click()
     },
-    prevPoezie () {
+    prevPoem () {
       const currentNr = +document.querySelector('.router-link-active').id
       const prevRoute = document.getElementById(`${currentNr - 1}`)
       if (prevRoute) {
-        this.checkCaiet(prevRoute)
+        this.checkFolder(prevRoute)
         prevRoute.click()
         prevRoute.scrollIntoView()
-      } else this.$router.push('inceput')
+      } else this.$router.push('beginning')
     },
-    nextPoezie () {
+    nextPoem () {
       const currentNr = +document.querySelector('.router-link-active').id
       const nextRoute = document.getElementById(`${currentNr + 1}`)
       if (nextRoute) {
         nextRoute.click()
-        this.checkCaiet(nextRoute)
+        this.checkFolder(nextRoute)
         nextRoute.scrollIntoView()
-      } else this.$router.push('sfarsit')
+      } else this.$router.push('end')
     },
-    keyboardNavPoezie (e) {
-      const searchFocus = this.$store.state.searchFocused
-      if (e.key === 'ArrowLeft' && !searchFocus) {
-        this.prevPoezie()
-      } else if (e.key === 'ArrowRight' && !searchFocus) {
-        this.nextPoezie()
+    handlePoemKeyNav (e) {
+      const searchFocused = this.$store.state.searchFocused
+      if (e.key === 'ArrowLeft' && !searchFocused) {
+        this.prevPoem()
+      } else if (e.key === 'ArrowRight' && !searchFocused) {
+        this.nextPoem()
       }
     },
     toggleZoomMenu () {
@@ -285,15 +284,14 @@ export default {
       this.$store.commit('setSelectEnabled', true)
     },
     afterLeave () {
-      document.getElementById('poezieParent').scrollTop = 0
+      document.getElementById('poemParent').scrollTop = 0
     }
   },
   watch: {
     '$route' (to, from) {
       const toDepth = to.params.order === undefined ? to.params.nr : to.params.order
       const fromDepth = from.params.order === undefined ? from.params.nr : from.params.order
-      this.poezieTransitionName = toDepth < fromDepth ? 'slide-right-poezie' : 'slide-left-poezie'
-
+      this.poemTransitionName = toDepth < fromDepth ? 'slide-right-poem' : 'slide-left-poem'
       this.currentURL = location.href
     }
   }
@@ -303,7 +301,7 @@ export default {
 <style scoped lang="stylus">
 @import "../variables"
 
-.poezie
+.poem
   display flex
   flex-direction column
   align-items center
@@ -316,50 +314,50 @@ export default {
   @media (min-width $breakpointMobile + 1px)
     padding 70px 80px
 
-.poezie__main
+.poem__main
   flex-grow 1
   max-width 100%
   will-change transform
   &.select
     user-select: all !important
 
-.slide-left-poezie-enter-active
-  animation slide-left-poezie-in 0.3s ease-in-out
-.slide-left-poezie-leave-active
-  animation slide-left-poezie-out 0.3s ease-in-out
-@keyframes slide-left-poezie-in
+.slide-left-poem-enter-active
+  animation slide-left-poem-in 0.3s ease-in-out
+.slide-left-poem-leave-active
+  animation slide-left-poem-out 0.3s ease-in-out
+@keyframes slide-left-poem-in
   from
     transform translateX(100%)
     opacity 0
   to
     transform translateX(0)
     opacity 1
-@keyframes slide-left-poezie-out
+@keyframes slide-left-poem-out
   from
     transform translateX(0)
   to
     transform translateX(-100%)
     opacity 0
 
-.slide-right-poezie-enter-active
-  animation slide-right-poezie-in 0.3s ease-in-out
-.slide-right-poezie-leave-active
-  animation slide-right-poezie-out 0.3s ease-in-out
-@keyframes slide-right-poezie-in
+.slide-right-poem-enter-active
+  animation slide-right-poem-in 0.3s ease-in-out
+.slide-right-poem-leave-active
+  animation slide-right-poem-out 0.3s ease-in-out
+@keyframes slide-right-poem-in
   from
     transform translateX(-100%)
     opacity 0
   to
     transform translateX(0)
     opacity 1
-@keyframes slide-right-poezie-out
+@keyframes slide-right-poem-out
   from
     transform translateX(0)
   to
     transform translateX(100%)
     opacity 0
 
-.poezie__titlu
+.poem__title
   margin 0 0 0.8em
   font-family $font1
   font-size 2em
@@ -371,8 +369,8 @@ export default {
   @media (min-width $breakpointMobile + 1px)
     margin 0 0 1.2em
 
-.poezie__desc
-.poezie__strofe
+.poem__desc
+.poem__blocks
   margin 0
   font-family $font2
   font-size 1.063em
@@ -380,13 +378,13 @@ export default {
   @media (max-width $breakpointMobileSmall)
     font-size 1em
 
-.poezie__desc
+.poem__desc
   margin-bottom 1.5em
   font-style italic
   @media (max-width $breakpointMobile)
     max-width 400px
 
-.poezie__strofe
+.poem__blocks
   white-space pre-wrap
   @media (min-width $breakpointMobile + 1px)
     columns 250px 2
@@ -416,16 +414,16 @@ $iconPrevNextSide = 20px
   @media (max-width $breakpointMobileSmall)
     transform translateY(-10px) translateX(50px)
 
-.poezie__author
-.poezie__url
+.poem__author
+.poem__url
   display block
   height 0
   opacity 0
 
-.poezie__share
-.poezie__zoom
+.poem__share
+.poem__zoom
   position absolute
-  bottom $poezieButtonGroupBottom
+  bottom $poemButtonGroupBottom
   overflow hidden
   @media (max-width $breakpointMobileSmall)
     bottom 0
@@ -436,8 +434,8 @@ $iconPrevNextSide = 20px
   &.toggled
     opacity 1
 
-.poezie__share
-  left $poezieButtonGroupSide
+.poem__share
+  left $poemButtonGroupSide
   @media (max-width $breakpointMobileSmall)
     left 0
     width 35%
@@ -492,8 +490,8 @@ $iconPrevNextSide = 20px
 .pop-leave-to
   transform scale(0)
 
-.poezie__zoom
-  right $poezieButtonGroupSide
+.poem__zoom
+  right $poemButtonGroupSide
   @media (max-width $breakpointMobileSmall)
     right 0
     width 70%

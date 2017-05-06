@@ -3,9 +3,9 @@
     id="app"
     class="app"
     :style="{
-      color: currentTheme.text,
-      backgroundColor: currentTheme.background,
-      borderColor: currentTheme.border
+      color: selectedTheme.text,
+      backgroundColor: selectedTheme.background,
+      borderColor: selectedTheme.border
     }">
     <svg style="display: none">
       <symbol id="iconList" viewBox="0 0 24 24">
@@ -45,39 +45,39 @@
       <div
         @click="closeSidebars"
         v-if="$store.state.sidebarLeftToggled || $store.state.sidebarRightToggled"
-        :style="{ backgroundColor: currentTheme.backdrop }"
+        :style="{ backgroundColor: selectedTheme.backdrop }"
         class="backdrop backdrop--sidebar">
       </div>
     </transition>
     <transition name="sidebar-slide-left">
         <!--v-on:setCuprinsPoeziiSort="getCuprinsPoeziiSort"-->
+        <!--:cuprinsPoeziiSort="cuprinsPoeziiSort"-->
       <sidebar-left
-        :cuprinsCaieteSnap="cuprinsCaieteSnap"
-        :cuprinsPoeziiSort="cuprinsPoeziiSort"
-        :theme="currentTheme"
+        :folderListSnap="folderListSnap"
+        :theme="selectedTheme"
         v-show="$store.state.sidebarLeftToggled">
       </sidebar-left>
     </transition>
     <main
-      :style="{ backgroundColor: currentTheme.background2 }"
+      :style="{ backgroundColor: selectedTheme.background2 }"
       class="app__main">
         <!--v-on:setFullBook="getPoeziiSnap"-->
       <navbar
-        v-on:setCuprinsCaiete="getCuprinsCaieteSnap"
-        :theme="currentTheme"
+        v-on:getFolderList="getFolderListSnap"
+        :theme="selectedTheme"
         :themes="themes">
       </navbar>
       <transition name="router-view" mode="out-in">
           <!--:poeziiSnap="poeziiSnap"-->
         <router-view
-          :theme="currentTheme"
+          :theme="selectedTheme"
           class="app__main-view">
         </router-view>
       </transition>
     </main>
     <!--<transition name="sidebar-slide-right">
       <sidebar-right
-        :theme="currentTheme"
+        :theme="selectedTheme"
         v-show="$store.state.sidebarRightToggled">
       </sidebar-right>
     </transition>-->
@@ -85,13 +85,13 @@
       <div
         @click="toggleMore"
         v-if="$store.state.moreOpen"
-        :style="{ backgroundColor: currentTheme.backdrop }"
+        :style="{ backgroundColor: selectedTheme.backdrop }"
         class="backdrop">
       </div>
     </transition>
     <transition name="backdrop">
       <more
-        :theme="currentTheme"
+        :theme="selectedTheme"
         v-if="$store.state.moreOpen">
       </more>
     </transition>
@@ -108,8 +108,8 @@ import More from './components/More'
 
 const app = Firebase.initializeApp({databaseURL: 'https://poeziitraiandorz.firebaseio.com'})
 const db = app.database()
-const cuprinsCaieteRef = db.ref('cuprinsCaiete')
-const poeziiRef = db.ref('poezii')
+const folderListRef = db.ref('cuprinsCaiete')
+const poemsRef = db.ref('poezii')
 
 export default {
   name: 'app',
@@ -121,8 +121,8 @@ export default {
   },
   data () {
     return {
-      cuprinsCaieteSnap: null,
-      cuprinsPoeziiSort: null,
+      folderListSnap: null,
+      // cuprinsPoeziiSort: null,
       // poeziiSnap: [],
       themes: [
         {
@@ -186,14 +186,18 @@ export default {
     }
   },
   created () {
-    let metaThemeColor = document.querySelector('meta[name=theme-color]')
-    metaThemeColor.setAttribute('content', this.themes[this.$store.state.currentTheme].theme)
-
-    this.poezieSnap()
+    const selectedTheme = this.themes[this.$store.state.selectedTheme]
+    const metaThemeColor = document.querySelector('meta[name=theme-color]')
+    metaThemeColor.setAttribute('content', selectedTheme.theme)
+    document.body.style.setProperty('--themeBG', selectedTheme.background)
+    this.poemSnap()
+  },
+  mounted () {
+    if (this.$store.state.sidebarLeftToggled) this.getFolderListSnap()
   },
   computed: {
-    currentTheme () {
-      return this.themes[this.$store.state.currentTheme]
+    selectedTheme () {
+      return this.themes[this.$store.state.selectedTheme]
     },
     currentNr () {
       return this.$store.state.route.params.nr - 1
@@ -206,12 +210,12 @@ export default {
     toggleMore () {
       this.$store.commit('toggleMore')
     },
-    getCuprinsCaieteSnap () {
+    getFolderListSnap () {
       const parseSnap = () => {
-        this.cuprinsCaieteSnap = JSON.parse(localStorage.getItem('poezii'))
+        this.folderListSnap = JSON.parse(localStorage.getItem('poezii'))
       }
       const setStore = () => {
-        this.$store.commit('setCuprinsCaieteSnap')
+        this.$store.commit('setFolderListLoaded')
       }
       if (!localStorage.getItem('poezii')) {
         const getSnap = (snap) => {
@@ -219,7 +223,7 @@ export default {
           parseSnap()
           setStore()
         }
-        cuprinsCaieteRef.once('value').then(getSnap)
+        folderListRef.once('value').then(getSnap)
       } else {
         parseSnap()
         setStore()
@@ -227,31 +231,31 @@ export default {
     },
     // getCuprinsPoeziiSort () {
     //   let cuprinsPoezii = []
-    //   for (const caiet of this.cuprinsCaieteSnap) {
-    //     for (const poezie of caiet.p) {
-    //       cuprinsPoezii.push(poezie)
+    //   for (const caiet of this.folderListSnap) {
+    //     for (const poem of caiet.p) {
+    //       cuprinsPoezii.push(poem)
     //     }
     //   }
     //   this.cuprinsPoeziiSort = cuprinsPoezii.sort((a, b) => a.t.localeCompare(b.t, 'ro'))
     // },
-    poezieSnap () {
+    poemSnap () {
       const getSnap = (snap) => {
-        this.$store.commit('setPoezieSnap', snap.val())
+        this.$store.commit('setSelectedPoem', snap.val())
       }
-      poeziiRef.child(this.currentNr).once('value').then(getSnap)
+      poemsRef.child(this.currentNr).once('value').then(getSnap)
     }
     // getPoeziiSnap () {
     //   const getSnap = (snap) => {
     //     this.poeziiSnap = snap.val()
     //     this.$store.commit('setPoeziiSnap')
     //   }
-    //   poeziiRef.once('value').then(getSnap)
+    //   poemsRef.once('value').then(getSnap)
     // }
   },
   watch: {
     '$route' () {
       if (!this.$store.state.fullBook) {
-        this.poezieSnap()
+        this.poemSnap()
       }
     }
   }

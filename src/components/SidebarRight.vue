@@ -26,7 +26,7 @@
       </div>
       <v-touch
         :swipe-options="{ direction: 'horizontal'}"
-        @swiperight="sidebarRightToggle"
+        @swiperight="toggleSidebarRight"
         class="sidebar-right__results"
         :style="{
           backgroundColor: theme.background,
@@ -61,10 +61,10 @@
               <div class="sidebar-right__filter">
                 <input
                   type="checkbox"
-                  value="checkboxTitlu" id="checkboxTitlu" v-model="filtersCheck">
+                  value="checkboxTitle" id="checkboxTitle" v-model="checkedFilters">
                 <label
-                  @click="handleCheckTitlu"
-                  for="checkboxTitlu">
+                  @click="handleCheckTitle"
+                  for="checkboxTitle">
                   <svg
                     class="icon icon-check"
                     :fill="theme.accent"
@@ -78,10 +78,10 @@
               <div class="sidebar-right__filter">
                 <input
                   type="checkbox"
-                  value="checkboxVersuri" id="checkboxVersuri" v-model="filtersCheck">
+                  value="checkboxVerses" id="checkboxVerses" v-model="checkedFilters">
                 <label
-                  @click="handleCheckVersuri"
-                  for="checkboxVersuri">
+                  @click="handleCheckVerses"
+                  for="checkboxVerses">
                   <svg
                     class="icon icon-check"
                     :fill="theme.accent"
@@ -95,7 +95,7 @@
               <div class="sidebar-right__filter">
                 <input
                   type="checkbox"
-                  value="checkboxCase" id="checkboxCase" v-model="filtersCheck">
+                  value="checkboxCase" id="checkboxCase" v-model="checkedFilters">
                 <label for="checkboxCase">
                   <svg
                     class="icon icon-check"
@@ -110,7 +110,7 @@
               <div class="sidebar-right__filter">
                 <input
                   type="checkbox"
-                  value="checkboxDiacritice" id="checkboxDiacritice" v-model="filtersCheck">
+                  value="checkboxDiacritice" id="checkboxDiacritice" v-model="checkedFilters">
                 <label for="checkboxDiacritice">
                   <svg
                     class="icon icon-check"
@@ -125,7 +125,7 @@
               <div class="sidebar-right__filter">
                 <input
                   type="checkbox"
-                  value="checkboxFuzzy" id="checkboxFuzzy" v-model="filtersCheck">
+                  value="checkboxFuzzy" id="checkboxFuzzy" v-model="checkedFilters">
                 <label for="checkboxFuzzy">
                   <svg
                     class="icon icon-check"
@@ -152,21 +152,21 @@ import Loading from './Loading'
 
 export default {
   name: 'sidebar-right',
-  props: ['theme', 'cuprinsCaieteRef'],
+  props: ['theme', 'folderListRef'],
   components: {
     Loading
   },
   data () {
     return {
-      filtersCheck: this.$store.state.filtersCheck
+      checkedFilters: this.$store.state.checkedFilters
     }
   },
   methods: {
-    sidebarRightToggle () {
+    toggleSidebarRight () {
       this.$store.commit('toggleSidebarRight')
     },
-    handleSearchFocus (n) {
-      this.$store.commit('handleSearchFocus', n)
+    handleSearchFocus (bool) {
+      this.$store.commit('handleSearchFocus', bool)
     },
     focusSearch () {
       document.getElementById('searchInput').focus()
@@ -175,19 +175,19 @@ export default {
       this.$store.commit('toggleFilters')
     },
     commitFilters () {
-      this.$store.commit('setFiltersCheck', this.filtersCheck)
+      this.$store.commit('setCheckedFilters', this.checkedFilters)
     },
-    handleCheckTitlu (e) {
-      if (this.filtersCheck.includes('checkboxTitlu') && !this.filtersCheck.includes('checkboxVersuri')) e.preventDefault()
+    handleCheckTitle (e) {
+      if (this.checkedFilters.includes('checkboxTitle') && !this.checkedFilters.includes('checkboxVerses')) e.preventDefault()
       else this.commitFilters()
     },
-    handleCheckVersuri (e) {
-      if (this.filtersCheck.includes('checkboxVersuri') && !this.filtersCheck.includes('checkboxTitlu')) e.preventDefault()
+    handleCheckVerses (e) {
+      if (this.checkedFilters.includes('checkboxVerses') && !this.checkedFilters.includes('checkboxTitle')) e.preventDefault()
       else this.commitFilters()
     }
   },
   watch: {
-    filtersCheck () {
+    checkedFilters () {
       this.commitFilters()
     }
   }

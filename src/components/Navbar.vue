@@ -10,7 +10,7 @@
         :class="{toggled: $store.state.sidebarLeftToggled}"
         class="navbar__icons-toggle navbar__icons-toggle--left">
         <svg
-          @click="sidebarLeftToggle"
+          @click="toggleSidebarLeft"
           v-show="$store.state.sidebarLeftToggled"
           :fill="theme.icon"
           class="icon icon-list-arrow"
@@ -19,7 +19,7 @@
           <path d="M0-.5h24v24H0z" fill="none"/>
         </svg>
         <svg
-          @click="sidebarLeftToggle"
+          @click="toggleSidebarLeft"
           v-show="!$store.state.sidebarLeftToggled"
           :fill="theme.icon"
           class="icon icon-list"
@@ -73,7 +73,7 @@
         :class="{toggled: $store.state.sidebarRightToggled}"
         class="navbar__icons-toggle navbar__icons-toggle--right">
         <svg
-          @click="sidebarRightToggle"
+          @click="toggleSidebarRight"
           v-show="$store.state.sidebarRightToggled"
           :fill="theme.icon"
           class="icon icon-search-arrow"
@@ -82,7 +82,7 @@
           <path d="M0-.25h24v24H0z" fill="none"/>
         </svg>
         <svg
-          @click="sidebarRightToggle"
+          @click="toggleSidebarRight"
           v-show="!$store.state.sidebarRightToggled"
           :fill="theme.icon"
           class="icon icon-search"
@@ -108,14 +108,12 @@ export default {
       themePickerToggled: false
     }
   },
-  computed: {
-  },
   methods: {
-    sidebarLeftToggle () {
+    toggleSidebarLeft () {
       this.$store.commit('toggleSidebarLeft')
-      if (!this.$store.state.cuprinsCaieteSnap) this.$emit('setCuprinsCaiete')
+      if (!this.$store.state.folderListLoaded) this.$emit('getFolderList')
     },
-    sidebarRightToggle () {
+    toggleSidebarRight () {
       this.$store.commit('toggleSidebarRight')
       // this.$store.commit('setFullBook')
       // if (!this.$store.state.poeziiSnap) this.$emit('setFullBook')

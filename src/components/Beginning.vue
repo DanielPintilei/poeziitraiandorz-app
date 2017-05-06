@@ -31,25 +31,20 @@
 
 <script>
 export default {
-  name: 'inceput',
+  name: 'beginning',
   props: ['theme'],
-  data () {
-    return {
-    }
-  },
   created () {
-    window.addEventListener('keyup', this.keyboardNavPoezie)
+    window.addEventListener('keyup', this.handleArrowRight)
   },
   beforeDestroy () {
-    window.removeEventListener('keyup', this.keyboardNavPoezie)
+    window.removeEventListener('keyup', this.handleArrowRight)
   },
   methods: {
     goBack () {
       this.$router.go(-1)
     },
-    keyboardNavPoezie (e) {
-      const searchFocus = this.$store.state.searchFocused
-      if (e.key === 'ArrowRight' && !searchFocus) {
+    handleArrowRight (e) {
+      if (e.key === 'ArrowRight' && !this.$store.state.searchFocused) {
         this.goBack()
       }
     }

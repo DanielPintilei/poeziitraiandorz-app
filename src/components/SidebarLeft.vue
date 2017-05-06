@@ -9,26 +9,26 @@
           backgroundColor: theme.navbar
         }">
         <svg
-          @click="sidebarLeftToggle"
-          class="icon icon-cuprins"
+          @click="toggleSidebarLeft"
+          class="icon icon-list"
           :fill="theme.accent"
           width="24" height="24">
           <use xlink:href="#iconList"></use>
         </svg>
         <!--<div
           @click="handleScrollSortedLinkIntoView"
-          class="sort-cuprins">
+          class="sort-list">
           <input
             v-model="sortCuprinsAZ"
             type="checkbox"
             id="checkboxSortCuprins"
-            class="sort-cuprins__checkbox">
+            class="sort-list__checkbox">
           <label
             for="checkboxSortCuprins"
-            class="sort-cuprins__label">
+            class="sort-list__label">
             <svg
               :fill="!sortCuprinsAZ ? theme.icon : theme.accent"
-              class="icon icon-sort-cuprins"
+              class="icon icon-sort-list"
               height="24" viewBox="0 0 24 24" width="24">
               <path d="M0 0h24v24H0V0zm0 0h24v24H0V0zm.75.75h22.5v22.5H.75z" fill="none"/>
               <path d="M14.94 4.66h-4.72l2.36-2.36zm-4.69 14.71h4.66l-2.33 2.33zM6.1 6.27L1.6 17.73h1.84l.92-2.45h5.11l.92 2.45h1.84L7.74 6.27H6.1zm-1.13 7.37l1.94-5.18 1.94 5.18H4.97zm10.76 2.5h6.12v1.59h-8.53v-1.29l5.92-8.56h-5.88v-1.6h8.3v1.26l-5.93 8.6z"/>
@@ -38,26 +38,26 @@
       </div>
       <v-touch
         :swipe-options="{ direction: 'horizontal'}"
-        @swipeleft="sidebarLeftToggle"
-        class="sidebar-left__cuprins"
+        @swipeleft="toggleSidebarLeft"
+        class="sidebar-left__list"
         :style="{
           color: theme.text2,
           backgroundColor: theme.background,
           borderColor: theme.border3
         }">
+          <!--v-if="!sortCuprinsAZ"-->
         <div
-          v-if="!sortCuprinsAZ"
-          v-for="(caiet, index) in cuprinsCaieteSnap"
-          class="caiet">
+          v-for="(folder, index) in folderListSnap"
+          class="folder">
           <input
             type="checkbox"
-            :id="`caiet${index}`"
+            :id="`folder${index}`"
             :value="index"
-            v-model="selectedCaiete"
-            class="caiet__checkbox">
+            v-model="selectedFolders"
+            class="folder__checkbox">
           <label
-            :for="`caiet${index}`"
-            class="caiet__titlu">
+            :for="`folder${index}`"
+            class="folder__title">
             <svg
               :fill="theme.icon2"
               class="icon-caret"
@@ -65,52 +65,52 @@
               <use xlink:href="#iconCaret"></use>
             </svg>
             <svg
-              class="icon-caiet"
+              class="icon-folder"
               :fill="theme.accent"
               width="24" height="24">
               <use xlink:href="#iconCaiet"></use>
             </svg>
-            {{caiet.t}}
+            {{folder.t}}
           </label>
-          <div :style="{ color: theme.text2 }" class="poezii">
+          <div :style="{ color: theme.text2 }" class="poems">
             <router-link
-              v-for="poezie in caiet.p"
-              :id="`${poezie.n}`"
+              v-for="poem in folder.p"
+              :id="`${poem.n}`"
               :to="{
-                name: 'Poezie',
+                name: 'Poem',
                 params: {
-                  nr: +poezie.n,
-                  titlu: formatTitlu(poezie.t)
+                  nr: +poem.n,
+                  title: formatTitle(poem.t)
                 }
               }">
               <span
-                @click="tapPoezie"
+                @click="tapPoemLink"
                 class="link-span">
-                <span class="link-span__nr">{{poezie.n}}</span>
-                <span>{{poezie.t}}</span>
+                <span class="link-span__nr">{{poem.n}}</span>
+                <span>{{poem.t}}</span>
               </span>
             </router-link>
           </div>
         </div>
         <!--<div
-          v-if="sortCuprinsAZ && cuprinsPoeziiSort"
-          class="cuprinsAZ">
+          v-if="sortCuprinsAZ && listPoemsSort"
+          class="listAZ">
           <router-link
-            v-for="(poezie, index) in cuprinsPoeziiSort"
+            v-for="(poem, index) in listPoemsSort"
             :id="index+1"
             :to="{
-              name: 'Poezie',
+              name: 'Poem',
               params: {
-                nr: +poezie.n,
-                titlu: formatTitlu(poezie.t),
+                nr: +poem.n,
+                title: formatTitle(poem.t),
                 order: index+1
               }
             }">
             <span
-              @click="tapPoezie"
+              @click="tapPoemLink"
               class="link-span">
-              <span class="link-span__nr">{{poezie.n}}</span>
-              <span>{{poezie.t}}</span>
+              <span class="link-span__nr">{{poem.n}}</span>
+              <span>{{poem.t}}</span>
             </span>
           </router-link>
         </div>-->
@@ -125,39 +125,41 @@ import Loading from './Loading'
 
 export default {
   name: 'sidebar-left',
-  props: ['theme', 'cuprinsCaieteSnap', 'cuprinsPoeziiSort'],
+  // props: ['theme', 'folderListSnap', 'listPoemsSort'],
+  props: ['theme', 'folderListSnap'],
   components: {
     Loading
   },
   data () {
     return {
-      selectedCaiete: this.$store.state.selectedCaiete,
-      sortCuprinsAZ: this.$store.state.sortCuprinsAZ
+      selectedFolders: this.$store.state.lastSelectedFolder
+      // selectedFolders: [+localStorage.getItem('selectedFolders')] || 0
+      // sortCuprinsAZ: this.$store.state.sortCuprinsAZ
     }
   },
   methods: {
-    formatTitlu (titlu) {
-      return titlu.replace(/\s+/g, '-').replace(/[ăâ]+/g, 'a').replace(/[ĂÂ]+/g, 'A').replace(/[î]+/g, 'i').replace(/[Î]+/g, 'I').replace(/[ș]+/g, 's').replace(/[Ș]+/g, 'S').replace(/[ț]+/g, 't').replace(/[Ț]+/g, 'T').replace(/[^\w-]+/g, '')
+    formatTitle (title) {
+      return title.replace(/\s+/g, '-').replace(/[ăâ]+/g, 'a').replace(/[ĂÂ]+/g, 'A').replace(/[î]+/g, 'i').replace(/[Î]+/g, 'I').replace(/[ș]+/g, 's').replace(/[Ș]+/g, 'S').replace(/[ț]+/g, 't').replace(/[Ț]+/g, 'T').replace(/[^\w-]+/g, '')
     },
-    sidebarLeftToggle () {
+    toggleSidebarLeft () {
       this.$store.commit('toggleSidebarLeft')
     },
-    tapPoezie () {
+    tapPoemLink () {
       const tapMQ = window.matchMedia('(max-width: 1100px)')
       if (tapMQ.matches) {
-        this.sidebarLeftToggle()
+        this.toggleSidebarLeft()
       }
-    },
-    scrollLinkIntoView () {
-      const route = document.querySelector('.router-link-active')
-      const routeParent = route.parentElement.parentElement.firstElementChild
-      if (routeParent && !routeParent.checked) routeParent.click()
-      route.scrollIntoView()
     }
+    // scrollLinkIntoView () {
+    //   const route = document.querySelector('.router-link-active')
+    //   const routeParent = route.parentElement.parentElement.firstElementChild
+    //   if (routeParent && !routeParent.checked) routeParent.click()
+    //   route.scrollIntoView()
+    // },
     // handleScrollSortedLinkIntoView () {
-    //   if (!this.cuprinsPoeziiSort) {
+    //   if (!this.listPoemsSort) {
     //     let wait = setInterval(() => {
-    //       if (this.cuprinsPoeziiSort) {
+    //       if (this.listPoemsSort) {
     //         clearInterval(wait)
     //         this.scrollLinkIntoView()
     //       }
@@ -166,12 +168,12 @@ export default {
     // }
   },
   watch: {
-    selectedCaiete () {
-      this.$store.commit('setSelectedCaiete', this.selectedCaiete)
+    selectedFolders () {
+      this.$store.commit('setLastSelectedFolder', this.selectedFolders)
     }
     // sortCuprinsAZ () {
     //   this.$store.commit('toggleSortCuprinsAZ', this.sortCuprinsAZ)
-    //   if (!this.$store.state.cuprinsPoeziiSort) this.$emit('setCuprinsPoeziiSort')
+    //   if (!this.$store.state.listPoemsSort) this.$emit('setCuprinsPoemsSort')
     // }
   }
 }
@@ -212,31 +214,31 @@ export default {
   border-right 1px solid
   border-bottom 1px solid
 
-.icon-cuprins
+.icon-list
   opacity 1
   margin-right 7px
   @media (min-width $breakpointMobile + 1px)
     pointer-events none
 
 $iconSortHeight = 24px
-.sort-cuprins
+.sort-list
   height $iconSortHeight
 
-.sort-cuprins__checkbox
+.sort-list__checkbox
   display none
-  &:checked + .sort-cuprins__label .icon-sort-cuprins
+  &:checked + .sort-list__label .icon-sort-list
     opacity 1
 
-.sort-cuprins__label
+.sort-list__label
   height $iconSortHeight
   margin-left 5px
   cursor pointer
 
-.icon-sort-cuprins
+.icon-sort-list
   &:active
     transform scale(0.9)
 
-.sidebar-left__cuprins
+.sidebar-left__list
   position relative
   flex-grow 1
   padding-top 4px
@@ -248,30 +250,30 @@ a
   text-decoration none
   line-height 1.2
 
-.caiet__checkbox
+.folder__checkbox
   display none
-  &:not(:checked) + .caiet__titlu + .poezii
+  &:not(:checked) + .folder__title + .poems
     display none
-  &:checked + .caiet__titlu
+  &:checked + .folder__title
     & .icon-caret
       transform rotate(45deg)
       opacity 1
-    & .icon-caiet
+    & .icon-folder
       opacity 1
 
-.caiet__titlu
+.folder__title
   display flex
   padding 10px 12px 8px
   align-items center
   line-height 100%
   cursor pointer
-  &:active .icon-caiet
+  &:active .icon-folder
     transform scale(0.9)
   @media (min-width $breakpointMobile + 1px)
     &:hover
       background-color $linkHoverBackground
       .icon-caret
-      .icon-caiet
+      .icon-folder
         opacity 1
 
 .icon-caret
@@ -279,7 +281,7 @@ a
   margin-right -7px
   opacity $iconOpacity
 
-.icon-caiet
+.icon-folder
   margin-left 6px
   margin-right 4px
   opacity $iconOpacity
@@ -304,8 +306,8 @@ a
     opacity 0.5
 
 .loading
-  .caiet + &
-  .cuprinsAZ + &
+  .folder + &
+  .listAZ + &
     display none
 
 </style>

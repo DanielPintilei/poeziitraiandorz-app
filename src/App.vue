@@ -59,26 +59,26 @@
     <main
       :style="{ backgroundColor: selectedTheme.background2 }"
       class="app__main">
-        <!--v-on:setFullBook="getPoeziiSnap"-->
       <navbar
         v-on:getFolderList="getFolderListSnap"
+        v-on:snapPoems="snapPoems"
         :theme="selectedTheme"
         :themes="themes">
       </navbar>
       <transition name="router-view" mode="out-in">
-          <!--:poeziiSnap="poeziiSnap"-->
         <router-view
+          :poemsSnap="poemsSnap"
           :theme="selectedTheme"
           class="app__main-view">
         </router-view>
       </transition>
     </main>
-    <!--<transition name="sidebar-slide-right">
+    <transition name="sidebar-slide-right">
       <sidebar-right
         :theme="selectedTheme"
         v-show="$store.state.sidebarRightToggled">
       </sidebar-right>
-    </transition>-->
+    </transition>
     <transition name="backdrop">
       <div
         @click="toggleMore"
@@ -101,7 +101,7 @@ import Firebase from 'firebase'
 
 import Navbar from './components/Navbar'
 import SidebarLeft from './components/SidebarLeft'
-// import SidebarRight from './components/SidebarRight'
+import SidebarRight from './components/SidebarRight'
 import More from './components/More'
 
 const app = Firebase.initializeApp({databaseURL: 'https://poeziitraiandorz.firebaseio.com'})
@@ -114,14 +114,13 @@ export default {
   components: {
     Navbar,
     SidebarLeft,
-    // SidebarRight,
+    SidebarRight,
     More
   },
   data () {
     return {
       folderListSnap: null,
-      // cuprinsPoeziiSort: null,
-      // poeziiSnap: [],
+      poemsSnap: [],
       themes: [
         {
           theme: '#ecce93',
@@ -188,7 +187,7 @@ export default {
     const metaThemeColor = document.querySelector('meta[name=theme-color]')
     metaThemeColor.setAttribute('content', selectedTheme.theme)
     document.body.style.setProperty('--themeBG', selectedTheme.background)
-    this.poemSnap()
+    this.snapPoem()
   },
   mounted () {
     if (localStorage.getItem('sidebarLeftToggled') === 'true') {
@@ -215,14 +214,14 @@ export default {
     },
     getFolderListSnap () {
       const parseSnap = () => {
-        this.folderListSnap = JSON.parse(localStorage.getItem('poezii'))
+        this.folderListSnap = JSON.parse(localStorage.getItem('folderList'))
       }
       const setStore = () => {
         this.$store.commit('setFolderListLoaded')
       }
-      if (!localStorage.getItem('poezii')) {
+      if (!localStorage.getItem('folderList')) {
         const getSnap = (snap) => {
-          localStorage.setItem('poezii', JSON.stringify(snap.val()))
+          localStorage.setItem('folderList', JSON.stringify(snap.val()))
           parseSnap()
           setStore()
         }
@@ -232,24 +231,43 @@ export default {
         setStore()
       }
     },
-    poemSnap () {
+    snapPoem () {
       const getSnap = (snap) => {
         this.$store.commit('setSelectedPoem', snap.val())
       }
       poemsRef.child(this.currentNr).once('value').then(getSnap)
     }
-    // getPoeziiSnap () {
+    // snapPoems () {
     //   const getSnap = (snap) => {
-    //     this.poeziiSnap = snap.val()
-    //     this.$store.commit('setPoeziiSnap')
+    //     // this.poemsSnap = snap.val()
+    //     // let IDB
+    //     const IDBRequest = indexedDB.open('poems', 1)
+
+    //     IDBRequest.onupgradeneeded = function (e) {
+    //       console.log('Upgrading...')
+    //       const IDB = e.target.result
+    //       // if (!IDB.objectStoreNames.contains('poems')) {
+    //       //   IDB.createObjectStore('poems')
+    //       // }
+    //     }
+    //     IDBRequest.onsuccess = function (e) {
+    //       console.log('Success!')
+    //       IDB = e.target.result
+    //     }
+    //     IDBRequest.onerror = function (e) {
+    //       console.log('Error')
+    //       console.dir(e)
+    //     }
+    //     this.$store.commit('setPoemsSnapped')
     //   }
     //   poemsRef.once('value').then(getSnap)
+    //   console.log('poems snapped')
     // }
   },
   watch: {
     '$route' () {
       if (!this.$store.state.fullBook) {
-        this.poemSnap()
+        this.snapPoem()
       }
       localStorage.setItem('lastRoute', this.$store.state.route.path)
     }
@@ -383,35 +401,35 @@ body
   to
     transform translateX(- $sidebarLeftWidth)
 
-// .sidebar-slide-right-enter-active
-//   @media (max-width $breakpointMobile)
-//     animation slide-right-in $sidebarDuration $sidebarTiming
-//   @media (min-width $breakpointMobile + 1px)
-//     animation width-right-in $sidebarDuration $sidebarTiming
-// .sidebar-slide-right-leave-active
-//   @media (max-width $breakpointMobile)
-//     animation slide-right-out $sidebarDuration $sidebarTiming
-//   @media (min-width $breakpointMobile + 1px)
-//     animation width-right-out $sidebarDuration $sidebarTiming
-// @keyframes width-right-in
-//   from
-//     width 0
-//   to
-//     width $sidebarRightWidth
-// @keyframes width-right-out
-//   from
-//     width $sidebarRightWidth
-//   to
-//     width 0
-// @keyframes slide-right-in
-//   from
-//     transform translateX($sidebarRightWidth)
-//   to
-//     transform translateX(0)
-// @keyframes slide-right-out
-//   from
-//     transform translateX(0)
-//   to
-//     transform translateX($sidebarRightWidth)
+.sidebar-slide-right-enter-active
+  @media (max-width $breakpointMobile)
+    animation slide-right-in $sidebarDuration $sidebarTiming
+  @media (min-width $breakpointMobile + 1px)
+    animation width-right-in $sidebarDuration $sidebarTiming
+.sidebar-slide-right-leave-active
+  @media (max-width $breakpointMobile)
+    animation slide-right-out $sidebarDuration $sidebarTiming
+  @media (min-width $breakpointMobile + 1px)
+    animation width-right-out $sidebarDuration $sidebarTiming
+@keyframes width-right-in
+  from
+    width 0
+  to
+    width $sidebarRightWidth
+@keyframes width-right-out
+  from
+    width $sidebarRightWidth
+  to
+    width 0
+@keyframes slide-right-in
+  from
+    transform translateX($sidebarRightWidth)
+  to
+    transform translateX(0)
+@keyframes slide-right-out
+  from
+    transform translateX(0)
+  to
+    transform translateX($sidebarRightWidth)
 
 </style>

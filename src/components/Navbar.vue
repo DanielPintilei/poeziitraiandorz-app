@@ -69,7 +69,6 @@
         </transition>
       </div>
       <div
-        style="display: none"
         :class="{toggled: $store.state.sidebarRightToggled}"
         class="navbar__icons-toggle navbar__icons-toggle--right">
         <svg
@@ -115,8 +114,8 @@ export default {
     },
     toggleSidebarRight () {
       this.$store.commit('toggleSidebarRight')
-      // this.$store.commit('setFullBook')
-      // if (!this.$store.state.poeziiSnap) this.$emit('setFullBook')
+      this.$store.commit('setFullBook')
+      // if (!this.$store.state.poemsSnapped) this.$emit('snapPoems')
     },
     toggleThemePicker () {
       this.themePickerToggled = !this.themePickerToggled

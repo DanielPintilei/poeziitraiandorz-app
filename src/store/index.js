@@ -6,6 +6,8 @@ Vue.use(Vuex)
 const sidebarRightToggled = localStorage.getItem('sidebarRightToggled') === 'true' || false
 const selectedTheme = +localStorage.getItem('selectedTheme') || 0
 const selectedFontSize = +localStorage.getItem('selectedFontSize') || 1
+const filtersOpen = localStorage.getItem('filtersOpen') === 'true' || false
+const checkedFilters = JSON.parse(localStorage.getItem('checkedFilters')) || ['checkboxTitle', 'checkboxVerses']
 
 export const store = new Vuex.Store({
   state: {
@@ -17,12 +19,12 @@ export const store = new Vuex.Store({
     selectedPoem: {},
     selectEnabled: false,
     copyConfirmShown: false,
-    moreOpen: false
-    // searchFocused: false,
-    // fullBook: false,
-    // poeziiSnap: false,
-    // filtersOpen: true,
-    // filtersCheck: ['checkboxTitlu', 'checkboxVersuri']
+    moreOpen: false,
+    fullBook: false,
+    poemsSnapped: false,
+    searchFocused: false,
+    filtersOpen,
+    checkedFilters
   },
   mutations: {
     toggleSidebarLeft (state) {
@@ -39,9 +41,9 @@ export const store = new Vuex.Store({
       waitForToggle.then(() => {
         if (state.sidebarLeftToggled) {
           if (!state.folderListLoaded) {
-            let wait = setInterval(() => {
+            let waitForLoad = setInterval(() => {
               if (state.folderListLoaded) {
-                clearInterval(wait)
+                clearInterval(waitForLoad)
                 scrollLinkIntoView()
               }
             }, 100)
@@ -95,21 +97,23 @@ export const store = new Vuex.Store({
     },
     toggleMore (state) {
       state.moreOpen = !state.moreOpen
+    },
+    setFullBook (state) {
+      state.fullBook = true
+    },
+    setPoemsSnapped (state) {
+      state.poemsSnapped = true
+    },
+    handleSearchFocus (state, bool) {
+      state.searchFocused = bool
+    },
+    toggleFilters (state) {
+      state.filtersOpen = !state.filtersOpen
+      localStorage.setItem('filtersOpen', state.filtersOpen)
+    },
+    setCheckedFilters (state, array) {
+      state.checkedFilters = array
+      localStorage.setItem('checkedFilters', JSON.stringify(array))
     }
-    // handleSearchFocus (state, n) {
-    //   state.searchFocused = n
-    // },
-    // toggleFilters (state) {
-    //   state.filtersOpen = !state.filtersOpen
-    // },
-    // setFiltersCheck (state, n) {
-    //   state.filtersCheck = n
-    // },
-    // setPoeziiSnap (state, n) {
-    //   state.poeziiSnap = true
-    // },
-    // setFullBook (state) {
-    //   state.fullBook = true
-    // },
   }
 })

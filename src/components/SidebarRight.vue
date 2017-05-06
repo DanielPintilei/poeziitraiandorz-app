@@ -53,7 +53,6 @@
             </svg>
           </div>
           <transition name="filters">
-              <!--:style="{ borderColor: theme.border3 }"-->
             <div
               :style="{color: theme.text2}"
               v-if="$store.state.filtersOpen"
@@ -174,21 +173,22 @@ export default {
     toggleFilters () {
       this.$store.commit('toggleFilters')
     },
-    commitFilters () {
-      this.$store.commit('setCheckedFilters', this.checkedFilters)
-    },
+    // commitFilters () {
+    //   this.$store.commit('setCheckedFilters', this.checkedFilters)
+    // },
     handleCheckTitle (e) {
       if (this.checkedFilters.includes('checkboxTitle') && !this.checkedFilters.includes('checkboxVerses')) e.preventDefault()
-      else this.commitFilters()
+      // else this.commitFilters()
     },
     handleCheckVerses (e) {
       if (this.checkedFilters.includes('checkboxVerses') && !this.checkedFilters.includes('checkboxTitle')) e.preventDefault()
-      else this.commitFilters()
+      // else this.commitFilters()
     }
   },
   watch: {
     checkedFilters () {
-      this.commitFilters()
+      // this.commitFilters()
+      this.$store.commit('setCheckedFilters', this.checkedFilters)
     }
   }
 }

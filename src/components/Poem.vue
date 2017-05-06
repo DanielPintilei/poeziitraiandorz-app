@@ -15,32 +15,24 @@
         :style="{fontSize: fontSizeREM}"
         :class="{select: $store.state.selectEnabled}"
         class="poem__main">
-        <!--<template v-if="$store.state.fullBook && poeziiSnap[nr-1]">
+
+        <template v-if="$store.state.fullBook && poemsSnap[nr-1]">
+        <!--<template v-if="$store.state.fullBook && poemsSnap">-->
           <h1 class="poem__title">
-            <!-0-full
-            {{ poeziiSnap[nr-1].n }}-0->
-            {{ poeziiSnap[nr-1].t }}
+            full
+            {{ poemsSnap[nr-1].n }}
+            {{ poemsSnap[nr-1].t }}
           </h1>
-          <p class="poem__desc">{{ poeziiSnap[nr-1].d }}</p>
+          <p class="poem__desc">{{ poemsSnap[nr-1].d }}</p>
           <pre
             :style="{columnRuleColor: theme.rule}"
-            class="poem__blocks">{{ poeziiSnap[nr-1].s }}</pre>
+            class="poem__blocks">{{ poemsSnap[nr-1].s }}</pre>
         </template>
-        <template v-if="$store.state.poemSnap && !poeziiSnap.length > 0">
+
+        <template v-if="$store.state.selectedPoem && !poemsSnap.length > 0">
           <h1 class="poem__title">
-            <!-0-single
-            {{ $store.state.poemSnap.n }}-0->
-            {{ $store.state.poemSnap.t }}
-          </h1>
-          <p class="poem__desc">{{ $store.state.poemSnap.d }}</p>
-          <pre
-            :style="{columnRuleColor: theme.rule}"
-            class="poem__blocks">{{ $store.state.poemSnap.s }}</pre>
-        </template>-->
-        <template v-if="$store.state.selectedPoem">
-          <h1 class="poem__title">
-            <!--single
-            {{ $store.state.selectedPoem.n }}-->
+            single
+            {{ $store.state.selectedPoem.n }}
             {{ $store.state.selectedPoem.t }}
           </h1>
           <p class="poem__desc">{{ $store.state.selectedPoem.d }}</p>
@@ -48,6 +40,7 @@
             :style="{columnRuleColor: theme.rule}"
             class="poem__blocks">{{ $store.state.selectedPoem.s }}</pre>
         </template>
+
         <loading class="loading" :color="theme.accent"></loading>
         <br>
         <span class="poem__author">—Traian Dorz</span>
@@ -195,8 +188,7 @@ import Loading from './Loading'
 
 export default {
   name: 'poem',
-  // props: ['theme', 'nr', 'poeziiSnap'],
-  props: ['theme', 'nr'],
+  props: ['theme', 'nr', 'poemsSnap'],
   components: {
     Loading
   },

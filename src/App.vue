@@ -230,10 +230,10 @@ export default {
       const loadFolderList = () => {
         idbKeyval.get('folderList').then(val => {
           this.folderListSnap = val
+          this.$store.commit('setFolderListLoaded')
           console.log('Folder List Loaded')
         })
       }
-      const setStore = () => { this.$store.commit('setFolderListLoaded') }
       if (!this.$store.state.folderListDownloaded) {
         const getSnap = (snap) => {
           console.log('Downloading Folder List Started')
@@ -241,15 +241,11 @@ export default {
             .then(() => {
               console.log('Downloading Folder List Finished')
               loadFolderList()
-              setStore()
             })
             .catch(err => console.log('Downloading Folder List Failed', err))
         }
         folderListRef.once('value').then(getSnap)
-      } else {
-        loadFolderList()
-        setStore()
-      }
+      } else loadFolderList()
     },
     fetchPoem () {
       if (this.poemsSnap) {
@@ -270,23 +266,19 @@ export default {
       })
     },
     downloadPoems () {
-      const setStore = () => { this.$store.commit('setPoemsDownloaded') }
       if (!this.$store.state.poemsDownloaded) {
         console.log('Downloading Poems Started')
         const getSnap = (snap) => {
           idbKeyval.set('poems', snap.val())
             .then(() => {
+              this.$store.commit('setPoemsDownloaded')
               console.log('Downloading Poems Finished')
               this.loadPoems()
-              setStore()
             })
             .catch(err => console.log('Downloading Poems Failed', err))
         }
         poemsRef.once('value').then(getSnap)
-      } else {
-        this.loadPoems()
-        setStore()
-      }
+      } else this.loadPoems()
     }
   },
   watch: {

@@ -60,8 +60,10 @@ export const store = new Vuex.Store({
       localStorage.setItem('sidebarRightToggled', state.sidebarRightToggled)
     },
     closeSidebars (state) {
-      state.sidebarRightToggled = false
       state.sidebarLeftToggled = false
+      localStorage.setItem('sidebarLeftToggled', false)
+      state.sidebarRightToggled = false
+      localStorage.setItem('sidebarRightToggled', false)
     },
     setSelectedTheme (state, theme) {
       state.selectedTheme = theme

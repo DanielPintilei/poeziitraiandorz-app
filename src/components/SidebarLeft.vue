@@ -94,10 +94,15 @@ export default {
       this.$store.commit('toggleSidebarLeft')
     },
     handleFolderClick (folder) {
-      if (document.getElementById(folder).checked) {
+      const folderById = document.getElementById(folder)
+      if (folderById.checked) {
         setTimeout(() => {
-          document.getElementById(folder).checked = false
-        }, 100)
+          folderById.checked = false
+        }, 10)
+      } else {
+        setTimeout(() => {
+          folderById.nextElementSibling.scrollIntoView()
+        }, 10)
       }
     },
     tapPoemLink () {

@@ -3,25 +3,28 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
+const sidebarLeftToggled = localStorage.getItem('sidebarLeftToggled') === 'true' || false
 const sidebarRightToggled = localStorage.getItem('sidebarRightToggled') === 'true' || false
 const selectedTheme = +localStorage.getItem('selectedTheme') || 0
 const selectedFontSize = +localStorage.getItem('selectedFontSize') || 1
+const folderListDownloaded = localStorage.getItem('folderListDownloaded') === 'true' || false
+const poemsDownloaded = localStorage.getItem('poemsDownloaded') === 'true' || false
 const filtersOpen = localStorage.getItem('filtersOpen') === 'true' || false
 const checkedFilters = JSON.parse(localStorage.getItem('checkedFilters')) || ['checkboxTitle', 'checkboxVerses']
 
 export const store = new Vuex.Store({
   state: {
-    sidebarLeftToggled: false,
+    sidebarLeftToggled,
     sidebarRightToggled,
     selectedTheme,
     selectedFontSize,
-    folderListLoaded: false,
+    folderListDownloaded,
     selectedPoem: {},
     selectEnabled: false,
     copyConfirmShown: false,
     moreOpen: false,
-    fullBook: false,
-    poemsSnapped: false,
+    fullBook: poemsDownloaded,
+    poemsDownloaded,
     searchFocused: false,
     filtersOpen,
     checkedFilters
@@ -40,9 +43,9 @@ export const store = new Vuex.Store({
       })
       waitForToggle.then(() => {
         if (state.sidebarLeftToggled) {
-          if (!state.folderListLoaded) {
+          if (!state.folderListDownloaded) {
             let waitForLoad = setInterval(() => {
-              if (state.folderListLoaded) {
+              if (state.folderListDownloaded) {
                 clearInterval(waitForLoad)
                 scrollLinkIntoView()
               }
@@ -81,7 +84,8 @@ export const store = new Vuex.Store({
       }
     },
     setFolderListLoaded (state) {
-      state.folderListLoaded = true
+      state.folderListDownloaded = true
+      localStorage.setItem('folderListDownloaded', true)
     },
     setSelectedPoem (state, poem) {
       state.selectedPoem = poem
@@ -101,8 +105,9 @@ export const store = new Vuex.Store({
     setFullBook (state) {
       state.fullBook = true
     },
-    setPoemsSnapped (state) {
-      state.poemsSnapped = true
+    setPoemsDownloaded (state) {
+      state.poemsDownloaded = true
+      localStorage.setItem('poemsDownloaded', true)
     },
     handleSearchFocus (state, bool) {
       state.searchFocused = bool

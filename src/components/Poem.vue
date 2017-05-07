@@ -15,32 +15,16 @@
         :style="{fontSize: fontSizeREM}"
         :class="{select: $store.state.selectEnabled}"
         class="poem__main">
-
-        <template v-if="$store.state.fullBook && poemsSnap[nr-1]">
-        <!--<template v-if="$store.state.fullBook && poemsSnap">-->
+        <template v-if="selectedPoem">
           <h1 class="poem__title">
-            full
-            {{ poemsSnap[nr-1].n }}
-            {{ poemsSnap[nr-1].t }}
+            <!--{{ selectedPoem.n }}-->
+            {{ selectedPoem.t }}
           </h1>
-          <p class="poem__desc">{{ poemsSnap[nr-1].d }}</p>
+          <p class="poem__desc">{{ selectedPoem.d }}</p>
           <pre
             :style="{columnRuleColor: theme.rule}"
-            class="poem__blocks">{{ poemsSnap[nr-1].s }}</pre>
+            class="poem__blocks">{{ selectedPoem.s }}</pre>
         </template>
-
-        <template v-if="$store.state.selectedPoem && !poemsSnap.length > 0">
-          <h1 class="poem__title">
-            single
-            {{ $store.state.selectedPoem.n }}
-            {{ $store.state.selectedPoem.t }}
-          </h1>
-          <p class="poem__desc">{{ $store.state.selectedPoem.d }}</p>
-          <pre
-            :style="{columnRuleColor: theme.rule}"
-            class="poem__blocks">{{ $store.state.selectedPoem.s }}</pre>
-        </template>
-
         <loading class="loading" :color="theme.accent"></loading>
         <br>
         <span class="poem__author">—Traian Dorz</span>
@@ -49,7 +33,7 @@
       </article>
     </transition>
     <div
-      v-if="$store.state.folderListLoaded"
+      v-if="$store.state.folderListDownloaded"
       @click="prevPoem"
       class="button-prev">
       <svg
@@ -60,7 +44,7 @@
       </svg>
     </div>
     <div
-      v-if="$store.state.folderListLoaded"
+      v-if="$store.state.folderListDownloaded"
       @click="nextPoem"
       class="button-next">
       <svg
@@ -188,7 +172,7 @@ import Loading from './Loading'
 
 export default {
   name: 'poem',
-  props: ['theme', 'nr', 'poemsSnap'],
+  props: ['theme', 'nr', 'selectedPoem'],
   components: {
     Loading
   },

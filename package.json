@@ -12,6 +12,7 @@
   "dependencies": {
     "clipboard": "^1.6.1",
     "firebase": "^3.7.2",
+    "idb-keyval": "^2.3.0",
     "vue": "^2.1.10",
     "vue-router": "^2.2.0",
     "vue-social-sharing": "^2.2.0",

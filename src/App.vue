@@ -61,13 +61,13 @@
       class="app__main">
       <navbar
         v-on:getFolderList="getFolderListSnap"
-        v-on:snapPoems="snapPoems"
+        v-on:downloadPoems="downloadPoems"
         :theme="selectedTheme"
         :themes="themes">
       </navbar>
       <transition name="router-view" mode="out-in">
         <router-view
-          :poemsSnap="poemsSnap"
+          :selectedPoem="selectedPoem"
           :theme="selectedTheme"
           class="app__main-view">
         </router-view>
@@ -98,6 +98,7 @@
 
 <script>
 import Firebase from 'firebase'
+import idbKeyval from 'idb-keyval'
 
 import Navbar from './components/Navbar'
 import SidebarLeft from './components/SidebarLeft'
@@ -120,7 +121,8 @@ export default {
   data () {
     return {
       folderListSnap: null,
-      poemsSnap: [],
+      poemsSnap: null,
+      selectedPoem: null,
       themes: [
         {
           theme: '#ecce93',
@@ -187,15 +189,27 @@ export default {
     const metaThemeColor = document.querySelector('meta[name=theme-color]')
     metaThemeColor.setAttribute('content', selectedTheme.theme)
     document.body.style.setProperty('--themeBG', selectedTheme.background)
+    if (this.$store.state.poemsDownloaded) {
+      this.loadPoems()
+    }
     this.snapPoem()
   },
   mounted () {
-    if (localStorage.getItem('sidebarLeftToggled') === 'true') {
-      this.$store.commit('toggleSidebarLeft')
-      this.getFolderListSnap()
-    }
+    if (this.$store.state.sidebarLeftToggled || this.$store.state.poemsDownloaded) this.getFolderListSnap()
     const lastRoute = localStorage.getItem('lastRoute')
-    if (lastRoute) this.$router.push(lastRoute)
+    if (lastRoute) {
+      this.$router.push(lastRoute)
+      if (this.$store.state.sidebarLeftToggled) {
+        let waitForLoad = setInterval(() => {
+          const lastRouteById = document.getElementById(`${this.$store.state.route.params.nr}`)
+          if (lastRouteById) {
+            clearInterval(waitForLoad)
+            lastRouteById.parentElement.parentElement.firstElementChild.click()
+            lastRouteById.scrollIntoView()
+          }
+        }, 100)
+      }
+    }
   },
   computed: {
     selectedTheme () {
@@ -214,16 +228,19 @@ export default {
     },
     getFolderListSnap () {
       const parseSnap = () => {
-        this.folderListSnap = JSON.parse(localStorage.getItem('folderList'))
+        idbKeyval.get('folderList').then(val => {
+          this.folderListSnap = val
+        })
       }
-      const setStore = () => {
-        this.$store.commit('setFolderListLoaded')
-      }
-      if (!localStorage.getItem('folderList')) {
+      const setStore = () => { this.$store.commit('setFolderListLoaded') }
+      if (!this.$store.state.folderListDownloaded) {
         const getSnap = (snap) => {
-          localStorage.setItem('folderList', JSON.stringify(snap.val()))
-          parseSnap()
-          setStore()
+          idbKeyval.set('folderList', snap.val())
+            .then(() => {
+              parseSnap()
+              setStore()
+            })
+            .catch(err => console.log('Downloading folderList failed.', err))
         }
         folderListRef.once('value').then(getSnap)
       } else {
@@ -232,43 +249,43 @@ export default {
       }
     },
     snapPoem () {
-      const getSnap = (snap) => {
-        this.$store.commit('setSelectedPoem', snap.val())
+      if (this.poemsSnap) {
+        for (let poem of this.poemsSnap) {
+          if (+poem.n === this.currentNr + 1) {
+            this.selectedPoem = poem
+          }
+        }
+      } else {
+        const getSnap = (snap) => { this.selectedPoem = snap.val() }
+        poemsRef.child(this.currentNr).once('value').then(getSnap)
       }
-      poemsRef.child(this.currentNr).once('value').then(getSnap)
+    },
+    loadPoems () {
+      idbKeyval.get('poems').then(val => {
+        this.poemsSnap = val
+      })
+    },
+    downloadPoems () {
+      const setStore = () => { this.$store.commit('setPoemsDownloaded') }
+      if (!this.$store.state.poemsDownloaded) {
+        const getSnap = (snap) => {
+          idbKeyval.set('poems', snap.val())
+            .then(() => {
+              this.loadPoems()
+              setStore()
+            })
+            .catch(err => console.log('Downloading poems failed.', err))
+        }
+        poemsRef.once('value').then(getSnap)
+      } else {
+        this.loadPoems()
+        setStore()
+      }
     }
-    // snapPoems () {
-    //   const getSnap = (snap) => {
-    //     // this.poemsSnap = snap.val()
-    //     // let IDB
-    //     const IDBRequest = indexedDB.open('poems', 1)
-
-    //     IDBRequest.onupgradeneeded = function (e) {
-    //       console.log('Upgrading...')
-    //       const IDB = e.target.result
-    //       // if (!IDB.objectStoreNames.contains('poems')) {
-    //       //   IDB.createObjectStore('poems')
-    //       // }
-    //     }
-    //     IDBRequest.onsuccess = function (e) {
-    //       console.log('Success!')
-    //       IDB = e.target.result
-    //     }
-    //     IDBRequest.onerror = function (e) {
-    //       console.log('Error')
-    //       console.dir(e)
-    //     }
-    //     this.$store.commit('setPoemsSnapped')
-    //   }
-    //   poemsRef.once('value').then(getSnap)
-    //   console.log('poems snapped')
-    // }
   },
   watch: {
     '$route' () {
-      if (!this.$store.state.fullBook) {
-        this.snapPoem()
-      }
+      this.snapPoem()
       localStorage.setItem('lastRoute', this.$store.state.route.path)
     }
   }

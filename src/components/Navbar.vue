@@ -81,6 +81,7 @@
           <path d="M0-.25h24v24H0z" fill="none"/>
         </svg>
         <svg
+          style="visibility: hidden"
           @click="toggleSidebarRight"
           v-show="!$store.state.sidebarRightToggled"
           :fill="theme.icon"
@@ -110,12 +111,12 @@ export default {
   methods: {
     toggleSidebarLeft () {
       this.$store.commit('toggleSidebarLeft')
-      if (!this.$store.state.folderListLoaded) this.$emit('getFolderList')
+      if (!this.$store.state.folderListDownloaded) this.$emit('getFolderList')
     },
     toggleSidebarRight () {
       this.$store.commit('toggleSidebarRight')
       this.$store.commit('setFullBook')
-      // if (!this.$store.state.poemsSnapped) this.$emit('snapPoems')
+      if (!this.$store.state.poemsDownloaded) this.$emit('downloadPoems')
     },
     toggleThemePicker () {
       this.themePickerToggled = !this.themePickerToggled

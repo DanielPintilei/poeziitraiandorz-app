@@ -195,7 +195,7 @@ export default {
     this.fetchPoem()
   },
   mounted () {
-    if (this.$store.state.sidebarLeftToggled || this.$store.state.poemsDownloaded) this.getFolderListSnap()
+    if (this.$store.state.sidebarLeftToggled || this.$store.state.folderListDownloaded) this.getFolderListSnap()
     const lastRoute = localStorage.getItem('lastRoute')
     if (lastRoute) {
       this.$router.push(lastRoute)

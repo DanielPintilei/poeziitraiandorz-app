@@ -55,6 +55,7 @@
             <router-link
               v-for="poem in folder.p"
               :id="`${poem.n}`"
+              :key="`${poem.n}`"
               :to="{
                 name: 'Poem',
                 params: {

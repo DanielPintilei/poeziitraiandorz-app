@@ -21,6 +21,10 @@
 
     <link href="https://fonts.googleapis.com/css?family=Lora:400,400i|Old+Standard+TT&amp;subset=latin-ext" rel="stylesheet">
 
+    <% for (var chunk of webpack.chunks) {
+      for (var file of chunk.files) {
+        if (file.match(/\.(js|css)$/)) { %>
+    <link rel="<%= chunk.initial?'preload':'prefetch' %>" href="<%= htmlWebpackPlugin.files.publicPath + file %>" as="<%= file.match(/\.css$/)?'style':'script' %>"><% }}} %>
   </head>
   <body style="margin: 0; height: 100vh; display: flex; align-items: center; justify-content: center;">
     <div id="app">
@@ -40,5 +44,16 @@
         </style>
       </svg>
     </div>
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/service-worker.js', { scope: '/' })
+          .then(function (registration) {
+            console.log('Service Worker Registered');
+          });
+        navigator.serviceWorker.ready.then(function (registration) {
+          console.log('Service Worker Ready');
+        });
+      }
+    </script>
   </body>
 </html>

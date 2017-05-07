@@ -192,7 +192,7 @@ export default {
     if (this.$store.state.poemsDownloaded) {
       this.loadPoems()
     }
-    this.snapPoem()
+    this.fetchPoem()
   },
   mounted () {
     if (this.$store.state.sidebarLeftToggled || this.$store.state.poemsDownloaded) this.getFolderListSnap()
@@ -227,28 +227,31 @@ export default {
       this.$store.commit('toggleMore')
     },
     getFolderListSnap () {
-      const parseSnap = () => {
+      const loadFolderList = () => {
         idbKeyval.get('folderList').then(val => {
           this.folderListSnap = val
+          console.log('Folder List Loaded')
         })
       }
       const setStore = () => { this.$store.commit('setFolderListLoaded') }
       if (!this.$store.state.folderListDownloaded) {
         const getSnap = (snap) => {
+          console.log('Downloading Folder List Started')
           idbKeyval.set('folderList', snap.val())
             .then(() => {
-              parseSnap()
+              console.log('Downloading Folder List Finished')
+              loadFolderList()
               setStore()
             })
-            .catch(err => console.log('Downloading folderList failed.', err))
+            .catch(err => console.log('Downloading Folder List Failed', err))
         }
         folderListRef.once('value').then(getSnap)
       } else {
-        parseSnap()
+        loadFolderList()
         setStore()
       }
     },
-    snapPoem () {
+    fetchPoem () {
       if (this.poemsSnap) {
         for (let poem of this.poemsSnap) {
           if (+poem.n === this.currentNr + 1) {
@@ -263,18 +266,21 @@ export default {
     loadPoems () {
       idbKeyval.get('poems').then(val => {
         this.poemsSnap = val
+        console.log('Poems Loaded')
       })
     },
     downloadPoems () {
       const setStore = () => { this.$store.commit('setPoemsDownloaded') }
       if (!this.$store.state.poemsDownloaded) {
+        console.log('Downloading Poems Started')
         const getSnap = (snap) => {
           idbKeyval.set('poems', snap.val())
             .then(() => {
+              console.log('Downloading Poems Finished')
               this.loadPoems()
               setStore()
             })
-            .catch(err => console.log('Downloading poems failed.', err))
+            .catch(err => console.log('Downloading Poems Failed', err))
         }
         poemsRef.once('value').then(getSnap)
       } else {
@@ -285,7 +291,7 @@ export default {
   },
   watch: {
     '$route' () {
-      this.snapPoem()
+      this.fetchPoem()
       localStorage.setItem('lastRoute', this.$store.state.route.path)
     }
   }

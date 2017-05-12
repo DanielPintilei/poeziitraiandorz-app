@@ -85,7 +85,7 @@ export const store = new Vuex.Store({
         localStorage.setItem('selectedFontSize', state.selectedFontSize)
       }
     },
-    setFolderListLoaded (state) {
+    setFolderListDownloaded (state) {
       state.folderListDownloaded = true
       localStorage.setItem('folderListDownloaded', true)
     },

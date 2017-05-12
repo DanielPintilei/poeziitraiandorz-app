@@ -111,7 +111,7 @@ export default {
   methods: {
     toggleSidebarLeft () {
       this.$store.commit('toggleSidebarLeft')
-      if (!this.$store.state.folderListDownloaded) this.$emit('getFolderList')
+      if (!this.$store.state.folderListDownloaded) this.$emit('downloadFolderList')
     },
     toggleSidebarRight () {
       this.$store.commit('toggleSidebarRight')

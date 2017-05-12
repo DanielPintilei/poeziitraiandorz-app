@@ -60,8 +60,8 @@
       :style="{ backgroundColor: selectedTheme.background2 }"
       class="app__main">
       <navbar
-        v-on:getFolderList="getFolderListSnap"
-        v-on:downloadPoems="downloadPoems"
+        v-on:downloadFolderList="getFolderListSnap"
+        v-on:downloadPoems="getPoemsSnap"
         :theme="selectedTheme"
         :themes="themes">
       </navbar>
@@ -97,18 +97,12 @@
 </template>
 
 <script>
-import Firebase from 'firebase'
 import idbKeyval from 'idb-keyval'
 
 import Navbar from './components/Navbar'
 import SidebarLeft from './components/SidebarLeft'
 import SidebarRight from './components/SidebarRight'
 import More from './components/More'
-
-const app = Firebase.initializeApp({databaseURL: 'https://poeziitraiandorz.firebaseio.com'})
-const db = app.database()
-const folderListRef = db.ref('cuprinsCaiete')
-const poemsRef = db.ref('poezii')
 
 export default {
   name: 'app',
@@ -189,13 +183,10 @@ export default {
     const metaThemeColor = document.querySelector('meta[name=theme-color]')
     metaThemeColor.setAttribute('content', selectedTheme.theme)
     document.body.style.setProperty('--themeBG', selectedTheme.background)
-    if (this.$store.state.poemsDownloaded) {
-      this.loadPoems()
-    }
-    this.fetchPoem()
+    if (this.$store.state.poemsDownloaded) this.loadPoems(this.fetchPoem)
   },
   mounted () {
-    if (this.$store.state.sidebarLeftToggled || this.$store.state.folderListDownloaded) this.getFolderListSnap()
+    if (this.$store.state.sidebarLeftToggled || this.$store.state.folderListDownloaded) this.loadFolderList()
     const lastRoute = localStorage.getItem('lastRoute')
     if (lastRoute) {
       this.$router.push(lastRoute)
@@ -226,58 +217,66 @@ export default {
     toggleMore () {
       this.$store.commit('toggleMore')
     },
-    getFolderListSnap () {
-      const loadFolderList = () => {
-        idbKeyval.get('folderList').then(val => {
-          this.folderListSnap = val
-          this.$store.commit('setFolderListLoaded')
-          console.log('Folder List Loaded')
-        })
-      }
-      if (!this.$store.state.folderListDownloaded) {
-        const getSnap = (snap) => {
-          console.log('Downloading Folder List Started')
-          idbKeyval.set('folderList', snap.val())
-            .then(() => {
-              console.log('Downloading Folder List Finished')
-              loadFolderList()
-            })
-            .catch(err => console.log('Downloading Folder List Failed', err))
-        }
-        folderListRef.once('value').then(getSnap)
-      } else loadFolderList()
-    },
-    fetchPoem () {
-      if (this.poemsSnap) {
-        for (let poem of this.poemsSnap) {
-          if (+poem.n === this.currentNr + 1) {
-            this.selectedPoem = poem
-          }
-        }
-      } else {
-        const getSnap = (snap) => { this.selectedPoem = snap.val() }
-        poemsRef.child(this.currentNr).once('value').then(getSnap)
-      }
-    },
-    loadPoems () {
-      idbKeyval.get('poems').then(val => {
-        this.poemsSnap = val
-        console.log('Poems Loaded')
+    loadFolderList () {
+      idbKeyval.get('folderList').then(val => {
+        this.folderListSnap = val
+        console.log('Folder List Loaded From Local')
       })
     },
-    downloadPoems () {
+    getFolderListSnap () {
+      if (!this.$store.state.folderListDownloaded) {
+        console.log('Downloading Folder List Started')
+        fetch('https://danielpintilei.bitbucket.io/cuprins.json')
+        .then(response => response.json())
+        .then(data => {
+          console.log('Downloading Folder List Finished')
+          this.folderListSnap = data
+          console.log('Folder List Loaded')
+          idbKeyval.set('folderList', data)
+            .then(() => {
+              this.$store.commit('setFolderListDownloaded')
+              console.log('Local Folder List Finished')
+            })
+            .catch(err => console.log('Local Folder List Failed', err))
+        })
+        .catch(err => console.log('Downloading Folder List Failed', err))
+      } else this.loadFolderList()
+    },
+    fetchPoem () {
+      if (this.poemsSnap) this.selectedPoem = this.poemsSnap[this.currentNr]
+      else {
+        fetch(`https://danielpintilei.bitbucket.io/${this.currentNr}.json`)
+        .then(response => response.json())
+        .then(data => {
+          this.selectedPoem = data
+        })
+        .catch(err => console.log('Fetching Poem Failed', err))
+      }
+    },
+    loadPoems (cb) {
+      idbKeyval.get('poems').then(val => {
+        this.poemsSnap = val
+        console.log('Poems Loaded From Local')
+        cb()
+      })
+    },
+    getPoemsSnap () {
       if (!this.$store.state.poemsDownloaded) {
         console.log('Downloading Poems Started')
-        const getSnap = (snap) => {
-          idbKeyval.set('poems', snap.val())
-            .then(() => {
-              this.$store.commit('setPoemsDownloaded')
-              console.log('Downloading Poems Finished')
-              this.loadPoems()
-            })
-            .catch(err => console.log('Downloading Poems Failed', err))
-        }
-        poemsRef.once('value').then(getSnap)
+        fetch('https://danielpintilei.bitbucket.io/poezii.json')
+        .then(response => response.json())
+        .then(data => {
+          console.log('Downloading Poems Finished')
+          this.poemsSnap = data
+          console.log('Poems Loaded')
+          idbKeyval.set('poems', data)
+          .then(() => {
+            this.$store.commit('setPoemsDownloaded')
+            console.log('Local Poems Finished')
+          })
+          .catch(err => console.log('Local Poems Failed', err))
+        })
+        .catch(err => console.log('Downloading Poems Failed', err))
       } else this.loadPoems()
     }
   },

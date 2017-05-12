@@ -75,6 +75,7 @@ export default {
 .more__item
   display flex
   align-items center
+  opacity 0.5
   & svg
     margin 7px
 

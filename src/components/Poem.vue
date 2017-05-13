@@ -17,7 +17,6 @@
         class="poem__main">
         <template v-if="selectedPoem">
           <h1 class="poem__title">
-            <!--{{ selectedPoem.n }}-->
             {{ selectedPoem.t }}
           </h1>
           <p class="poem__desc">{{ selectedPoem.d }}</p>

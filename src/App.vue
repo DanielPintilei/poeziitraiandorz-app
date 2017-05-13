@@ -184,6 +184,7 @@ export default {
     metaThemeColor.setAttribute('content', selectedTheme.theme)
     document.body.style.setProperty('--themeBG', selectedTheme.background)
     if (this.$store.state.poemsDownloaded) this.loadPoems(this.fetchPoem)
+    else this.fetchPoem()
   },
   mounted () {
     if (this.$store.state.sidebarLeftToggled || this.$store.state.folderListDownloaded) this.loadFolderList()
@@ -207,7 +208,7 @@ export default {
       return this.themes[this.$store.state.selectedTheme]
     },
     currentNr () {
-      return this.$store.state.route.params.nr - 1
+      return this.$store.state.route.params.nr
     }
   },
   methods: {
@@ -216,6 +217,9 @@ export default {
     },
     toggleMore () {
       this.$store.commit('toggleMore')
+    },
+    DBURL (file) {
+      return `https://danielpintilei.bitbucket.io/p/${file}.json`
     },
     loadFolderList () {
       idbKeyval.get('folderList').then(val => {
@@ -226,7 +230,7 @@ export default {
     getFolderListSnap () {
       if (!this.$store.state.folderListDownloaded) {
         console.log('Downloading Folder List Started')
-        fetch('https://danielpintilei.bitbucket.io/cuprins.json')
+        fetch(this.DBURL('cuprins'))
         .then(response => response.json())
         .then(data => {
           console.log('Downloading Folder List Finished')
@@ -235,17 +239,17 @@ export default {
           idbKeyval.set('folderList', data)
             .then(() => {
               this.$store.commit('setFolderListDownloaded')
-              console.log('Local Folder List Finished')
+              console.log('Folder List Saving Finished')
             })
-            .catch(err => console.log('Local Folder List Failed', err))
+            .catch(err => console.log('Folder List Saving Failed', err))
         })
         .catch(err => console.log('Downloading Folder List Failed', err))
       } else this.loadFolderList()
     },
     fetchPoem () {
-      if (this.poemsSnap) this.selectedPoem = this.poemsSnap[this.currentNr]
+      if (this.poemsSnap) this.selectedPoem = this.poemsSnap[this.currentNr - 1]
       else {
-        fetch(`https://danielpintilei.bitbucket.io/${this.currentNr}.json`)
+        fetch(this.DBURL(this.currentNr))
         .then(response => response.json())
         .then(data => {
           this.selectedPoem = data
@@ -263,7 +267,7 @@ export default {
     getPoemsSnap () {
       if (!this.$store.state.poemsDownloaded) {
         console.log('Downloading Poems Started')
-        fetch('https://danielpintilei.bitbucket.io/poezii.json')
+        fetch(this.DBURL('poezii'))
         .then(response => response.json())
         .then(data => {
           console.log('Downloading Poems Finished')
@@ -272,9 +276,9 @@ export default {
           idbKeyval.set('poems', data)
           .then(() => {
             this.$store.commit('setPoemsDownloaded')
-            console.log('Local Poems Finished')
+            console.log('Poems Saving Finished')
           })
-          .catch(err => console.log('Local Poems Failed', err))
+          .catch(err => console.log('Poems Saving Failed', err))
         })
         .catch(err => console.log('Downloading Poems Failed', err))
       } else this.loadPoems()

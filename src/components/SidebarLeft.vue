@@ -96,15 +96,8 @@ export default {
     },
     handleFolderClick (folder) {
       const folderById = document.getElementById(folder)
-      if (folderById.checked) {
-        setTimeout(() => {
-          folderById.checked = false
-        }, 10)
-      } else {
-        setTimeout(() => {
-          folderById.nextElementSibling.scrollIntoView()
-        }, 10)
-      }
+      if (folderById.checked) setTimeout(() => { folderById.checked = false }, 0)
+      else setTimeout(() => { folderById.nextElementSibling.scrollIntoView() }, 0)
     },
     tapPoemLink () {
       const tapMQ = window.matchMedia('(max-width: 1100px)')

@@ -25,6 +25,8 @@
           type="search"
           class="search-box__input"
           autocorrect="off"
+          autocapitalize="off"
+          spellcheck="false"
           placeholder="Caută">
       </form>
       <v-touch
@@ -160,7 +162,7 @@
             class="result">
             <p class="result__title">
               <span class="result__nr">{{result.nr}}</span>
-              <span>{{result.t}}</span>
+              <span v-html="result.t"></span>
             </p>
             <!--<p
               v-for="find in result"
@@ -215,6 +217,14 @@ export default {
     handleCheckVerses (e) {
       if (this.checkedFilters.includes('checkboxVerses') && !this.checkedFilters.includes('checkboxTitle')) e.preventDefault()
     },
+    highlightResult (result, indexes) {
+      let highlightedResult = result
+      for (const occurence of indexes) {
+        const substr = result.substring(occurence[0], occurence[1])
+        highlightedResult = highlightedResult.replace(new RegExp(substr), `<span style="background-color: ${this.theme.highlight}">${substr}</span>`)
+      }
+      return highlightedResult
+    },
     submit () {
       this.results = []
       if (this.inputText.length) {
@@ -224,25 +234,34 @@ export default {
         const searchIgnoreCase = this.checkedFilters.includes('checkboxCase')
         const searchIgnoreAccents = this.checkedFilters.includes('checkboxAccents')
         let textToSearch = this.inputText
-        let textToBeSearched = ''
-        let textFound = false
         this.loaderShown = true
         this.resultsInfoShown = true
         this.resultsCounter = 0
         if (searchIgnoreCase) textToSearch = textToSearch.toLowerCase()
         if (searchIgnoreAccents) textToSearch = replaceAccents(textToSearch)
         for (const [index, item] of this.poemsSnap.entries()) {
+          let textToBeSearched = ''
+          let textRegEx
           if (searchInTitle && !searchInVerses) textToBeSearched = item.t
           if (searchInVerses && !searchInTitle) textToBeSearched = item.s
           if (searchInTitle && searchInVerses) textToBeSearched = `${item.t} ${item.s}`
           if (searchIgnoreCase) textToBeSearched = textToBeSearched.toLowerCase()
           if (searchIgnoreAccents) textToBeSearched = replaceAccents(textToBeSearched)
-          if (searchWhole) textFound = textToBeSearched.match(new RegExp(`\\b${textToSearch}\\b`))
-          else textFound = textToBeSearched.includes(textToSearch)
-          if (textFound) {
+          if (searchWhole) textRegEx = new RegExp(`\\b${textToSearch}\\b`, 'g')
+          else textRegEx = new RegExp(textToSearch, 'g')
+          if (textToBeSearched.match(textRegEx)) {
+            let resultsIndexes = []
+            let match
+            while ((match = textRegEx.exec(textToBeSearched)) !== null) {
+              resultsIndexes.push([
+                match.index,
+                textRegEx.lastIndex
+              ])
+            }
             this.results.push({
-              t: item.t,
-              nr: index + 1
+              t: this.highlightResult(item.t, resultsIndexes),
+              nr: index + 1,
+              finds: []
             })
             this.resultsCounter++
           }
@@ -429,6 +448,7 @@ export default {
   font-size 15px
 
 .result__nr
+  flex-shrink 0
   display inline-block
   width 45px
   opacity 0.3

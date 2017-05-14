@@ -75,6 +75,7 @@
     </main>
     <transition name="sidebar-slide-right">
       <sidebar-right
+        :poemsSnap="poemsSnap"
         :theme="selectedTheme"
         v-show="$store.state.sidebarRightToggled">
       </sidebar-right>
@@ -222,65 +223,67 @@ export default {
       return `https://danielpintilei.bitbucket.io/p/${file}.json`
     },
     loadFolderList () {
-      idbKeyval.get('folderList').then(val => {
-        this.folderListSnap = val
-        console.log('Folder List Loaded From Local')
-      })
+      idbKeyval.get('folderList')
+        .then(val => {
+          this.folderListSnap = val
+          console.log('Folder List Loaded From Local')
+        })
     },
     getFolderListSnap () {
       if (!this.$store.state.folderListDownloaded) {
         console.log('Downloading Folder List Started')
         fetch(this.DBURL('cuprins'))
-        .then(response => response.json())
-        .then(data => {
-          console.log('Downloading Folder List Finished')
-          this.folderListSnap = data
-          console.log('Folder List Loaded')
-          idbKeyval.set('folderList', data)
-            .then(() => {
-              this.$store.commit('setFolderListDownloaded')
-              console.log('Folder List Saving Finished')
-            })
-            .catch(err => console.log('Folder List Saving Failed', err))
-        })
-        .catch(err => console.log('Downloading Folder List Failed', err))
+          .then(response => response.json())
+          .then(data => {
+            console.log('Downloading Folder List Finished')
+            this.folderListSnap = data
+            console.log('Folder List Loaded')
+            idbKeyval.set('folderList', data)
+              .then(() => {
+                this.$store.commit('setFolderListDownloaded')
+                console.log('Folder List Saving Finished')
+              })
+              .catch(err => console.log('Folder List Saving Failed', err))
+          })
+          .catch(err => console.log('Downloading Folder List Failed', err))
       } else this.loadFolderList()
     },
     fetchPoem () {
       if (this.poemsSnap) this.selectedPoem = this.poemsSnap[this.currentNr - 1]
       else {
         fetch(this.DBURL(this.currentNr))
-        .then(response => response.json())
-        .then(data => {
-          this.selectedPoem = data
-        })
-        .catch(err => console.log('Fetching Poem Failed', err))
+          .then(response => response.json())
+          .then(data => {
+            this.selectedPoem = data
+          })
+          .catch(err => console.log('Fetching Poem Failed', err))
       }
     },
     loadPoems (cb) {
-      idbKeyval.get('poems').then(val => {
-        this.poemsSnap = val
-        console.log('Poems Loaded From Local')
-        cb()
-      })
+      idbKeyval.get('poems')
+        .then(val => {
+          this.poemsSnap = val
+          console.log('Poems Loaded From Local')
+          cb()
+        })
     },
     getPoemsSnap () {
       if (!this.$store.state.poemsDownloaded) {
         console.log('Downloading Poems Started')
         fetch(this.DBURL('poezii'))
-        .then(response => response.json())
-        .then(data => {
-          console.log('Downloading Poems Finished')
-          this.poemsSnap = data
-          console.log('Poems Loaded')
-          idbKeyval.set('poems', data)
-          .then(() => {
-            this.$store.commit('setPoemsDownloaded')
-            console.log('Poems Saving Finished')
+          .then(response => response.json())
+          .then(data => {
+            console.log('Downloading Poems Finished')
+            this.poemsSnap = data
+            console.log('Poems Loaded')
+            idbKeyval.set('poems', data)
+              .then(() => {
+                this.$store.commit('setPoemsDownloaded')
+                console.log('Poems Saving Finished')
+              })
+              .catch(err => console.log('Poems Saving Failed', err))
           })
-          .catch(err => console.log('Poems Saving Failed', err))
-        })
-        .catch(err => console.log('Downloading Poems Failed', err))
+          .catch(err => console.log('Downloading Poems Failed', err))
       } else this.loadPoems()
     }
   },

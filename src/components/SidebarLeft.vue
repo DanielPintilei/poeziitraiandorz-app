@@ -173,6 +173,7 @@ $iconSortHeight = 24px
   flex-grow 1
   padding-top 4px
   padding-bottom 12px
+  font-size 15px
   border-right 1px solid
   overflow auto
 
@@ -193,8 +194,8 @@ a
 
 .folder__title
   display flex
-  padding 10px 12px 8px
   align-items center
+  padding 8px 12px
   line-height 100%
   cursor pointer
   &:active .icon-folder

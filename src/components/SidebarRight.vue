@@ -1,8 +1,9 @@
 <template>
   <aside class="sidebar-right">
     <div class="sidebar-right__inner">
-      <div
+      <form
         @click="focusSearch"
+        @submit.prevent="submit"
         class="search-box"
         :style="{
           borderLeftColor: theme.border2,
@@ -16,6 +17,7 @@
           <use xlink:href="#iconSearch"></use>
         </svg>
         <input
+          v-model="inputText"
           @focus="handleSearchFocus(true)"
           @blur="handleSearchFocus(false)"
           :style="{ color: theme.text3 }"
@@ -23,7 +25,7 @@
           type="search"
           class="search-box__input"
           placeholder="Caută">
-      </div>
+      </form>
       <v-touch
         :swipe-options="{ direction: 'horizontal'}"
         @swiperight="toggleSidebarRight"
@@ -33,6 +35,7 @@
           borderColor: theme.border3
         }">
         <svg
+          v-if="loaderShown"
           class="sidebar-right__loading"
           width="300" height="2" viewBox="0 0 300 2">
           <line
@@ -42,6 +45,10 @@
         </svg>
         <div class="sidebar-right__filters">
           <div
+            :style="{
+              backgroundColor: theme.background,
+              borderColor: !$store.state.filtersOpen ? '' : 'transparent'
+            }"
             class="sidebar-right__filters-icon-wrapper">
             <svg
               @click="toggleFilters"
@@ -51,6 +58,9 @@
               <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"/>
               <path d="M0 0h24v24H0z" fill="none"/>
             </svg>
+            <span v-if="resultsInfoShown">
+              {{resultsCounter}} rezultate pentru "{{inputText}}"
+            </span>
           </div>
           <transition name="filters">
             <div
@@ -140,6 +150,19 @@
           </transition>
         </div>
         <div class="sidebar-right__results-inner">
+          <div
+            v-for="result in results"
+            @click="handleResultClick($event, result.nr)"
+            :id="`res${result.nr}`"
+            class="result">
+            <p class="result__title">{{result.t}}</p>
+            <p class="result__nr">{{result.nr}}</p>
+            <!--<p
+              v-for="find in result"
+              class="find">
+              {{find}}
+            </p>-->
+          </div>
         </div>
       </v-touch>
     </div>
@@ -151,13 +174,19 @@ import Loading from './Loading'
 
 export default {
   name: 'sidebar-right',
-  props: ['theme', 'folderListRef'],
+  props: ['theme', 'poemsSnap'],
   components: {
     Loading
   },
   data () {
     return {
-      checkedFilters: this.$store.state.checkedFilters
+      checkedFilters: this.$store.state.checkedFilters,
+      inputText: '',
+      results: [],
+      resultsCounter: 0,
+      resultsInfoShown: false,
+      loaderShown: false,
+      lastSelectedResult: ''
     }
   },
   methods: {
@@ -183,12 +212,46 @@ export default {
     handleCheckVerses (e) {
       if (this.checkedFilters.includes('checkboxVerses') && !this.checkedFilters.includes('checkboxTitle')) e.preventDefault()
       // else this.commitFilters()
+    },
+    submit () {
+      console.log('submitted')
+      this.results = []
+      if (this.inputText.length) {
+        this.loaderShown = true
+        this.resultsInfoShown = true
+        this.resultsCounter = 0
+        for (const [index, item] of this.poemsSnap.entries()) {
+          if (item.t.includes(this.inputText)) {
+            this.results.push({
+              t: item.t,
+              nr: index + 1
+            })
+            ++this.resultsCounter
+          }
+        }
+      }
+      this.lastSelectedResult = 0
+      this.loaderShown = false
+    },
+    handleResultClick (event, nr) {
+      const route = document.getElementById(nr)
+      const routeParent = route.parentElement.parentElement.firstElementChild
+      if (!routeParent.checked) routeParent.click()
+      route.click()
+      route.scrollIntoView()
+      if (this.lastSelectedResult.length) document.getElementById(this.lastSelectedResult).classList.remove('active')
+      event.target.closest('.result').classList.add('active')
+      this.lastSelectedResult = `res${nr}`
+      // console.log(nr)
     }
   },
   watch: {
     checkedFilters () {
       // this.commitFilters()
       this.$store.commit('setCheckedFilters', this.checkedFilters)
+    },
+    inputText () {
+      this.resultsInfoShown = false
     }
   }
 }
@@ -262,11 +325,11 @@ export default {
   padding-bottom 12px
   border-left 1px solid
   overflow-x hidden
-  overflow-y auto
 
 .sidebar-right__loading
   position absolute
   top -1px
+  z-index 20
 .line
   stroke-dasharray 300
   stroke-dashoffset 300
@@ -280,10 +343,14 @@ export default {
 
 .sidebar-right__filters-icon-wrapper
   display flex
-  padding 15px 22px 0
+  padding 15px 22px 12px
+  border-bottom 1px solid $separatorBorderColor
+  position relative
+  z-index 10
 
 .icon-filters
 .icon-check
+  flex-shrink 0
   margin-right 10px
 
 .sidebar-right__filter-wrapper
@@ -291,13 +358,13 @@ export default {
   padding-left 22px
   padding-right 22px
   font-size 15px
+  border-bottom 1px solid $separatorBorderColor
   overflow hidden
 
 .sidebar-right__filter
   display flex
   align-items center
   margin-top 10px
-
   input
     display none
     &:checked + label svg .off
@@ -315,16 +382,30 @@ export default {
       & svg
         opacity 1
 
-.sidebar-right__results-inner
-  flex-grow 1
-  padding-top 15px
-
 .filters-enter-active
 .filters-leave-active
-  transition height $sidebarDuration $sidebarTiming, opacity $sidebarDuration $sidebarTiming
+  transition transform $sidebarDuration $sidebarTiming
 .filters-enter
 .filters-leave-to
-  height 0
-  opacity 0
+  transform translateY(-100%)
+
+.sidebar-right__results-inner
+  flex-grow 1
+  overflow-y auto
+
+.result
+  padding 10px
+  font-size 14px
+  border-bottom 1px solid $separatorBorderColor
+  cursor pointer
+  &:hover
+    background-color $linkHoverBackground
+  &.active
+    background-color $linkSelectedBackground
+  p
+    margin 0
+
+.result__title
+  font-size 15px
 
 </style>

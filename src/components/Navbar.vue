@@ -81,7 +81,6 @@
           <path d="M0-.25h24v24H0z" fill="none"/>
         </svg>
         <svg
-          style="visibility: hidden"
           @click="toggleSidebarRight"
           v-show="!$store.state.sidebarRightToggled"
           :fill="theme.icon"

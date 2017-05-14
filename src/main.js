@@ -11,7 +11,7 @@ import SocialSharing from 'vue-social-sharing'
 sync(store, router)
 
 Vue.config.productionTip = false
-Vue.config.performance = true
+// Vue.config.performance = true
 Vue.use(VueTouch, { name: 'v-touch' })
 Vue.use(SocialSharing)
 

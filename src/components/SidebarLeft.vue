@@ -79,6 +79,8 @@
 </template>
 
 <script>
+import { replaceAccents } from '../helpers'
+
 import Loading from './Loading'
 
 export default {
@@ -89,7 +91,7 @@ export default {
   },
   methods: {
     formatTitle (title) {
-      return title.replace(/\s+/g, '-').replace(/[ăâ]+/g, 'a').replace(/[ĂÂ]+/g, 'A').replace(/[î]+/g, 'i').replace(/[Î]+/g, 'I').replace(/[ș]+/g, 's').replace(/[Ș]+/g, 'S').replace(/[ț]+/g, 't').replace(/[Ț]+/g, 'T').replace(/[^\w-]+/g, '')
+      return replaceAccents(title.replace(/\s+/g, '-').replace(/[^\w-]+/g, ''))
     },
     toggleSidebarLeft () {
       this.$store.commit('toggleSidebarLeft')

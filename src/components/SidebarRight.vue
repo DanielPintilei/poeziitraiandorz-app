@@ -59,7 +59,7 @@
               <path d="M0 0h24v24H0z" fill="none"/>
             </svg>
             <span v-if="resultsInfoShown">
-              {{resultsCounter}} rezultate pentru "{{inputText}}"
+              {{resultsCounter}} {{`${resultsCounter > 1 ? 'rezultate' : 'rezultat'}`}} pentru "{{inputText}}"
             </span>
           </div>
           <transition name="filters">
@@ -104,8 +104,8 @@
               <div class="sidebar-right__filter">
                 <input
                   type="checkbox"
-                  value="checkboxCase" id="checkboxCase" v-model="checkedFilters">
-                <label for="checkboxCase">
+                  value="checkboxFuzzy" id="checkboxFuzzy" v-model="checkedFilters">
+                <label for="checkboxFuzzy">
                   <svg
                     class="icon icon-check"
                     :fill="theme.accent"
@@ -119,8 +119,8 @@
               <div class="sidebar-right__filter">
                 <input
                   type="checkbox"
-                  value="checkboxDiacritice" id="checkboxDiacritice" v-model="checkedFilters">
-                <label for="checkboxDiacritice">
+                  value="checkboxCase" id="checkboxCase" v-model="checkedFilters">
+                <label for="checkboxCase">
                   <svg
                     class="icon icon-check"
                     :fill="theme.accent"
@@ -134,8 +134,8 @@
               <div class="sidebar-right__filter">
                 <input
                   type="checkbox"
-                  value="checkboxFuzzy" id="checkboxFuzzy" v-model="checkedFilters">
-                <label for="checkboxFuzzy">
+                  value="checkboxAccents" id="checkboxAccents" v-model="checkedFilters">
+                <label for="checkboxAccents">
                   <svg
                     class="icon icon-check"
                     :fill="theme.accent"
@@ -170,6 +170,8 @@
 </template>
 
 <script>
+import { replaceAccents } from '../helpers'
+
 import Loading from './Loading'
 
 export default {
@@ -220,13 +222,28 @@ export default {
         this.loaderShown = true
         this.resultsInfoShown = true
         this.resultsCounter = 0
+        const filterTitle = this.checkedFilters.includes('checkboxTitle')
+        const filterVerses = this.checkedFilters.includes('checkboxVerses')
+        // const filterFuzzy = this.checkedFilters.includes('checkboxFuzzy')
+        const filterCase = this.checkedFilters.includes('checkboxCase')
+        const filterAccents = this.checkedFilters.includes('checkboxAccents')
+        let textToSearch = this.inputText
+        if (!filterCase) textToSearch = textToSearch.toLowerCase()
+        if (!filterAccents) textToSearch = replaceAccents(textToSearch)
         for (const [index, item] of this.poemsSnap.entries()) {
-          if (item.t.includes(this.inputText)) {
+          let textToBeSearched = ''
+          if (filterTitle && !filterVerses) textToBeSearched = item.t
+          if (filterVerses && !filterTitle) textToBeSearched = item.s
+          if (filterTitle && filterVerses) textToBeSearched = `${item.t} ${item.s}`
+          // fuzzy
+          if (!filterCase) textToBeSearched = textToBeSearched.toLowerCase()
+          if (!filterAccents) textToBeSearched = replaceAccents(textToBeSearched)
+          if (textToBeSearched.includes(textToSearch)) {
             this.results.push({
               t: item.t,
               nr: index + 1
             })
-            ++this.resultsCounter
+            this.resultsCounter++
           }
         }
       }
@@ -242,7 +259,6 @@ export default {
       if (this.lastSelectedResult.length) document.getElementById(this.lastSelectedResult).classList.remove('active')
       event.target.closest('.result').classList.add('active')
       this.lastSelectedResult = `res${nr}`
-      // console.log(nr)
     }
   },
   watch: {

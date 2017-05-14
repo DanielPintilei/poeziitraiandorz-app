@@ -10,7 +10,7 @@ const selectedFontSize = +localStorage.getItem('selectedFontSize') || 1
 const folderListDownloaded = localStorage.getItem('folderListDownloaded') === 'true' || false
 const poemsDownloaded = localStorage.getItem('poemsDownloaded') === 'true' || false
 const filtersOpen = localStorage.getItem('filtersOpen') === 'true' || false
-const checkedFilters = JSON.parse(localStorage.getItem('checkedFilters')) || ['checkboxTitle', 'checkboxVerses']
+const checkedFilters = JSON.parse(localStorage.getItem('checkedFilters')) || ['checkboxTitle', 'checkboxVerses', 'checkboxWhole', 'checkboxCase', 'checkboxAccents']
 
 export const store = new Vuex.Store({
   state: {

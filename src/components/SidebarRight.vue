@@ -24,6 +24,7 @@
           id="searchInput"
           type="search"
           class="search-box__input"
+          autocorrect="off"
           placeholder="Caută">
       </form>
       <v-touch
@@ -58,7 +59,9 @@
               <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"/>
               <path d="M0 0h24v24H0z" fill="none"/>
             </svg>
-            <span v-if="resultsInfoShown">
+            <span
+              v-if="resultsInfoShown"
+              class="results-info">
               {{resultsCounter}} {{`${resultsCounter > 1 ? 'rezultate' : 'rezultat'}`}} pentru "{{inputText}}"
             </span>
           </div>
@@ -81,7 +84,7 @@
                     <use class="off" xlink:href="#iconCheck"></use>
                     <use class="on" xlink:href="#iconCheckOn"></use>
                   </svg>
-                  <span>Titlu</span>
+                  <span>În titlu</span>
                 </label>
               </div>
               <div class="sidebar-right__filter">
@@ -98,14 +101,14 @@
                     <use class="off" xlink:href="#iconCheck"></use>
                     <use class="on" xlink:href="#iconCheckOn"></use>
                   </svg>
-                  <span>Versuri</span>
+                  <span>În versuri</span>
                 </label>
               </div>
               <div class="sidebar-right__filter">
                 <input
                   type="checkbox"
-                  value="checkboxFuzzy" id="checkboxFuzzy" v-model="checkedFilters">
-                <label for="checkboxFuzzy">
+                  value="checkboxWhole" id="checkboxWhole" v-model="checkedFilters">
+                <label for="checkboxWhole">
                   <svg
                     class="icon icon-check"
                     :fill="theme.accent"
@@ -113,7 +116,7 @@
                     <use class="off" xlink:href="#iconCheck"></use>
                     <use class="on" xlink:href="#iconCheckOn"></use>
                   </svg>
-                  <span>Exact</span>
+                  <span>Cuvinte întregi</span>
                 </label>
               </div>
               <div class="sidebar-right__filter">
@@ -128,7 +131,7 @@
                     <use class="off" xlink:href="#iconCheck"></use>
                     <use class="on" xlink:href="#iconCheckOn"></use>
                   </svg>
-                  <span>Majuscule</span>
+                  <span>Ignoră majusculele</span>
                 </label>
               </div>
               <div class="sidebar-right__filter">
@@ -143,7 +146,7 @@
                     <use class="off" xlink:href="#iconCheck"></use>
                     <use class="on" xlink:href="#iconCheckOn"></use>
                   </svg>
-                  <span>Diacritice</span>
+                  <span>Ignoră diacriticele</span>
                 </label>
               </div>
             </div>
@@ -155,8 +158,10 @@
             @click="handleResultClick($event, result.nr)"
             :id="`res${result.nr}`"
             class="result">
-            <p class="result__title">{{result.t}}</p>
-            <p class="result__nr">{{result.nr}}</p>
+            <p class="result__title">
+              <span class="result__nr">{{result.nr}}</span>
+              <span>{{result.t}}</span>
+            </p>
             <!--<p
               v-for="find in result"
               class="find">
@@ -204,41 +209,37 @@ export default {
     toggleFilters () {
       this.$store.commit('toggleFilters')
     },
-    // commitFilters () {
-    //   this.$store.commit('setCheckedFilters', this.checkedFilters)
-    // },
     handleCheckTitle (e) {
       if (this.checkedFilters.includes('checkboxTitle') && !this.checkedFilters.includes('checkboxVerses')) e.preventDefault()
-      // else this.commitFilters()
     },
     handleCheckVerses (e) {
       if (this.checkedFilters.includes('checkboxVerses') && !this.checkedFilters.includes('checkboxTitle')) e.preventDefault()
-      // else this.commitFilters()
     },
     submit () {
-      console.log('submitted')
       this.results = []
       if (this.inputText.length) {
+        const searchInTitle = this.checkedFilters.includes('checkboxTitle')
+        const searchInVerses = this.checkedFilters.includes('checkboxVerses')
+        const searchWhole = this.checkedFilters.includes('checkboxWhole')
+        const searchIgnoreCase = this.checkedFilters.includes('checkboxCase')
+        const searchIgnoreAccents = this.checkedFilters.includes('checkboxAccents')
+        let textToSearch = this.inputText
+        let textToBeSearched = ''
+        let textFound = false
         this.loaderShown = true
         this.resultsInfoShown = true
         this.resultsCounter = 0
-        const filterTitle = this.checkedFilters.includes('checkboxTitle')
-        const filterVerses = this.checkedFilters.includes('checkboxVerses')
-        // const filterFuzzy = this.checkedFilters.includes('checkboxFuzzy')
-        const filterCase = this.checkedFilters.includes('checkboxCase')
-        const filterAccents = this.checkedFilters.includes('checkboxAccents')
-        let textToSearch = this.inputText
-        if (!filterCase) textToSearch = textToSearch.toLowerCase()
-        if (!filterAccents) textToSearch = replaceAccents(textToSearch)
+        if (searchIgnoreCase) textToSearch = textToSearch.toLowerCase()
+        if (searchIgnoreAccents) textToSearch = replaceAccents(textToSearch)
         for (const [index, item] of this.poemsSnap.entries()) {
-          let textToBeSearched = ''
-          if (filterTitle && !filterVerses) textToBeSearched = item.t
-          if (filterVerses && !filterTitle) textToBeSearched = item.s
-          if (filterTitle && filterVerses) textToBeSearched = `${item.t} ${item.s}`
-          // fuzzy
-          if (!filterCase) textToBeSearched = textToBeSearched.toLowerCase()
-          if (!filterAccents) textToBeSearched = replaceAccents(textToBeSearched)
-          if (textToBeSearched.includes(textToSearch)) {
+          if (searchInTitle && !searchInVerses) textToBeSearched = item.t
+          if (searchInVerses && !searchInTitle) textToBeSearched = item.s
+          if (searchInTitle && searchInVerses) textToBeSearched = `${item.t} ${item.s}`
+          if (searchIgnoreCase) textToBeSearched = textToBeSearched.toLowerCase()
+          if (searchIgnoreAccents) textToBeSearched = replaceAccents(textToBeSearched)
+          if (searchWhole) textFound = textToBeSearched.match(new RegExp(`\\b${textToSearch}\\b`))
+          else textFound = textToBeSearched.includes(textToSearch)
+          if (textFound) {
             this.results.push({
               t: item.t,
               nr: index + 1
@@ -263,7 +264,6 @@ export default {
   },
   watch: {
     checkedFilters () {
-      // this.commitFilters()
       this.$store.commit('setCheckedFilters', this.checkedFilters)
     },
     inputText () {
@@ -369,6 +369,9 @@ export default {
   flex-shrink 0
   margin-right 10px
 
+.results-info
+  opacity 0.5
+
 .sidebar-right__filter-wrapper
   height 186px
   padding-left 22px
@@ -410,7 +413,7 @@ export default {
   overflow-y auto
 
 .result
-  padding 10px
+  padding 10px 15px
   font-size 14px
   border-bottom 1px solid $separatorBorderColor
   cursor pointer
@@ -422,6 +425,12 @@ export default {
     margin 0
 
 .result__title
+  display flex
   font-size 15px
+
+.result__nr
+  display inline-block
+  width 45px
+  opacity 0.3
 
 </style>

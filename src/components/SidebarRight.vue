@@ -24,6 +24,7 @@
           id="searchInput"
           type="search"
           class="search-box__input"
+          autocomplete="off"
           autocorrect="off"
           autocapitalize="off"
           spellcheck="false"
@@ -160,15 +161,15 @@
             @click="handleResultClick($event, result.nr)"
             :id="`res${result.nr}`"
             class="result">
-            <p class="result__title">
-              <span class="result__nr">{{result.nr}}</span>
-              <span v-html="result.t"></span>
-            </p>
-            <!--<p
-              v-for="find in result"
-              class="find">
-              {{find}}
-            </p>-->
+            <span class="result__nr">{{result.nr}}</span>
+            <div >
+              <div class="result__title" v-html="result.title"></div>
+              <div
+                v-for="find in result.findsInVerses"
+                class="find">
+                {{find}}
+              </div>
+            </div>
           </div>
         </div>
       </v-touch>
@@ -258,10 +259,11 @@ export default {
                 textRegEx.lastIndex
               ])
             }
+            let findsInVerses = []
             this.results.push({
-              t: this.highlightResult(item.t, resultsIndexes),
+              title: this.highlightResult(item.t, resultsIndexes),
               nr: index + 1,
-              finds: []
+              findsInVerses
             })
             this.resultsCounter++
           }
@@ -327,6 +329,7 @@ export default {
   padding-right 20px
   border-left 1px solid
   border-bottom 1px solid
+  cursor text
 
 .search-box__input
   order 1
@@ -378,6 +381,7 @@ export default {
 
 .sidebar-right__filters-icon-wrapper
   display flex
+  align-items center
   padding 15px 22px 12px
   border-bottom 1px solid $separatorBorderColor
   position relative
@@ -390,6 +394,7 @@ export default {
 
 .results-info
   opacity 0.5
+  cursor default
 
 .sidebar-right__filter-wrapper
   height 186px
@@ -432,6 +437,7 @@ export default {
   overflow-y auto
 
 .result
+  display flex
   padding 10px 15px
   font-size 14px
   border-bottom 1px solid $separatorBorderColor
@@ -440,11 +446,8 @@ export default {
     background-color $linkHoverBackground
   &.active
     background-color $linkSelectedBackground
-  p
-    margin 0
 
 .result__title
-  display flex
   font-size 15px
 
 .result__nr

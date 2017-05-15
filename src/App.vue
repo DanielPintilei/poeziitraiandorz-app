@@ -188,7 +188,7 @@ export default {
     metaThemeColor.setAttribute('content', selectedTheme.theme)
     document.body.style.setProperty('--themeBG', selectedTheme.background)
     if (this.$store.state.poemsDownloaded) this.loadPoems(this.fetchPoem)
-    else this.fetchPoem()
+    else if (this.$store.state.route.params.nr) this.fetchPoem()
   },
   mounted () {
     if (this.$store.state.sidebarLeftToggled || this.$store.state.folderListDownloaded) this.loadFolderList()
@@ -288,6 +288,7 @@ export default {
           })
           .catch(err => console.log('Downloading Poems Failed', err))
       } else this.loadPoems()
+      if (!this.$store.state.sidebarLeftToggled && !this.folderListSnap) this.getFolderListSnap()
     }
   },
   watch: {

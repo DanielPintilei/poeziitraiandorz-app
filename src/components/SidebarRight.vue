@@ -17,7 +17,7 @@
           <use xlink:href="#iconSearch"></use>
         </svg>
         <input
-          v-model="inputText"
+          v-model="searchText"
           @focus="handleSearchFocus(true)"
           @blur="handleSearchFocus(false)"
           :style="{ color: theme.text3 }"
@@ -65,7 +65,7 @@
             <span
               v-if="resultsInfoShown"
               class="results-info">
-              {{resultsCounter}} {{`${resultsCounter > 1 ? 'rezultate' : 'rezultat'}`}} pentru "{{inputText}}"
+              {{resultsCounter}} {{`${resultsCounter === 1 ? 'rezultat' : 'rezultate'}`}} pentru "{{searchText}}"
             </span>
           </div>
           <transition name="filters">
@@ -191,7 +191,7 @@ export default {
   data () {
     return {
       checkedFilters: this.$store.state.checkedFilters,
-      inputText: '',
+      searchText: this.$store.state.searchText,
       results: [],
       resultsCounter: 0,
       resultsInfoShown: false,
@@ -228,13 +228,13 @@ export default {
     },
     submit () {
       this.results = []
-      if (this.inputText.length) {
+      if (this.searchText.length > 2) {
         const searchInTitle = this.checkedFilters.includes('checkboxTitle')
         const searchInVerses = this.checkedFilters.includes('checkboxVerses')
         const searchWhole = this.checkedFilters.includes('checkboxWhole')
         const searchIgnoreCase = this.checkedFilters.includes('checkboxCase')
         const searchIgnoreAccents = this.checkedFilters.includes('checkboxAccents')
-        let textToSearch = this.inputText
+        let textToSearch = this.searchText
         this.loaderShown = true
         this.resultsInfoShown = true
         this.resultsCounter = 0
@@ -250,15 +250,14 @@ export default {
           if (searchIgnoreAccents) textToBeSearched = replaceAccents(textToBeSearched)
           if (searchWhole) textRegEx = new RegExp(`\\b${textToSearch}\\b`, 'g')
           else textRegEx = new RegExp(textToSearch, 'g')
-          if (textToBeSearched.match(textRegEx)) {
-            let resultsIndexes = []
-            let match
-            while ((match = textRegEx.exec(textToBeSearched)) !== null) {
-              resultsIndexes.push([
-                match.index,
-                textRegEx.lastIndex
-              ])
-            }
+          // if (textToBeSearched.match(textRegEx)) {
+          let resultsIndexes = []
+          let match
+          while ((match = textRegEx.exec(textToBeSearched)) !== null) {
+            resultsIndexes.push([
+              match.index,
+              textRegEx.lastIndex
+            ])
             let findsInVerses = []
             this.results.push({
               title: this.highlightResult(item.t, resultsIndexes),
@@ -267,10 +266,12 @@ export default {
             })
             this.resultsCounter++
           }
+          // }
         }
       }
       this.lastSelectedResult = 0
       this.loaderShown = false
+      this.$store.commit('setSearchText', this.searchText)
     },
     handleResultClick (event, nr) {
       const route = document.getElementById(nr)
@@ -287,7 +288,7 @@ export default {
     checkedFilters () {
       this.$store.commit('setCheckedFilters', this.checkedFilters)
     },
-    inputText () {
+    searchText () {
       this.resultsInfoShown = false
     }
   }

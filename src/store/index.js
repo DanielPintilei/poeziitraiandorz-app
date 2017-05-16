@@ -9,6 +9,7 @@ const selectedTheme = +localStorage.getItem('selectedTheme') || 0
 const selectedFontSize = +localStorage.getItem('selectedFontSize') || 1
 const folderListDownloaded = localStorage.getItem('folderListDownloaded') === 'true' || false
 const poemsDownloaded = localStorage.getItem('poemsDownloaded') === 'true' || false
+const searchText = localStorage.getItem('searchText') || ''
 const filtersOpen = localStorage.getItem('filtersOpen') === 'true' || false
 const checkedFilters = JSON.parse(localStorage.getItem('checkedFilters')) || ['checkboxTitle', 'checkboxVerses', 'checkboxWhole', 'checkboxCase', 'checkboxAccents']
 
@@ -26,6 +27,7 @@ export const store = new Vuex.Store({
     fullBook: poemsDownloaded,
     poemsDownloaded,
     searchFocused: false,
+    searchText,
     filtersOpen,
     checkedFilters
   },
@@ -113,6 +115,9 @@ export const store = new Vuex.Store({
     },
     handleSearchFocus (state, bool) {
       state.searchFocused = bool
+    },
+    setSearchText (state, str) {
+      localStorage.setItem('searchText', str)
     },
     toggleFilters (state) {
       state.filtersOpen = !state.filtersOpen

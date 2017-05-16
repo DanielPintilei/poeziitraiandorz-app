@@ -288,7 +288,7 @@ export default {
           })
           .catch(err => console.log('Downloading Poems Failed', err))
       } else this.loadPoems()
-      if (!this.$store.state.sidebarLeftToggled && !this.folderListSnap) this.getFolderListSnap()
+      if (!this.folderListSnap) this.getFolderListSnap()
     }
   },
   watch: {

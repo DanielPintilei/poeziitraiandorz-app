@@ -79,7 +79,7 @@
 </template>
 
 <script>
-import { replaceAccents } from '../helpers'
+import { replaceAccents, mobileTap } from '../helpers'
 
 import Loading from './Loading'
 
@@ -102,10 +102,7 @@ export default {
       else setTimeout(() => { folderById.nextElementSibling.scrollIntoView() }, 0)
     },
     tapPoemLink () {
-      const tapMQ = window.matchMedia('(max-width: 1100px)')
-      if (tapMQ.matches) {
-        this.toggleSidebarLeft()
-      }
+      mobileTap(1100, this.toggleSidebarLeft)
     }
   }
 }

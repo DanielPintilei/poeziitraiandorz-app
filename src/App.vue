@@ -229,26 +229,26 @@ export default {
       idbKeyval.get('folderList')
         .then(val => {
           this.folderListSnap = val
-          console.log('Folder List Loaded From Local')
+          // console.log('Folder List Loaded From Local')
         })
     },
     getFolderListSnap () {
       if (!this.$store.state.folderListDownloaded) {
-        console.log('Downloading Folder List Started')
+        // console.log('Downloading Folder List Started')
         fetch(this.DBURL('cuprins'))
           .then(response => response.json())
           .then(data => {
-            console.log('Downloading Folder List Finished')
+            // console.log('Downloading Folder List Finished')
             this.folderListSnap = data
-            console.log('Folder List Loaded')
+            // console.log('Folder List Loaded')
             idbKeyval.set('folderList', data)
               .then(() => {
                 this.$store.commit('setFolderListDownloaded')
-                console.log('Folder List Saving Finished')
+                // console.log('Folder List Saving Finished')
               })
-              .catch(err => console.log('Folder List Saving Failed', err))
+              // .catch(err => console.log('Folder List Saving Failed', err))
           })
-          .catch(err => console.log('Downloading Folder List Failed', err))
+          // .catch(err => console.log('Downloading Folder List Failed', err))
       } else this.loadFolderList()
     },
     fetchPoem () {
@@ -259,34 +259,34 @@ export default {
           .then(data => {
             this.selectedPoem = data
           })
-          .catch(err => console.log('Fetching Poem Failed', err))
+          // .catch(err => console.log('Fetching Poem Failed', err))
       }
     },
     loadPoems (cb) {
       idbKeyval.get('poems')
         .then(val => {
           this.poemsSnap = val
-          console.log('Poems Loaded From Local')
+          // console.log('Poems Loaded From Local')
           cb()
         })
     },
     getPoemsSnap () {
       if (!this.$store.state.poemsDownloaded) {
-        console.log('Downloading Poems Started')
+        // console.log('Downloading Poems Started')
         fetch(this.DBURL('poezii'))
           .then(response => response.json())
           .then(data => {
-            console.log('Downloading Poems Finished')
+            // console.log('Downloading Poems Finished')
             this.poemsSnap = data
-            console.log('Poems Loaded')
+            // console.log('Poems Loaded')
             idbKeyval.set('poems', data)
               .then(() => {
                 this.$store.commit('setPoemsDownloaded')
-                console.log('Poems Saving Finished')
+                // console.log('Poems Saving Finished')
               })
-              .catch(err => console.log('Poems Saving Failed', err))
+              // .catch(err => console.log('Poems Saving Failed', err))
           })
-          .catch(err => console.log('Downloading Poems Failed', err))
+          // .catch(err => console.log('Downloading Poems Failed', err))
       } else this.loadPoems()
       if (!this.folderListSnap) this.getFolderListSnap()
     }

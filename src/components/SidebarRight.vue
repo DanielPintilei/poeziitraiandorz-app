@@ -65,7 +65,7 @@
             <span
               v-if="resultsInfoShown"
               class="results-info">
-              {{resultsCounter}} {{`${resultsCounter === 1 ? 'rezultat' : 'rezultate'}`}} pentru "{{searchText}}"
+              {{resultsCounter}} {{resultsCounter === 1 ? 'rezultat' : 'rezultate'}} în {{resultsPoemsCounter}} {{resultsPoemsCounter === 1 ? 'poezie' : 'poezii'}} pentru "{{searchText}}"
             </span>
           </div>
           <transition name="filters">
@@ -178,7 +178,7 @@
 </template>
 
 <script>
-import { replaceAccents } from '../helpers'
+import { replaceAccents, mobileTap } from '../helpers'
 
 import Loading from './Loading'
 
@@ -194,6 +194,7 @@ export default {
       searchText: this.$store.state.searchText,
       results: [],
       resultsCounter: 0,
+      resultsPoemsCounter: 0,
       resultsInfoShown: false,
       loaderShown: false,
       lastSelectedResult: ''
@@ -238,6 +239,7 @@ export default {
         this.loaderShown = true
         this.resultsInfoShown = true
         this.resultsCounter = 0
+        this.resultsPoemsCounter = 0
         if (searchIgnoreCase) textToSearch = textToSearch.toLowerCase()
         if (searchIgnoreAccents) textToSearch = replaceAccents(textToSearch)
         for (const [index, item] of this.poemsSnap.entries()) {
@@ -250,23 +252,24 @@ export default {
           if (searchIgnoreAccents) textToBeSearched = replaceAccents(textToBeSearched)
           if (searchWhole) textRegEx = new RegExp(`\\b${textToSearch}\\b`, 'g')
           else textRegEx = new RegExp(textToSearch, 'g')
-          // if (textToBeSearched.match(textRegEx)) {
-          let resultsIndexes = []
-          let match
-          while ((match = textRegEx.exec(textToBeSearched)) !== null) {
-            resultsIndexes.push([
-              match.index,
-              textRegEx.lastIndex
-            ])
+          if (textToBeSearched.match(textRegEx)) {
+            let resultsIndexes = []
             let findsInVerses = []
+            let match
+            while ((match = textRegEx.exec(textToBeSearched)) !== null) {
+              resultsIndexes.push([
+                match.index,
+                textRegEx.lastIndex
+              ])
+              this.resultsCounter++
+            }
             this.results.push({
               title: this.highlightResult(item.t, resultsIndexes),
               nr: index + 1,
               findsInVerses
             })
-            this.resultsCounter++
+            this.resultsPoemsCounter++
           }
-          // }
         }
       }
       this.lastSelectedResult = 0
@@ -282,6 +285,7 @@ export default {
       if (this.lastSelectedResult.length) document.getElementById(this.lastSelectedResult).classList.remove('active')
       event.target.closest('.result').classList.add('active')
       this.lastSelectedResult = `res${nr}`
+      mobileTap(1100, this.toggleSidebarRight)
     }
   },
   watch: {
@@ -382,7 +386,6 @@ export default {
 
 .sidebar-right__filters-icon-wrapper
   display flex
-  align-items center
   padding 15px 22px 12px
   border-bottom 1px solid $separatorBorderColor
   position relative

@@ -3,7 +3,7 @@
     <div class="sidebar-right__inner">
       <form
         @click="focusSearch"
-        @submit.prevent="submit"
+        @submit.prevent="submitSearch"
         class="search-box"
         :style="{
           borderLeftColor: theme.border2,
@@ -65,7 +65,7 @@
             <span
               v-if="resultsInfoShown"
               class="results-info">
-              {{resultsCounter}} {{resultsCounter === 1 ? 'rezultat' : 'rezultate'}} în {{resultsPoemsCounter}} {{resultsPoemsCounter === 1 ? 'poezie' : 'poezii'}} pentru "{{searchText}}"
+              {{resultsInfo}}
             </span>
           </div>
           <transition name="filters">
@@ -200,6 +200,13 @@ export default {
       lastSelectedResult: ''
     }
   },
+  computed: {
+    resultsInfo () {
+      let inPoems = ' '
+      if (this.resultsCounter) inPoems = ` în ${this.resultsPoemsCounter} ${this.resultsPoemsCounter === 1 ? 'poezie' : 'poezii'} `
+      return `${this.resultsCounter} ${this.resultsCounter === 1 ? 'rezultat' : 'rezultate'}${inPoems}pentru "${this.searchText}"`
+    }
+  },
   methods: {
     toggleSidebarRight () {
       this.$store.commit('toggleSidebarRight')
@@ -219,62 +226,75 @@ export default {
     handleCheckVerses (e) {
       if (this.checkedFilters.includes('checkboxVerses') && !this.checkedFilters.includes('checkboxTitle')) e.preventDefault()
     },
-    highlightResult (result, indexes) {
-      let highlightedResult = result
-      for (const occurence of indexes) {
-        const substr = result.substring(occurence[0], occurence[1])
-        highlightedResult = highlightedResult.replace(new RegExp(substr), `<span style="background-color: ${this.theme.highlight}">${substr}</span>`)
+    submitSearch () {
+      const searchForIndexes = (words, text) => {
+        let indexes = []
+        let match
+        while ((match = words.exec(text)) !== null) {
+          indexes.push([
+            match.index,
+            words.lastIndex
+          ])
+          this.resultsCounter++
+        }
+        return indexes.length ? indexes : null
       }
-      return highlightedResult
-    },
-    submit () {
-      this.results = []
+      const highlightResult = (result, indexes) => {
+        let highlightedResult = result
+        for (const occurence of indexes) {
+          const substr = result.substring(occurence[0], occurence[1])
+          highlightedResult = highlightedResult.replace(new RegExp(substr), `<span style="background-color: ${this.theme.highlight}">${substr}</span>`)
+        }
+        return highlightedResult
+      }
+      const listVersesResults = () => {
+
+      }
       if (this.searchText.length > 2) {
+        this.results = []
         const searchInTitle = this.checkedFilters.includes('checkboxTitle')
         const searchInVerses = this.checkedFilters.includes('checkboxVerses')
         const searchWhole = this.checkedFilters.includes('checkboxWhole')
         const searchIgnoreCase = this.checkedFilters.includes('checkboxCase')
         const searchIgnoreAccents = this.checkedFilters.includes('checkboxAccents')
-        let textToSearch = this.searchText
         this.loaderShown = true
         this.resultsInfoShown = true
         this.resultsCounter = 0
         this.resultsPoemsCounter = 0
-        if (searchIgnoreCase) textToSearch = textToSearch.toLowerCase()
+        let textToSearch = this.searchText
         if (searchIgnoreAccents) textToSearch = replaceAccents(textToSearch)
-        for (const [index, item] of this.poemsSnap.entries()) {
-          let textToBeSearched = ''
-          let textRegEx
-          if (searchInTitle && !searchInVerses) textToBeSearched = item.t
-          if (searchInVerses && !searchInTitle) textToBeSearched = item.s
-          if (searchInTitle && searchInVerses) textToBeSearched = `${item.t} ${item.s}`
-          if (searchIgnoreCase) textToBeSearched = textToBeSearched.toLowerCase()
+        let searchRegEx
+        let searchFlags = 'g'
+        if (searchIgnoreCase) searchFlags = 'ig'
+        if (searchWhole) searchRegEx = new RegExp(`\\b${textToSearch}\\b`, searchFlags)
+        else searchRegEx = new RegExp(textToSearch, searchFlags)
+        const searchText = (textToBeSearched) => {
           if (searchIgnoreAccents) textToBeSearched = replaceAccents(textToBeSearched)
-          if (searchWhole) textRegEx = new RegExp(`\\b${textToSearch}\\b`, 'g')
-          else textRegEx = new RegExp(textToSearch, 'g')
-          if (textToBeSearched.match(textRegEx)) {
-            let resultsIndexes = []
-            let findsInVerses = []
-            let match
-            while ((match = textRegEx.exec(textToBeSearched)) !== null) {
-              resultsIndexes.push([
-                match.index,
-                textRegEx.lastIndex
-              ])
-              this.resultsCounter++
-            }
+          return searchForIndexes(searchRegEx, textToBeSearched)
+        }
+        for (const [index, item] of this.poemsSnap.entries()) {
+          let title
+          let verses = null
+          let titleResults = null
+          let versesResults = null
+          if (searchInTitle) titleResults = searchText(item.t)
+          if (searchInVerses) versesResults = searchText(item.s)
+          if (titleResults) title = highlightResult(item.t, titleResults)
+          else title = item.t
+          if (versesResults) verses = listVersesResults(highlightResult(item.s, versesResults))
+          if (titleResults || versesResults) {
             this.results.push({
-              title: this.highlightResult(item.t, resultsIndexes),
               nr: index + 1,
-              findsInVerses
+              title,
+              verses
             })
             this.resultsPoemsCounter++
           }
         }
+        this.lastSelectedResult = 0
+        this.loaderShown = false
+        this.$store.commit('setSearchText', this.searchText)
       }
-      this.lastSelectedResult = 0
-      this.loaderShown = false
-      this.$store.commit('setSearchText', this.searchText)
     },
     handleResultClick (event, nr) {
       const route = document.getElementById(nr)

@@ -33,7 +33,7 @@
       <v-touch
         :swipe-options="{ direction: 'horizontal'}"
         @swiperight="toggleSidebarRight"
-        class="sidebar-right__results"
+        class="sidebar-right__main"
         :style="{
           backgroundColor: theme.background,
           borderColor: theme.border3
@@ -155,7 +155,7 @@
             </div>
           </transition>
         </div>
-        <div class="sidebar-right__results-inner">
+        <div class="sidebar-right__results" id="sidebarRightResults">
           <div
             v-for="result in results"
             @click="handleResultClick($event, result.nr)"
@@ -164,10 +164,12 @@
             <span class="result__nr">{{result.nr}}</span>
             <div >
               <div class="result__title" v-html="result.title"></div>
-              <div
-                v-for="find in result.findsInVerses"
-                class="find">
-                {{find}}
+              <div class="result__verses">
+                <span
+                  v-for="verse in result.verses"
+                  v-html="verse"
+                  class="result__verse">
+                </span>
               </div>
             </div>
           </div>
@@ -227,30 +229,45 @@ export default {
       if (this.checkedFilters.includes('checkboxVerses') && !this.checkedFilters.includes('checkboxTitle')) e.preventDefault()
     },
     submitSearch () {
-      const searchForIndexes = (words, text) => {
-        let indexes = []
-        let match
-        while ((match = words.exec(text)) !== null) {
-          indexes.push([
-            match.index,
-            words.lastIndex
-          ])
-          this.resultsCounter++
-        }
-        return indexes.length ? indexes : null
-      }
-      const highlightResult = (result, indexes) => {
-        let highlightedResult = result
-        for (const occurence of indexes) {
-          const substr = result.substring(occurence[0], occurence[1])
-          highlightedResult = highlightedResult.replace(new RegExp(substr), `<span style="background-color: ${this.theme.highlight}">${substr}</span>`)
-        }
-        return highlightedResult
-      }
-      const listVersesResults = () => {
-
-      }
+      // const incrementResultsCounter = () => { this.resultsCounter++ }
+      // const searchForIndexes = (words, text, cb) => {
+      //   let indexes = []
+      //   let match
+      //   while ((match = words.exec(text)) !== null) {
+      //     indexes.push([
+      //       match.index,
+      //       words.lastIndex
+      //     ])
+      //     if (cb) cb()
+      //   }
+      //   return indexes.length ? indexes : null
+      // }
+      // const highlightResult = (result, indexes) => {
+      //   let highlightedResult = result
+      //   console.log(indexes)
+      //   for (const occurence of indexes) {
+      //     const substr = result.substring(occurence[0], occurence[1])
+      //     console.log(occurence[0], occurence[1])
+      //     // highlightedResult = highlightedResult.replace(new RegExp(substr), `<span style="background-color: ${this.theme.highlight}">${substr}</span>`)
+      //     // console.log(highlightedResult)
+      //     highlightedResult = highlightedResult.replace(substr, `<span style="background-color: ${this.theme.highlight}">${substr}</span>`)
+      //   }
+      //   // console.log(highlightedResult)
+      //   return highlightedResult
+      // }
+      // const listVersesResults = results => {
+      //   let matchRegEx = /<span(.*?)<\/span>/g
+      //   let indexes = searchForIndexes(matchRegEx, results)
+      //   let list = []
+      //   if (indexes) {
+      //     for (const result of indexes) {
+      //       list.push(`..${results.substring(result[0] - 12, result[1] + 12).trim()}..`)
+      //     }
+      //   }
+      //   return list
+      // }
       if (this.searchText.length > 2) {
+        document.getElementById('sidebarRightResults').scrollTop = 0
         this.results = []
         const searchInTitle = this.checkedFilters.includes('checkboxTitle')
         const searchInVerses = this.checkedFilters.includes('checkboxVerses')
@@ -264,24 +281,63 @@ export default {
         let textToSearch = this.searchText
         if (searchIgnoreAccents) textToSearch = replaceAccents(textToSearch)
         let searchRegEx
+        // const searchWholeRegExChars = 'a-zA-ZăâîşţĂÂÎŞŢ-'
         let searchFlags = 'g'
         if (searchIgnoreCase) searchFlags = 'ig'
-        if (searchWhole) searchRegEx = new RegExp(`\\b${textToSearch}\\b`, searchFlags)
+        // if (searchWhole) searchRegEx = new RegExp(`[^${searchWholeRegExChars}]?${textToSearch}(?![${searchWholeRegExChars}])`, searchFlags)
+        if (searchWhole) searchRegEx = new RegExp(`(?=[\\n\\s])${textToSearch}(?![a-zA-ZăâîşţĂÂÎŞŢ])`, searchFlags)
         else searchRegEx = new RegExp(textToSearch, searchFlags)
-        const searchText = (textToBeSearched) => {
+        const incrementResultsCounter = () => { this.resultsCounter++ }
+        const searchForIndexes = (words, text, cb) => {
+          let indexes = []
+          let match
+          while ((match = words.exec(text)) !== null) {
+            indexes.push([
+              match.index,
+              words.lastIndex
+            ])
+            if (cb) cb()
+          }
+          return indexes.length ? indexes : null
+        }
+        const searchForMatches = (textToBeSearched) => {
           if (searchIgnoreAccents) textToBeSearched = replaceAccents(textToBeSearched)
-          return searchForIndexes(searchRegEx, textToBeSearched)
+          return searchForIndexes(searchRegEx, textToBeSearched, incrementResultsCounter)
+        }
+        const highlightMatches = (result, indexes) => {
+          // TODO replace only whole words
+          let highlightedResult = result
+          for (const occurence of indexes) {
+            const substr = result.substring(occurence[0], occurence[1])
+            const substrOnce = new RegExp(`(?!<span[^>]*>)${substr}(?![^<]*</span>)`)
+            highlightedResult = highlightedResult.replace(substrOnce, `<span style="background-color: ${this.theme.highlight}">${substr}</span>`)
+          }
+          return highlightedResult
+        }
+        // const highlightMatches = textToBeHighlighted => {
+        //   return textToBeHighlighted.replace(searchRegEx, `<span style="background-color: ${this.theme.highlight}">$&</span>`)
+        // }
+        const listVersesMatches = results => {
+          let matchRegEx = /<span(.*?)<\/span>/g
+          let indexes = searchForIndexes(matchRegEx, results)
+          let list = []
+          if (indexes) {
+            for (const result of indexes) {
+              list.push(`..${results.substring(result[0] - 12, result[1] + 12).trim()}..`)
+            }
+          }
+          return list
         }
         for (const [index, item] of this.poemsSnap.entries()) {
           let title
           let verses = null
           let titleResults = null
           let versesResults = null
-          if (searchInTitle) titleResults = searchText(item.t)
-          if (searchInVerses) versesResults = searchText(item.s)
-          if (titleResults) title = highlightResult(item.t, titleResults)
+          if (searchInTitle) titleResults = searchForMatches(item.t)
+          if (searchInVerses) versesResults = searchForMatches(item.s)
+          if (titleResults) title = highlightMatches(item.t, titleResults)
           else title = item.t
-          if (versesResults) verses = listVersesResults(highlightResult(item.s, versesResults))
+          if (versesResults) verses = listVersesMatches(highlightMatches(item.s, versesResults))
           if (titleResults || versesResults) {
             this.results.push({
               nr: index + 1,
@@ -380,7 +436,7 @@ export default {
 .search-box__icon
   opacity $iconOpacity
 
-.sidebar-right__results
+.sidebar-right__main
   position relative
   flex-grow: 1
   display flex
@@ -456,7 +512,7 @@ export default {
 .filters-leave-to
   transform translateY(-100%)
 
-.sidebar-right__results-inner
+.sidebar-right__results
   flex-grow 1
   overflow-y auto
 
@@ -478,6 +534,16 @@ export default {
   flex-shrink 0
   display inline-block
   width 45px
+  height 20px
   opacity 0.3
+
+.result__verses
+  padding-left 7px
+
+.result__verse
+  display block
+  padding-top 2px
+  padding-bottom 2px
+  line-height 1.2
 
 </style>

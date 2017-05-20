@@ -134,7 +134,7 @@
                     <use class="off" xlink:href="#iconCheck"></use>
                     <use class="on" xlink:href="#iconCheckOn"></use>
                   </svg>
-                  <span>Înlocuiește majusculele</span>
+                  <span>Ignoră majusculele</span>
                 </label>
               </div>
               <div class="sidebar-right__filter">
@@ -149,7 +149,7 @@
                     <use class="off" xlink:href="#iconCheck"></use>
                     <use class="on" xlink:href="#iconCheckOn"></use>
                   </svg>
-                  <span>Înlocuiește diacriticele</span>
+                  <span>Ignoră diacriticele</span>
                 </label>
               </div>
             </div>
@@ -260,8 +260,6 @@ export default {
         if (searchWhole) {
           const searchWholeRegExChars = 'a-zA-ZăâîşţĂÂÎŞŢ'
           searchRegEx = new RegExp(`([^${searchWholeRegExChars}]|^)(${textToSearch})(?![${searchWholeRegExChars}])`, searchFlags)
-          // searchRegEx = new RegExp(`(?=(?![${searchWholeRegExChars}])[^]+)*(${textToSearch})(?![${searchWholeRegExChars}])`, searchFlags)
-          // searchRegEx = new RegExp(`(?=(?![${searchWholeRegExChars}]).)*(${textToSearch})(?![${searchWholeRegExChars}])`, searchFlags)
         } else searchRegEx = new RegExp(textToSearch, searchFlags)
         const incrementResultsCounter = int => { this.resultsCounter += int }
         const searchForMatches = textToBeSearched => {
@@ -279,26 +277,20 @@ export default {
           return textToBeHighlighted.replace(searchRegEx, `${firstGroup}<span style="background-color: ${this.theme.highlight}">${secondGroup}</span>`)
         }
         const listVersesMatches = results => {
-          let matchRegEx = /<span([^]*?)<\/span>/g
+          let matchRegEx = /(?:\S+\s)?\S*<span([^]*?)<\/span>\S*(?:\s\S+)?/g
           let list = []
           let match
-          while ((match = matchRegEx.exec(results)) !== null) {
-            list.push(match[0])
-            // console.log(match)
-          }
-          // for (const result of indexes) {
-          //   list.push(`..${results.substring(result[0] - 12, result[1] + 12).trim()}..`)
+          while ((match = matchRegEx.exec(results)) !== null) list.push(match[0])
           return list
         }
         for (const [index, item] of this.poemsSnap.entries()) {
-          let title
+          let title = item.t
           let verses = null
           let titleResults = null
           let versesResults = null
           if (searchInTitle) titleResults = searchForMatches(item.t)
           if (searchInVerses) versesResults = searchForMatches(item.s)
           if (titleResults) title = highlightMatches(item.t)
-          else title = item.t
           if (versesResults) verses = listVersesMatches(highlightMatches(item.s))
           if (titleResults || versesResults) {
             this.results.push({

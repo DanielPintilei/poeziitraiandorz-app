@@ -443,6 +443,7 @@ export default {
 
 .sidebar-right__results
   flex-grow 1
+  overflow-x hidden
   overflow-y auto
   &::-webkit-scrollbar
     background-color $scrollbarTrackBackgroundDarker
@@ -451,7 +452,7 @@ export default {
 
 .result
   display flex
-  padding 10px 15px
+  padding 7px 15px
   font-size 14px
   border-bottom 1px solid $separatorBorderColor
   cursor pointer
@@ -462,6 +463,7 @@ export default {
 
 .result__title
   font-size 15px
+  line-height 1.2
 
 .result__nr
   flex-shrink 0
@@ -472,6 +474,7 @@ export default {
 
 .result__verses
   padding-left 7px
+  opacity 0.8
 
 .result__verse
   padding-top 5px

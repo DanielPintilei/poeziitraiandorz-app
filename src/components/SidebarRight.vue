@@ -134,7 +134,7 @@
                     <use class="off" xlink:href="#iconCheck"></use>
                     <use class="on" xlink:href="#iconCheckOn"></use>
                   </svg>
-                  <span>Ignoră majusculele</span>
+                  <span>Înlocuiește majusculele</span>
                 </label>
               </div>
               <div class="sidebar-right__filter">
@@ -149,7 +149,7 @@
                     <use class="off" xlink:href="#iconCheck"></use>
                     <use class="on" xlink:href="#iconCheckOn"></use>
                   </svg>
-                  <span>Ignoră diacriticele</span>
+                  <span>Înlocuiește diacriticele</span>
                 </label>
               </div>
             </div>
@@ -165,11 +165,11 @@
             <div >
               <div class="result__title" v-html="result.title"></div>
               <div class="result__verses">
-                <span
+                <div
                   v-for="verse in result.verses"
                   v-html="verse"
                   class="result__verse">
-                </span>
+                </div>
               </div>
             </div>
           </div>
@@ -180,7 +180,7 @@
 </template>
 
 <script>
-import { replaceAccents, mobileTap } from '../helpers'
+import { mobileTap } from '../helpers'
 
 import Loading from './Loading'
 
@@ -229,43 +229,6 @@ export default {
       if (this.checkedFilters.includes('checkboxVerses') && !this.checkedFilters.includes('checkboxTitle')) e.preventDefault()
     },
     submitSearch () {
-      // const incrementResultsCounter = () => { this.resultsCounter++ }
-      // const searchForIndexes = (words, text, cb) => {
-      //   let indexes = []
-      //   let match
-      //   while ((match = words.exec(text)) !== null) {
-      //     indexes.push([
-      //       match.index,
-      //       words.lastIndex
-      //     ])
-      //     if (cb) cb()
-      //   }
-      //   return indexes.length ? indexes : null
-      // }
-      // const highlightResult = (result, indexes) => {
-      //   let highlightedResult = result
-      //   console.log(indexes)
-      //   for (const occurence of indexes) {
-      //     const substr = result.substring(occurence[0], occurence[1])
-      //     console.log(occurence[0], occurence[1])
-      //     // highlightedResult = highlightedResult.replace(new RegExp(substr), `<span style="background-color: ${this.theme.highlight}">${substr}</span>`)
-      //     // console.log(highlightedResult)
-      //     highlightedResult = highlightedResult.replace(substr, `<span style="background-color: ${this.theme.highlight}">${substr}</span>`)
-      //   }
-      //   // console.log(highlightedResult)
-      //   return highlightedResult
-      // }
-      // const listVersesResults = results => {
-      //   let matchRegEx = /<span(.*?)<\/span>/g
-      //   let indexes = searchForIndexes(matchRegEx, results)
-      //   let list = []
-      //   if (indexes) {
-      //     for (const result of indexes) {
-      //       list.push(`..${results.substring(result[0] - 12, result[1] + 12).trim()}..`)
-      //     }
-      //   }
-      //   return list
-      // }
       if (this.searchText.length > 2) {
         document.getElementById('sidebarRightResults').scrollTop = 0
         this.results = []
@@ -279,53 +242,52 @@ export default {
         this.resultsCounter = 0
         this.resultsPoemsCounter = 0
         let textToSearch = this.searchText
-        if (searchIgnoreAccents) textToSearch = replaceAccents(textToSearch)
+        if (searchIgnoreAccents) {
+          textToSearch = textToSearch
+            .replace(/[aăâ]/g, '[aăâ]')
+            .replace(/[AĂÂ]/g, '[AĂÂ]')
+            .replace(/[iî]/g, '[iî]')
+            .replace(/[IÎ]/g, '[IÎ]')
+            .replace(/[sş]/g, '[sş]')
+            .replace(/[SŞ]/g, '[SŞ]')
+            .replace(/[tţ]/g, '[tţ]')
+            .replace(/[TŢ]/g, '[TŢ]')
+        }
+        textToSearch = textToSearch.trim().replace(/[!?,.-]/g, '\\$&').replace(/\s/g, '\\s')
         let searchRegEx
-        // const searchWholeRegExChars = 'a-zA-ZăâîşţĂÂÎŞŢ-'
         let searchFlags = 'g'
         if (searchIgnoreCase) searchFlags = 'ig'
-        // if (searchWhole) searchRegEx = new RegExp(`[^${searchWholeRegExChars}]?${textToSearch}(?![${searchWholeRegExChars}])`, searchFlags)
-        if (searchWhole) searchRegEx = new RegExp(`(?=[\\n\\s])${textToSearch}(?![a-zA-ZăâîşţĂÂÎŞŢ])`, searchFlags)
-        else searchRegEx = new RegExp(textToSearch, searchFlags)
-        const incrementResultsCounter = () => { this.resultsCounter++ }
-        const searchForIndexes = (words, text, cb) => {
-          let indexes = []
-          let match
-          while ((match = words.exec(text)) !== null) {
-            indexes.push([
-              match.index,
-              words.lastIndex
-            ])
-            if (cb) cb()
+        if (searchWhole) {
+          const searchWholeRegExChars = 'a-zA-ZăâîşţĂÂÎŞŢ'
+          searchRegEx = new RegExp(`([^${searchWholeRegExChars}]|^)(${textToSearch})(?![${searchWholeRegExChars}])`, searchFlags)
+          // searchRegEx = new RegExp(`(?=(?![${searchWholeRegExChars}])[^]+)*(${textToSearch})(?![${searchWholeRegExChars}])`, searchFlags)
+          // searchRegEx = new RegExp(`(?=(?![${searchWholeRegExChars}]).)*(${textToSearch})(?![${searchWholeRegExChars}])`, searchFlags)
+        } else searchRegEx = new RegExp(textToSearch, searchFlags)
+        const incrementResultsCounter = int => { this.resultsCounter += int }
+        const searchForMatches = textToBeSearched => {
+          const matchesCount = (textToBeSearched.match(searchRegEx) || []).length
+          if (matchesCount) incrementResultsCounter(matchesCount)
+          return matchesCount
+        }
+        const highlightMatches = textToBeHighlighted => {
+          let firstGroup = ''
+          let secondGroup = '$&'
+          if (searchWhole) {
+            firstGroup = '$1'
+            secondGroup = '$2'
           }
-          return indexes.length ? indexes : null
+          return textToBeHighlighted.replace(searchRegEx, `${firstGroup}<span style="background-color: ${this.theme.highlight}">${secondGroup}</span>`)
         }
-        const searchForMatches = (textToBeSearched) => {
-          if (searchIgnoreAccents) textToBeSearched = replaceAccents(textToBeSearched)
-          return searchForIndexes(searchRegEx, textToBeSearched, incrementResultsCounter)
-        }
-        const highlightMatches = (result, indexes) => {
-          // TODO replace only whole words
-          let highlightedResult = result
-          for (const occurence of indexes) {
-            const substr = result.substring(occurence[0], occurence[1])
-            const substrOnce = new RegExp(`(?!<span[^>]*>)${substr}(?![^<]*</span>)`)
-            highlightedResult = highlightedResult.replace(substrOnce, `<span style="background-color: ${this.theme.highlight}">${substr}</span>`)
-          }
-          return highlightedResult
-        }
-        // const highlightMatches = textToBeHighlighted => {
-        //   return textToBeHighlighted.replace(searchRegEx, `<span style="background-color: ${this.theme.highlight}">$&</span>`)
-        // }
         const listVersesMatches = results => {
-          let matchRegEx = /<span(.*?)<\/span>/g
-          let indexes = searchForIndexes(matchRegEx, results)
+          let matchRegEx = /<span([^]*?)<\/span>/g
           let list = []
-          if (indexes) {
-            for (const result of indexes) {
-              list.push(`..${results.substring(result[0] - 12, result[1] + 12).trim()}..`)
-            }
+          let match
+          while ((match = matchRegEx.exec(results)) !== null) {
+            list.push(match[0])
+            // console.log(match)
           }
+          // for (const result of indexes) {
+          //   list.push(`..${results.substring(result[0] - 12, result[1] + 12).trim()}..`)
           return list
         }
         for (const [index, item] of this.poemsSnap.entries()) {
@@ -335,9 +297,9 @@ export default {
           let versesResults = null
           if (searchInTitle) titleResults = searchForMatches(item.t)
           if (searchInVerses) versesResults = searchForMatches(item.s)
-          if (titleResults) title = highlightMatches(item.t, titleResults)
+          if (titleResults) title = highlightMatches(item.t)
           else title = item.t
-          if (versesResults) verses = listVersesMatches(highlightMatches(item.s, versesResults))
+          if (versesResults) verses = listVersesMatches(highlightMatches(item.s))
           if (titleResults || versesResults) {
             this.results.push({
               nr: index + 1,
@@ -441,7 +403,6 @@ export default {
   flex-grow: 1
   display flex
   flex-direction column
-  padding-bottom 12px
   border-left 1px solid
   overflow-x hidden
 
@@ -515,6 +476,10 @@ export default {
 .sidebar-right__results
   flex-grow 1
   overflow-y auto
+  &::-webkit-scrollbar
+    background-color $scrollbarTrackBackgroundDarker
+  &::-webkit-scrollbar-thumb
+    background-color $scrollbarThumbBackgroundDarker
 
 .result
   display flex
@@ -541,9 +506,7 @@ export default {
   padding-left 7px
 
 .result__verse
-  display block
-  padding-top 2px
-  padding-bottom 2px
+  padding-top 5px
   line-height 1.2
 
 </style>

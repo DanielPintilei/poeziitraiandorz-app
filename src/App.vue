@@ -137,7 +137,7 @@ export default {
           confirm: '#FFFF00',
           confirm2: '#757575',
           rule: '#e6e6e6',
-          highlight: 'rgba(236, 206, 147, 0.3)'
+          highlight: 'rgba(236, 206, 147, 0.4)'
         },
         {
           theme: '#ecce93',
@@ -157,7 +157,7 @@ export default {
           confirm: '#C6FF00',
           confirm2: '#212121',
           rule: '#333',
-          highlight: 'rgba(236, 206, 147, 0.25)'
+          highlight: 'rgba(236, 206, 147, 0.35)'
         },
         {
           theme: '#393a3e',
@@ -177,7 +177,7 @@ export default {
           confirm: '#18FFFF',
           confirm2: '#757575',
           rule: '#eee0ba',
-          highlight: 'rgba(255, 118, 75, 0.25)'
+          highlight: 'rgba(255, 118, 75, 0.35)'
         }
       ]
     }

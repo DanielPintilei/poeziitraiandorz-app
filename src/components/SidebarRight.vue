@@ -38,15 +38,6 @@
           backgroundColor: theme.background,
           borderColor: theme.border3
         }">
-        <svg
-          v-if="loaderShown"
-          class="sidebar-right__loading"
-          width="300" height="2" viewBox="0 0 300 2">
-          <line
-            :stroke="theme.accent"
-            class="line"
-            x1="0" y1="1" x2="300" y2="1" stroke-width="2" />
-        </svg>
         <div class="sidebar-right__filters">
           <div
             :style="{
@@ -198,7 +189,6 @@ export default {
       resultsCounter: 0,
       resultsPoemsCounter: 0,
       resultsInfoShown: false,
-      loaderShown: false,
       lastSelectedResult: ''
     }
   },
@@ -237,7 +227,6 @@ export default {
         const searchWhole = this.checkedFilters.includes('checkboxWhole')
         const searchIgnoreCase = this.checkedFilters.includes('checkboxCase')
         const searchIgnoreAccents = this.checkedFilters.includes('checkboxAccents')
-        this.loaderShown = true
         this.resultsInfoShown = true
         this.resultsCounter = 0
         this.resultsPoemsCounter = 0
@@ -302,7 +291,6 @@ export default {
           }
         }
         this.lastSelectedResult = 0
-        this.loaderShown = false
         this.$store.commit('setSearchText', this.searchText)
       }
     },
@@ -397,18 +385,6 @@ export default {
   flex-direction column
   border-left 1px solid
   overflow-x hidden
-
-.sidebar-right__loading
-  position absolute
-  top -1px
-  z-index 20
-.line
-  stroke-dasharray 300
-  stroke-dashoffset 300
-  animation searchLoading 2s infinite ease-in
-@keyframes searchLoading
-  to
-    stroke-dashoffset -300
 
 .sidebar-right__filters
   flex-shrink 0

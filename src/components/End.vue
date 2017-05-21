@@ -1,8 +1,5 @@
 <template>
-  <v-touch
-    :swipe-options="{ direction: 'horizontal'}"
-    @swiperight="goBack"
-    class="out">
+  <div class="out">
     <pre
       :style="{ color: theme.accent }"
       class="out__text">
@@ -21,7 +18,7 @@
         <use xlink:href="#iconPrev"></use>
       </svg>
     </div>
-  </v-touch>
+  </div>
 </template>
 
 <script>
@@ -36,7 +33,7 @@ export default {
   },
   methods: {
     goBack () {
-      this.$router.go(-1)
+      this.$router.back()
     },
     handleArrowLeft (e) {
       if (e.key === 'ArrowLeft' && !this.$store.state.searchFocused) {
@@ -48,8 +45,6 @@ export default {
 </script>
 
 <style lang="stylus">
-@import "../variables"
-
 .out-prev
   left 20px
 

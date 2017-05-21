@@ -36,7 +36,7 @@
         <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
       </svg>
     </div>
-    <router-link to="/" class="logo">
+    <router-link to="/" class="logo" title="Acasă">
       <svg :fill="theme.logo" class="logo__img"
         width="28.222mm"
         height="12.848mm"

@@ -263,7 +263,7 @@ export default {
           return textToBeHighlighted.replace(searchRegEx, `${firstGroup}<span style="background-color: ${this.theme.highlight}">${secondGroup}</span>`)
         }
         const listVersesMatches = results => {
-          let matchRegEx = /((?:\S+\s){0,3})\S*<span([^]*?)<\/span>\S*((?:\s\S+){0,3})/g
+          const matchRegEx = /((?:\S+\s){0,3})\S*<span([^]*?)<\/span>\S*((?:\s\S+){0,3})/g
           let list = []
           let match
           while ((match = matchRegEx.exec(results)) !== null) list.push(match[0])

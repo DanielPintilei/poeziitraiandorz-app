@@ -16,9 +16,9 @@
           <use xlink:href="#iconList"></use>
         </svg>
       </div>
-      <v-touch
-        :swipe-options="{ direction: 'horizontal'}"
-        @swipeleft="toggleSidebarLeft"
+        <!--:swipe-options="{ direction: 'horizontal'}"
+        @swipeleft="toggleSidebarLeft"-->
+      <div
         class="sidebar-left__list"
         :style="{
           color: theme.text2,
@@ -73,14 +73,13 @@
           </div>
         </div>
         <loading class="loading" :color="theme.accent"></loading>
-      </v-touch>
+      </div>
     </div>
   </aside>
 </template>
 
 <script>
 import { replaceAccents, mobileTap } from '../helpers'
-
 import Loading from './Loading'
 
 export default {

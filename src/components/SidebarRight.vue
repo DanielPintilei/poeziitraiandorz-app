@@ -30,9 +30,9 @@
           spellcheck="false"
           placeholder="Caută">
       </form>
-      <v-touch
-        :swipe-options="{ direction: 'horizontal'}"
-        @swiperight="toggleSidebarRight"
+        <!--:swipe-options="{ direction: 'horizontal'}"
+        @swiperight="toggleSidebarRight"-->
+      <div
         class="sidebar-right__main"
         :style="{
           backgroundColor: theme.background,
@@ -165,14 +165,13 @@
             </div>
           </div>
         </div>
-      </v-touch>
+      </div>
     </div>
   </aside>
 </template>
 
 <script>
 import { mobileTap } from '../helpers'
-
 import Loading from './Loading'
 
 export default {
@@ -266,7 +265,7 @@ export default {
           return textToBeHighlighted.replace(searchRegEx, `${firstGroup}<span style="background-color: ${this.theme.highlight}">${secondGroup}</span>`)
         }
         const listVersesMatches = results => {
-          let matchRegEx = /(?:\S+\s)?\S*<span([^]*?)<\/span>\S*(?:\s\S+)?/g
+          let matchRegEx = /((?:\S+\s){0,3})\S*<span([^]*?)<\/span>\S*((?:\s\S+){0,3})/g
           let list = []
           let match
           while ((match = matchRegEx.exec(results)) !== null) list.push(match[0])
@@ -468,7 +467,7 @@ export default {
 .result__nr
   flex-shrink 0
   display inline-block
-  width 45px
+  width 42px
   height 20px
   opacity 0.3
 

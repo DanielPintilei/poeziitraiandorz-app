@@ -99,7 +99,6 @@
 
 <script>
 import idbKeyval from 'idb-keyval'
-
 import Navbar from './components/Navbar'
 import SidebarLeft from './components/SidebarLeft'
 import SidebarRight from './components/SidebarRight'
@@ -137,7 +136,7 @@ export default {
           confirm: '#FFFF00',
           confirm2: '#757575',
           rule: '#e6e6e6',
-          highlight: 'rgba(236, 206, 147, 0.4)'
+          highlight: '#f7ebd4'
         },
         {
           theme: '#ecce93',
@@ -157,7 +156,7 @@ export default {
           confirm: '#C6FF00',
           confirm2: '#212121',
           rule: '#333',
-          highlight: 'rgba(236, 206, 147, 0.35)'
+          highlight: '#675d48'
         },
         {
           theme: '#393a3e',
@@ -177,7 +176,7 @@ export default {
           confirm: '#18FFFF',
           confirm2: '#757575',
           rule: '#eee0ba',
-          highlight: 'rgba(255, 118, 75, 0.35)'
+          highlight: '#ffc8a6'
         }
       ]
     }

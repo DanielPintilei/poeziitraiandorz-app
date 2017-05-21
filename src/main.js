@@ -3,13 +3,11 @@ import App from './App'
 import { sync } from 'vuex-router-sync'
 import router from './router'
 import { store } from './store/index'
-import VueTouch from 'vue-touch'
 import SocialSharing from 'vue-social-sharing'
 
 sync(store, router)
 
 Vue.config.productionTip = false
-Vue.use(VueTouch, { name: 'v-touch' })
 Vue.use(SocialSharing)
 
 /* eslint-disable no-new */

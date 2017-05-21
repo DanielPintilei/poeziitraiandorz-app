@@ -30,8 +30,6 @@
           spellcheck="false"
           placeholder="Caută">
       </form>
-        <!--:swipe-options="{ direction: 'horizontal'}"
-        @swiperight="toggleSidebarRight"-->
       <div
         class="sidebar-right__main"
         :style="{
@@ -236,17 +234,17 @@ export default {
             .replace(/[AĂÂ]/g, '[AĂÂ]')
             .replace(/[iî]/g, '[iî]')
             .replace(/[IÎ]/g, '[IÎ]')
-            .replace(/[sş]/g, '[sş]')
-            .replace(/[SŞ]/g, '[SŞ]')
-            .replace(/[tţ]/g, '[tţ]')
-            .replace(/[TŢ]/g, '[TŢ]')
+            .replace(/[sș]/g, '[sș]')
+            .replace(/[SȘ]/g, '[SȘ]')
+            .replace(/[tț]/g, '[tț]')
+            .replace(/[TȚ]/g, '[TȚ]')
         }
         textToSearch = textToSearch.trim().replace(/[!?,.-]/g, '\\$&').replace(/\s/g, '\\s')
         let searchRegEx
         let searchFlags = 'g'
         if (searchIgnoreCase) searchFlags = 'ig'
         if (searchWhole) {
-          const searchWholeRegExChars = 'a-zA-ZăâîşţĂÂÎŞŢ'
+          const searchWholeRegExChars = 'a-zA-ZăâîșțĂÂÎȘȚ'
           searchRegEx = new RegExp(`([^${searchWholeRegExChars}]|^)(${textToSearch})(?![${searchWholeRegExChars}])`, searchFlags)
         } else searchRegEx = new RegExp(textToSearch, searchFlags)
         const incrementResultsCounter = int => { this.resultsCounter += int }

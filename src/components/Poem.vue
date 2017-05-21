@@ -1,7 +1,4 @@
 <template>
-    <!--:swipe-options="{ direction: 'horizontal'}"
-    @swipeleft="nextPoem"
-    @swiperight="prevPoem"-->
   <div
     id="poemParent"
     class="poem">
@@ -60,6 +57,7 @@
         data-clipboard-target="#poem"
         @click="enableSelect"
         class="icon icon-copy"
+        id="btnCopy"
         :fill="theme.icon2"
         height="24" viewBox="0 0 24 24" width="24">
         <path d="M0 0h24v24H0z" fill="none"/>
@@ -185,7 +183,7 @@ export default {
   },
   mounted () {
     this.currentURL = location.href
-    const clipboard = new Clipboard('.icon-copy')
+    const clipboard = new Clipboard('#btnCopy')
     clipboard.on('success', (e) => {
       e.clearSelection()
       this.$store.commit('setSelectEnabled', false)
@@ -346,7 +344,7 @@ export default {
   margin 0
   font-family $font2
   font-size 1.063em
-  line-height 1.3
+  line-height 1.4
   @media (max-width $breakpointMobileSmall)
     font-size 1em
 
@@ -360,7 +358,6 @@ export default {
   white-space pre-wrap
   @media (min-width $breakpointMobile + 1px)
     columns 250px 2
-    // column-gap 3em
     column-gap 6em
     column-rule 1px solid
   &:not(:empty) + .loading

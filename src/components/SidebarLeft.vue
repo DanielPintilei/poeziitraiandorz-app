@@ -16,8 +16,6 @@
           <use xlink:href="#iconList"></use>
         </svg>
       </div>
-        <!--:swipe-options="{ direction: 'horizontal'}"
-        @swipeleft="toggleSidebarLeft"-->
       <div
         class="sidebar-left__list"
         :style="{

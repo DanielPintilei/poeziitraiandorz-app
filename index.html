@@ -5,22 +5,17 @@
     <title>Poezii – Traian Dorz</title>
     <meta name="description" content="Opera poetică a psalmistului Oastei Domnului, Traian Dorz.">
     <meta name="author" content="Daniel Pintilei">
-
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Lora:400,400i|Old+Standard+TT&amp;subset=latin-ext" onload="this.rel='stylesheet'">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,400i|Old+Standard+TT&amp;subset=latin-ext">
+    <meta name="theme-color" content="#ecce93">
     <link rel="icon" type="image/png" href="/static/favicon-32x32.png" sizes="32x32">
     <link rel="icon" type="image/png" href="/static/favicon-16x16.png" sizes="16x16">
     <link rel="shortcut icon" href="/static/favicon.ico">
-
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="Poezii">
     <link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.png">
-
     <link rel="manifest" href="/static/manifest.json">
-    <meta name="theme-color" content="#ecce93">
-
-    <link href="https://fonts.googleapis.com/css?family=Lora:400,400i|Old+Standard+TT&amp;subset=latin-ext" rel="stylesheet">
-
     <% for (var chunk of webpack.chunks) {
       for (var file of chunk.files) {
         if (file.match(/\.(js|css)$/)) { %>

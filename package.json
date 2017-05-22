@@ -1,7 +1,7 @@
 {
   "name": "poeziitraiandorz",
   "version": "0.0.0",
-  "description": "Poetry book SPA",
+  "description": "Poetry book PWA",
   "author": "Daniel Pintilei <danielpintilei@outlook.com>",
   "private": true,
   "scripts": {

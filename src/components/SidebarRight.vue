@@ -284,7 +284,7 @@ export default {
               title,
               verses
             })
-            this.resultsPoemsCounter++
+            this.resultsPoemsCounter += 1
           }
         }
         this.lastSelectedResult = 0
@@ -403,9 +403,9 @@ export default {
   cursor default
 
 .sidebar-right__filter-wrapper
-  height 186px
   padding-left 22px
   padding-right 22px
+  padding-bottom 15px
   font-size 15px
   border-bottom 1px solid $separatorBorderColor
   overflow hidden

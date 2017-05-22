@@ -1,7 +1,7 @@
 {
   "name": "poeziitraiandorz",
   "version": "0.0.0",
-  "description": "Poetry book PWA",
+  "description": "Poetry book Vue.js PWA",
   "author": "Daniel Pintilei <danielpintilei@outlook.com>",
   "private": true,
   "scripts": {

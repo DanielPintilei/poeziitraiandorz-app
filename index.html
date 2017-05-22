@@ -6,8 +6,7 @@
     <meta name="description" content="Opera poetică a psalmistului Oastei Domnului, Traian Dorz.">
     <meta name="author" content="Daniel Pintilei">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Lora:400,400i|Old+Standard+TT&amp;subset=latin-ext" onload="this.rel='stylesheet'">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,400i|Old+Standard+TT&amp;subset=latin-ext">
+    <link rel="prefetch stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,400i|Old+Standard+TT&amp;subset=latin-ext">
     <meta name="theme-color" content="#ecce93">
     <link rel="icon" type="image/png" href="/static/favicon-32x32.png" sizes="32x32">
     <link rel="icon" type="image/png" href="/static/favicon-16x16.png" sizes="16x16">
@@ -20,6 +19,9 @@
       for (var file of chunk.files) {
         if (file.match(/\.(js|css)$/)) { %>
     <link rel="<%= chunk.initial?'preload':'prefetch' %>" href="<%= htmlWebpackPlugin.files.publicPath + file %>" as="<%= file.match(/\.css$/)?'style':'script' %>"><% }}} %>
+    <meta property="og:image" content="/static/og-image.jpg">
+    <meta property="og:image:width" content="279">
+    <meta property="og:image:height" content="279">
   </head>
   <body style="margin: 0; height: 100vh; display: flex; align-items: center; justify-content: center;">
     <div id="app">

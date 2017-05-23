@@ -87,12 +87,11 @@
       class="backdrop backdrop--social">
     </div>
     <transition name="pop">
-        <!--:url="currentURL"-->
       <social-sharing
         v-if="shareMenuOpen"
         class="social"
         :title="selectedPoem.t"
-        :description="selectedPoem.s"
+        :description="selectedPoem.s.replace(/(?:\n)/g, '<br>')"
         inline-template>
         <div>
           <network style="height: 28px; cursor: pointer" network="facebook">
@@ -198,6 +197,7 @@ export default {
   },
   created () {
     window.addEventListener('keyup', this.handlePoemKeyNav)
+    this.$root.$on('social_shares_open', () => { this.shareMenuOpen = false })
   },
   beforeDestroy () {
     window.removeEventListener('keyup', this.handlePoemKeyNav)

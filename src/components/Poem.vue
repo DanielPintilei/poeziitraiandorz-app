@@ -91,7 +91,7 @@
         v-if="shareMenuOpen"
         class="social"
         :title="selectedPoem.t"
-        :description="selectedPoem.s.replace(/(?:\n)/g, '<br>')"
+        :description="selectedPoem.s"
         inline-template>
         <div>
           <network style="height: 28px; cursor: pointer" network="facebook">

@@ -87,10 +87,13 @@
       class="backdrop backdrop--social">
     </div>
     <transition name="pop">
+        <!--:url="currentURL"-->
       <social-sharing
         v-if="shareMenuOpen"
         class="social"
-        :url="currentURL" inline-template>
+        :title="selectedPoem.t"
+        :description="selectedPoem.s"
+        inline-template>
         <div>
           <network style="height: 28px; cursor: pointer" network="facebook">
             <svg width="28" height="28" viewBox="0 0 16 16" fill="#3B5998">

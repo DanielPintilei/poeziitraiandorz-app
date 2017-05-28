@@ -110,8 +110,6 @@ export default {
 
 .sidebar-left
   flex-shrink 0
-  display flex
-  flex-direction column
   width $sidebarLeftWidth
   overflow hidden
   z-index 5
@@ -126,10 +124,10 @@ export default {
     will-change width
 
 .sidebar-left__inner
-  flex-grow 1
   display flex
   flex-direction column
   width $sidebarLeftWidth
+  height 100%
 
 .sidebar-left__top
   flex-shrink 0

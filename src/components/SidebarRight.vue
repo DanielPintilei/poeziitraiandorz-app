@@ -319,8 +319,6 @@ export default {
 
 .sidebar-right
   flex-shrink 0
-  display flex
-  flex-direction column
   width $sidebarRightWidth
   overflow hidden
   z-index 5
@@ -335,10 +333,10 @@ export default {
     will-change width
 
 .sidebar-right__inner
-  flex-grow 1
   display flex
   flex-direction column
   width $sidebarRightWidth
+  height 100%
 
 .search-box
   flex-shrink 0

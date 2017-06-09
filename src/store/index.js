@@ -3,6 +3,15 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
+let contentVersion = 1
+fetch('https://danielpintilei.bitbucket.io/p/v.json')
+  .then(response => response.json())
+  .then(data => { this.contentVersion = data[0] })
+if (+localStorage.getItem('contentVersion') !== contentVersion) {
+  localStorage.removeItem('folderListDownloaded')
+  localStorage.removeItem('poemsDownloaded')
+}
+
 const sidebarLeftToggled = localStorage.getItem('sidebarLeftToggled') === 'true' || false
 const sidebarRightToggled = localStorage.getItem('sidebarRightToggled') === 'true' || false
 const selectedTheme = +localStorage.getItem('selectedTheme') || 0
@@ -90,6 +99,7 @@ export const store = new Vuex.Store({
     setFolderListDownloaded (state) {
       state.folderListDownloaded = true
       localStorage.setItem('folderListDownloaded', true)
+      localStorage.setItem('contentVersion', contentVersion)
     },
     setSelectedPoem (state, poem) {
       state.selectedPoem = poem

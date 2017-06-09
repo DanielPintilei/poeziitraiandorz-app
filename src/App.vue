@@ -186,11 +186,11 @@ export default {
     const metaThemeColor = document.querySelector('meta[name=theme-color]')
     metaThemeColor.setAttribute('content', selectedTheme.theme)
     document.body.style.setProperty('--themeBG', selectedTheme.background)
-    if (this.$store.state.poemsDownloaded) this.loadPoems(this.fetchPoem)
+    if (this.$store.state.sidebarRightToggled || this.$store.state.poemsDownloaded) this.getPoemsSnap(this.fetchPoem)
     else if (this.$store.state.route.params.nr) this.fetchPoem()
   },
   mounted () {
-    if (this.$store.state.sidebarLeftToggled || this.$store.state.folderListDownloaded) this.loadFolderList()
+    if (this.$store.state.sidebarLeftToggled || this.$store.state.folderListDownloaded) this.getFolderListSnap()
     const lastRoute = localStorage.getItem('lastRoute')
     if (lastRoute) {
       this.$router.push(lastRoute)
@@ -266,10 +266,13 @@ export default {
         .then(val => {
           this.poemsSnap = val
           // console.log('Poems Loaded From Local')
-          cb()
+          if (cb) {
+            cb()
+            // console.log('Fetch Poem Callback From Load Poems')
+          }
         })
     },
-    getPoemsSnap () {
+    getPoemsSnap (cb) {
       if (!this.$store.state.poemsDownloaded) {
         // console.log('Downloading Poems Started')
         fetch(this.DBURL('poezii'))
@@ -278,6 +281,10 @@ export default {
             // console.log('Downloading Poems Finished')
             this.poemsSnap = data
             // console.log('Poems Loaded')
+            if (cb) {
+              cb()
+              // console.log('Fetch Poem Callback From Download Poems')
+            }
             idbKeyval.set('poems', data)
               .then(() => {
                 this.$store.commit('setPoemsDownloaded')
@@ -286,8 +293,8 @@ export default {
               // .catch(err => console.log('Poems Saving Failed', err))
           })
           // .catch(err => console.log('Downloading Poems Failed', err))
-      } else this.loadPoems()
-      if (!this.folderListSnap) this.getFolderListSnap()
+      } else this.loadPoems(cb)
+      if (!this.$store.state.folderListDownloaded) this.getFolderListSnap()
     }
   },
   watch: {

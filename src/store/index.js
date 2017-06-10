@@ -3,11 +3,11 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-let contentVersion = 1
+let contentVersion = null
 fetch('https://danielpintilei.bitbucket.io/p/v.json')
   .then(response => response.json())
   .then(data => { this.contentVersion = data[0] })
-if (+localStorage.getItem('contentVersion') !== contentVersion) {
+if (contentVersion && +localStorage.getItem('contentVersion') !== contentVersion) {
   localStorage.removeItem('folderListDownloaded')
   localStorage.removeItem('poemsDownloaded')
 }

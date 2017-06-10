@@ -13,9 +13,9 @@
           <div>Domnul</div>
         </h1>
       </div>
-      <div class="landing-info">
+      <p class="landing-info">
 
-      </div>
+      </p>
     </div>
   </div>
 </template>
@@ -50,6 +50,8 @@ imgHeight = imgOriginalHeight + imgBorderWidth * 2
 .landing-intro
   flex-shrink 0
   display flex
+  @media (max-width 399px)
+    flex-direction column
 
 .landing-img
   flex-shrink 0
@@ -57,24 +59,36 @@ imgHeight = imgOriginalHeight + imgBorderWidth * 2
   height imgHeight
   border imgBorderWidth solid transparent
   box-shadow 0 0 0 1px currentColor
-  transition 3s
+  transition filter 3s
   filter grayscale(50%)
   &:hover
     filter none
+  @media (max-width 399px)
+    order 1
+  @media (max-width $breakpointMobileSmall)
+    width (imgWidth / 1.2)
+    height (imgHeight / 1.2)
 
 .landing__header
   position relative
-  margin-left -80px
+  margin-top 0
+  margin-bottom 20px
   font-family $font2
-  font-size 72px
+  font-size 54px
   line-height 1
   font-weight normal
   font-style italic
   color gray
   cursor default
+  @media (min-width 400px)
+    margin 36px 0 36px -60px
+  @media (min-width $breakpointMobileSmall + 1px)
+    margin-left -80px
+    font-size 72px
 
 .landing-info
-  max-width imgWidth + 400px
-  padding-left imgWidth + 20px
+  @media (min-width $breakpointMobileSmall + 1px)
+    max-width imgWidth + 300px
+    padding-left imgWidth + 20px
 
 </style>

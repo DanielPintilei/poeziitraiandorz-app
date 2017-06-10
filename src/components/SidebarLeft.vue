@@ -88,7 +88,7 @@ export default {
   },
   methods: {
     formatTitle (title) {
-      return replaceAccents(title).replace(/\s+/g, '-').replace(/[^\w-]+/g, '')
+      return replaceAccents(title).replace(/\s+/g, '-').replace(/[^\w-]+/g, '').replace(/-+/g, '-')
     },
     toggleSidebarLeft () {
       this.$store.commit('toggleSidebarLeft')

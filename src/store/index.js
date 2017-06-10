@@ -3,15 +3,11 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-let contentVersion = null
-fetch('https://danielpintilei.bitbucket.io/p/v.json')
-  .then(response => response.json())
-  .then(data => { this.contentVersion = data[0] })
-if (contentVersion && +localStorage.getItem('contentVersion') !== contentVersion) {
+const contentVersion = 1
+if (+localStorage.getItem('contentVersion') !== contentVersion) {
   localStorage.removeItem('folderListDownloaded')
   localStorage.removeItem('poemsDownloaded')
 }
-
 const sidebarLeftToggled = localStorage.getItem('sidebarLeftToggled') === 'true' || false
 const sidebarRightToggled = localStorage.getItem('sidebarRightToggled') === 'true' || false
 const selectedTheme = +localStorage.getItem('selectedTheme') || 0
@@ -24,6 +20,7 @@ const checkedFilters = JSON.parse(localStorage.getItem('checkedFilters')) || ['c
 
 export const store = new Vuex.Store({
   state: {
+    contentVersion,
     sidebarLeftToggled,
     sidebarRightToggled,
     selectedTheme,
@@ -99,7 +96,7 @@ export const store = new Vuex.Store({
     setFolderListDownloaded (state) {
       state.folderListDownloaded = true
       localStorage.setItem('folderListDownloaded', true)
-      localStorage.setItem('contentVersion', contentVersion)
+      localStorage.setItem('contentVersion', state.contentVersion)
     },
     setSelectedPoem (state, poem) {
       state.selectedPoem = poem

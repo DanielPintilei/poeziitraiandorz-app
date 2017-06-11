@@ -14,7 +14,13 @@
         </h1>
       </div>
       <p class="landing-info">
-
+        Text text text text text text text text text text text text text text text text text text text text text text text text text text text text text
+        <br>
+        <br>
+        Text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text
+        <br>
+        <br>
+        Text text text text text text text text text text text text text text text text text text text
       </p>
     </div>
   </div>
@@ -46,10 +52,12 @@ imgHeight = imgOriginalHeight + imgBorderWidth * 2
   align-items center
   justify-content flex-start
   padding 40px
+  cursor default
 
 .landing-intro
   flex-shrink 0
   display flex
+  align-items flex-start
   @media (max-width 399px)
     flex-direction column
 
@@ -79,7 +87,6 @@ imgHeight = imgOriginalHeight + imgBorderWidth * 2
   font-weight normal
   font-style italic
   color gray
-  cursor default
   @media (min-width 400px)
     margin 36px 0 36px -60px
   @media (min-width $breakpointMobileSmall + 1px)
@@ -87,6 +94,9 @@ imgHeight = imgOriginalHeight + imgBorderWidth * 2
     font-size 72px
 
 .landing-info
+  margin-top 18px
+  margin-bottom 18px
+  font-size 18px
   @media (min-width $breakpointMobileSmall + 1px)
     max-width imgWidth + 300px
     padding-left imgWidth + 20px

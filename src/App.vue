@@ -224,6 +224,15 @@ export default {
     DBURL (file) {
       return `https://danielpintilei.bitbucket.io/p/${file}.json`
     },
+    logError (err) {
+      fetch('https://poeziitraiandorz.herokuapp.com', {
+        method: 'post',
+        headers: {
+          'Content-Type': 'text/plain'
+        },
+        body: err
+      })
+    },
     loadFolderList () {
       idbKeyval.get('folderList')
         .then(val => {
@@ -246,8 +255,10 @@ export default {
                 // console.log('Folder List Saving Finished')
               })
               // .catch(err => console.log('Folder List Saving Failed', err))
+              .catch(err => this.logError('Folder List Saving Failed:' + err))
           })
           // .catch(err => console.log('Downloading Folder List Failed', err))
+          .catch(err => this.logError('Downloading Folder List Failed:' + err))
       } else this.loadFolderList()
     },
     fetchPoem () {
@@ -260,6 +271,7 @@ export default {
               this.selectedPoem = data
             })
             // .catch(err => console.log('Fetching Poem Failed', err))
+            .catch(err => this.logError(`Fetching Poem nr${this.currentNr} Failed:` + err))
         }
       }
     },
@@ -293,8 +305,10 @@ export default {
                 // console.log('Poems Saving Finished')
               })
               // .catch(err => console.log('Poems Saving Failed', err))
+              .catch(err => this.logError('Poems Saving Failed:' + err))
           })
           // .catch(err => console.log('Downloading Poems Failed', err))
+          .catch(err => this.logError('Downloading Poems Failed:' + err))
       } else this.loadPoems(cb)
       if (!this.$store.state.folderListDownloaded) this.getFolderListSnap()
     }

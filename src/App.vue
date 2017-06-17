@@ -224,13 +224,13 @@ export default {
     DBURL (file) {
       return `https://danielpintilei.bitbucket.io/p/${file}.json`
     },
-    logError (err) {
+    logError (msg) {
       fetch('https://poeziitraiandorz.herokuapp.com', {
         method: 'post',
         headers: {
           'Content-Type': 'text/plain'
         },
-        body: err
+        body: msg
       })
     },
     loadFolderList () {
@@ -239,6 +239,8 @@ export default {
           this.folderListSnap = val
           // console.log('Folder List Loaded From Local')
         })
+        // .catch(err => console.log('Folder List Loaded From Local Failed', err))
+        .catch(err => this.logError('Folder List Loaded From Local Failed:' + err))
     },
     getFolderListSnap () {
       if (!this.$store.state.folderListDownloaded) {
@@ -285,6 +287,8 @@ export default {
             // console.log('Fetch Poem Callback From Load Poems')
           }
         })
+        // .catch(err => console.log('Poems Loaded From Local Failed', err))
+        .catch(err => this.logError('Poems Loaded From Local Failed:' + err))
     },
     getPoemsSnap (cb) {
       if (!this.$store.state.poemsDownloaded) {

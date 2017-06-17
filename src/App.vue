@@ -279,7 +279,6 @@ export default {
               this.logError(`Fetching Poem No.${this.currentNr} Failed:` + err)
             })
         }
-        this.logError(`Fetching Poem No.${this.currentNr}`)
       }
     },
     loadPoems (cb) {

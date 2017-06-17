@@ -239,8 +239,6 @@ export default {
           this.folderListSnap = val
           // console.log('Folder List Loaded From Local')
         })
-        // .catch(err => console.log('Folder List Loaded From Local Failed', err))
-        .catch(err => this.logError('Folder List Loaded From Local Failed:' + err))
     },
     getFolderListSnap () {
       if (!this.$store.state.folderListDownloaded) {
@@ -256,11 +254,15 @@ export default {
                 this.$store.commit('setFolderListDownloaded')
                 // console.log('Folder List Saving Finished')
               })
-              // .catch(err => console.log('Folder List Saving Failed', err))
-              .catch(err => this.logError('Folder List Saving Failed:' + err))
+              .catch(err => {
+                // console.log('Folder List Saving Failed', err)
+                this.logError('Folder List Saving Failed:' + err)
+              })
           })
-          // .catch(err => console.log('Downloading Folder List Failed', err))
-          .catch(err => this.logError('Downloading Folder List Failed:' + err))
+          .catch(err => {
+            // console.log('Downloading Folder List Failed', err)
+            this.logError('Downloading Folder List Failed:' + err)
+          })
       } else this.loadFolderList()
     },
     fetchPoem () {
@@ -272,8 +274,10 @@ export default {
             .then(data => {
               this.selectedPoem = data
             })
-            // .catch(err => console.log('Fetching Poem Failed', err))
-            .catch(err => this.logError(`Fetching Poem nr${this.currentNr} Failed:` + err))
+            .catch(err => {
+              // console.log(`Fetching Poem No.${this.currentNr} Failed`, err)
+              this.logError(`Fetching Poem No.${this.currentNr} Failed:` + err)
+            })
         }
       }
     },
@@ -287,8 +291,6 @@ export default {
             // console.log('Fetch Poem Callback From Load Poems')
           }
         })
-        // .catch(err => console.log('Poems Loaded From Local Failed', err))
-        .catch(err => this.logError('Poems Loaded From Local Failed:' + err))
     },
     getPoemsSnap (cb) {
       if (!this.$store.state.poemsDownloaded) {
@@ -308,11 +310,15 @@ export default {
                 this.$store.commit('setPoemsDownloaded')
                 // console.log('Poems Saving Finished')
               })
-              // .catch(err => console.log('Poems Saving Failed', err))
-              .catch(err => this.logError('Poems Saving Failed:' + err))
+              .catch(err => {
+                // console.log('Poems Saving Failed', err)
+                this.logError('Poems Saving Failed:' + err)
+              })
           })
-          // .catch(err => console.log('Downloading Poems Failed', err))
-          .catch(err => this.logError('Downloading Poems Failed:' + err))
+          .catch(err => {
+            // console.log('Downloading Poems Failed', err)
+            this.logError('Downloading Poems Failed:' + err)
+          })
       } else this.loadPoems(cb)
       if (!this.$store.state.folderListDownloaded) this.getFolderListSnap()
     }

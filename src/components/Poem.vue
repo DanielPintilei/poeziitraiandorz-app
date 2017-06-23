@@ -3,7 +3,7 @@
     id="poemParent"
     class="poem">
     <transition
-      v-on:after-leave="afterLeave"
+      @after-leave="afterLeave"
       :name="poemTransitionName"
       mode="out-in">
       <article

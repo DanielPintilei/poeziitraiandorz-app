@@ -60,8 +60,8 @@
       :style="{ backgroundColor: selectedTheme.background2 }"
       class="app__main">
       <navbar
-        v-on:downloadFolderList="getFolderListSnap"
-        v-on:downloadPoems="getPoemsSnap"
+        @downloadFolderList="getFolderListSnap"
+        @downloadPoems="getPoemsSnap"
         :theme="selectedTheme"
         :themes="themes">
       </navbar>
@@ -222,7 +222,7 @@ export default {
       this.$store.commit('toggleMore')
     },
     DBURL (file) {
-      return `https://danielpintilei.bitbucket.io/p/${file}.json`
+      return `https://www.poeziitraiandorz.ro/static/json/${file}.json`
     },
     logError (msg) {
       fetch('https://poeziitraiandorz.herokuapp.com', {
@@ -269,7 +269,7 @@ export default {
       if (this.currentNr) {
         if (this.poemsSnap) this.selectedPoem = this.poemsSnap[this.currentNr - 1]
         else {
-          fetch(this.DBURL(this.currentNr))
+          fetch(this.DBURL('poezii/' + this.currentNr))
             .then(response => response.json())
             .then(data => {
               this.selectedPoem = data

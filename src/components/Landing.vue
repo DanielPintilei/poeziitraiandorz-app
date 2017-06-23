@@ -13,15 +13,8 @@
           <div>Domnul</div>
         </h1>
       </div>
-      <p class="landing-info">
-        Text text text text text text text text text text text text text text text text text text text text text text text text text text text text text
-        <br>
-        <br>
-        Text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text
-        <br>
-        <br>
-        Text text text text text text text text text text text text text text text text text text text
-      </p>
+      <!--<p class="landing-info">
+      </p>-->
     </div>
   </div>
 </template>
@@ -93,12 +86,12 @@ imgHeight = imgOriginalHeight + imgBorderWidth * 2
     margin-left -80px
     font-size 72px
 
-.landing-info
-  margin-top 18px
-  margin-bottom 18px
-  font-size 18px
-  @media (min-width $breakpointMobileSmall + 1px)
-    max-width imgWidth + 300px
-    padding-left imgWidth + 20px
+// .landing-info
+//   margin-top 18px
+//   margin-bottom 18px
+//   font-size 18px
+//   @media (min-width $breakpointMobileSmall + 1px)
+//     max-width imgWidth + 300px
+//     padding-left imgWidth + 20px
 
 </style>

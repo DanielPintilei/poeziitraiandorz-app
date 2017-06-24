@@ -13,8 +13,34 @@
           <div>Domnul</div>
         </h1>
       </div>
-      <!--<p class="landing-info">
-      </p>-->
+      <p class="landing-info">
+        <button
+          @click="toggleSidebarLeft"
+          @mouseenter="listButtonHovered = true"
+          @mouseleave="listButtonHovered = false"
+          type="button"
+          class="button"
+          :style="{
+            color: listButtonHovered ? theme.background : theme.accent,
+            backgroundColor: listButtonHovered ? theme.accent : ''
+          }"
+        >
+          Cuprins
+        </button>
+        <button
+          @click="toggleSidebarRight"
+          @mouseenter="searchButtonHovered = true"
+          @mouseleave="searchButtonHovered = false"
+          type="button"
+          class="button"
+          :style="{
+            color: searchButtonHovered ? theme.background : theme.accent,
+            backgroundColor: searchButtonHovered ? theme.accent : ''
+          }"
+        >
+          Căutare
+        </button>
+      </p>
     </div>
   </div>
 </template>
@@ -25,6 +51,19 @@ export default {
   props: ['theme'],
   data () {
     return {
+      listButtonHovered: false,
+      searchButtonHovered: false
+    }
+  },
+  methods: {
+    toggleSidebarLeft () {
+      this.$store.commit('toggleSidebarLeft')
+      if (!this.$store.state.folderListDownloaded) this.$emit('downloadFolderList')
+    },
+    toggleSidebarRight () {
+      this.$store.commit('toggleSidebarRight')
+      this.$store.commit('setFullBook')
+      if (!this.$store.state.poemsDownloaded) this.$emit('downloadPoems')
     }
   }
 }
@@ -86,12 +125,27 @@ imgHeight = imgOriginalHeight + imgBorderWidth * 2
     margin-left -80px
     font-size 72px
 
-// .landing-info
-//   margin-top 18px
-//   margin-bottom 18px
-//   font-size 18px
-//   @media (min-width $breakpointMobileSmall + 1px)
-//     max-width imgWidth + 300px
-//     padding-left imgWidth + 20px
+.landing-info
+  margin-top 18px
+  margin-bottom 18px
+  font-size 18px
+  @media (min-width $breakpointMobileSmall + 1px)
+    max-width imgWidth + 300px
+    padding-left imgWidth + 20px
+
+.button
+  margin-right 10px
+  margin-bottom: 10px
+  padding 10px 30px
+  text-align center
+  font-size 15px
+  border 1px solid currentColor
+  background-color transparent
+  box-shadow none
+  cursor pointer
+  user-select none
+  outline none
+  -webkit-appearance none
+  transition color 0.1s, background-color 0.1s
 
 </style>

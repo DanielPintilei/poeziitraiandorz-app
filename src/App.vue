@@ -67,6 +67,8 @@
       </navbar>
       <transition name="router-view" mode="out-in">
         <router-view
+          @downloadFolderList="getFolderListSnap"
+          @downloadPoems="getPoemsSnap"
           :selectedPoem="selectedPoem"
           :theme="selectedTheme"
           class="app__main-view">
@@ -192,7 +194,7 @@ export default {
   mounted () {
     if (this.$store.state.sidebarLeftToggled || this.$store.state.folderListDownloaded) this.getFolderListSnap()
     const lastRoute = localStorage.getItem('lastRoute')
-    if (lastRoute) {
+    if (lastRoute && !this.currentNr) {
       this.$router.push(lastRoute)
       if (this.$store.state.sidebarLeftToggled) {
         let waitForLoad = setInterval(() => {

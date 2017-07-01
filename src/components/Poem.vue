@@ -90,6 +90,7 @@
       <social-sharing
         v-if="shareMenuOpen"
         class="social"
+        :url="currentURL"
         :title="selectedPoem.t"
         :description="selectedPoem.s"
         inline-template>

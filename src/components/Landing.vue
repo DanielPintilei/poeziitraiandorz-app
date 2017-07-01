@@ -13,7 +13,10 @@
           <div>Domnul</div>
         </h1>
       </div>
-      <p class="landing-info">
+      <div class="landing-info">
+        <p class="landing-text">
+
+        </p>
         <button
           @click="toggleSidebarLeft"
           @mouseenter="listButtonHovered = true"
@@ -40,7 +43,7 @@
         >
           Căutare
         </button>
-      </p>
+      </div>
     </div>
   </div>
 </template>
@@ -126,12 +129,15 @@ imgHeight = imgOriginalHeight + imgBorderWidth * 2
     font-size 72px
 
 .landing-info
-  margin-top 18px
-  margin-bottom 18px
-  font-size 18px
+  margin-bottom 8px
   @media (min-width $breakpointMobileSmall + 1px)
     max-width imgWidth + 300px
     padding-left imgWidth + 20px
+
+.landing-text
+  margin-top 18px
+  margin-bottom 18px
+  font-size 18px
 
 .button
   margin-right 10px

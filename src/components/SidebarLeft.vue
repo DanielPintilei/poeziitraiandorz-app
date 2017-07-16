@@ -25,6 +25,7 @@
         }">
         <div
           v-for="(folder, index) in folderListSnap"
+          :key="index"
           class="folder">
           <input
             type="radio"

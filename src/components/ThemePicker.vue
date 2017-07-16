@@ -2,6 +2,7 @@
   <div class="theme-picker">
     <div
       v-for="(theme, index) in themes"
+      :key="index"
       @click="setSelectedTheme(index)"
       :style="{ backgroundColor: theme.background }"
       class="swatch">

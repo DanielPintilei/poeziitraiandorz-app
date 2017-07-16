@@ -146,7 +146,8 @@
         </div>
         <div class="sidebar-right__results" id="sidebarRightResults">
           <div
-            v-for="result in results"
+            v-for="(result, index) in results"
+            :key="index"
             @click="handleResultClick($event, result.nr)"
             :id="`res${result.nr}`"
             class="result">
@@ -155,7 +156,8 @@
               <div class="result__title" v-html="result.title"></div>
               <div class="result__verses">
                 <div
-                  v-for="verse in result.verses"
+                  v-for="(verse, verseIndex) in result.verses"
+                  :key="verseIndex"
                   v-html="verse"
                   class="result__verse">
                 </div>

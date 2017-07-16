@@ -9,6 +9,7 @@ import End from '@/components/End'
 import Poem from '@/components/Poem'
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -27,6 +28,10 @@ export default new Router({
       name: 'Poem',
       component: Poem,
       props: true
+    },
+    {
+      path: '*',
+      component: Landing
     }
   ]
 })

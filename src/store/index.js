@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-const contentVersion = 1
+const contentVersion = 2
 if (+localStorage.getItem('contentVersion') !== contentVersion && navigator.onLine) {
   localStorage.removeItem('folderListDownloaded')
   localStorage.removeItem('poemsDownloaded')

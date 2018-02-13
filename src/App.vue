@@ -224,7 +224,7 @@ export default {
       this.$store.commit('toggleMore')
     },
     DBURL (file) {
-      return `https://www.poeziitraiandorz.ro/static/json/${file}.json`
+      return `/static/json/${file}.json`
     },
     logError (msg) {
       fetch('https://poeziitraiandorz.herokuapp.com', {

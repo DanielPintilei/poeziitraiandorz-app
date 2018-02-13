@@ -2,6 +2,7 @@
   <aside class="sidebar-right">
     <div class="sidebar-right__inner">
       <form
+        v-if="poemsSnap"
         @click="focusSearch"
         @submit.prevent="submitSearch"
         class="search-box"
@@ -36,7 +37,7 @@
           backgroundColor: theme.background,
           borderColor: theme.border3
         }">
-        <div class="sidebar-right__filters">
+        <div v-if="poemsSnap" class="sidebar-right__filters">
           <div
             :style="{
               backgroundColor: theme.background,
@@ -165,6 +166,7 @@
             </div>
           </div>
         </div>
+        <loading v-if="!poemsSnap" class="loading" :color="theme.accent"></loading>
       </div>
     </div>
   </aside>

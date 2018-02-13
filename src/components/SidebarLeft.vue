@@ -233,7 +233,6 @@ a
 
 .loading
   .folder + &
-  .listAZ + &
     display none
 
 </style>

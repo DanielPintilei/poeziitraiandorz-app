@@ -190,6 +190,15 @@ export default {
     document.body.style.setProperty('--themeBG', selectedTheme.background)
     if (this.$store.state.sidebarRightToggled || this.$store.state.poemsDownloaded) this.getPoemsSnap(this.fetchPoem)
     else if (this.$store.state.route.params.nr) this.fetchPoem()
+    if (this.$store.state.folderListDownloaded) {
+      idbKeyval.keys().then(keys => {
+        const folderListDeleted = !keys.includes('folderList')
+        const poemsDeleted = this.$store.state.poemsDownloaded && !keys.includes('poems')
+        if (folderListDeleted) localStorage.removeItem('folderListDownloaded')
+        if (poemsDeleted) localStorage.removeItem('poemsDownloaded')
+        if (folderListDeleted || poemsDeleted) window.location.reload()
+      })
+    }
   },
   mounted () {
     if (this.$store.state.sidebarLeftToggled || this.$store.state.folderListDownloaded) this.getFolderListSnap()

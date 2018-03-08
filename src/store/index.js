@@ -4,19 +4,32 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 const contentVersion = 2
-if (+localStorage.getItem('contentVersion') !== contentVersion && navigator.onLine) {
+if (
+  +localStorage.getItem('contentVersion') !== contentVersion &&
+  navigator.onLine
+) {
   localStorage.removeItem('folderListDownloaded')
   localStorage.removeItem('poemsDownloaded')
 }
-const sidebarLeftToggled = localStorage.getItem('sidebarLeftToggled') === 'true' || false
-const sidebarRightToggled = localStorage.getItem('sidebarRightToggled') === 'true' || false
+const sidebarLeftToggled =
+  localStorage.getItem('sidebarLeftToggled') === 'true' || false
+const sidebarRightToggled =
+  localStorage.getItem('sidebarRightToggled') === 'true' || false
 const selectedTheme = +localStorage.getItem('selectedTheme') || 0
 const selectedFontSize = +localStorage.getItem('selectedFontSize') || 1
-const folderListDownloaded = localStorage.getItem('folderListDownloaded') === 'true' || false
-const poemsDownloaded = localStorage.getItem('poemsDownloaded') === 'true' || false
+const folderListDownloaded =
+  localStorage.getItem('folderListDownloaded') === 'true' || false
+const poemsDownloaded =
+  localStorage.getItem('poemsDownloaded') === 'true' || false
 const searchText = localStorage.getItem('searchText') || ''
 const filtersOpen = localStorage.getItem('filtersOpen') === 'true' || false
-const checkedFilters = JSON.parse(localStorage.getItem('checkedFilters')) || ['checkboxTitle', 'checkboxVerses', 'checkboxWhole', 'checkboxCase', 'checkboxAccents']
+const checkedFilters = JSON.parse(localStorage.getItem('checkedFilters')) || [
+  'checkboxTitle',
+  'checkboxVerses',
+  'checkboxWhole',
+  'checkboxCase',
+  'checkboxAccents'
+]
 
 export const store = new Vuex.Store({
   state: {
@@ -45,7 +58,7 @@ export const store = new Vuex.Store({
         if (routeParent && !routeParent.checked) routeParent.click()
         route.scrollIntoView()
       }
-      const waitForToggle = new Promise((resolve) => {
+      const waitForToggle = new Promise(resolve => {
         state.sidebarLeftToggled = !state.sidebarLeftToggled
         resolve()
       })
@@ -82,13 +95,13 @@ export const store = new Vuex.Store({
       localStorage.setItem('selectedFontSize', 1)
     },
     zoomOut (state) {
-      if (state.selectedFontSize > 0.9) {
+      if (state.selectedFontSize > 0.7) {
         state.selectedFontSize -= 0.06
         localStorage.setItem('selectedFontSize', state.selectedFontSize)
       }
     },
     zoomIn (state) {
-      if (state.selectedFontSize < 1.1) {
+      if (state.selectedFontSize < 1.3) {
         state.selectedFontSize += 0.06
         localStorage.setItem('selectedFontSize', state.selectedFontSize)
       }

@@ -167,7 +167,7 @@
 </template>
 
 <script>
-import Clipboard from 'clipboard'
+import ClipboardJS from 'clipboard'
 import Loading from './Loading'
 
 export default {
@@ -186,7 +186,7 @@ export default {
   },
   mounted () {
     this.currentURL = location.href
-    const clipboard = new Clipboard('#btnCopy')
+    const clipboard = new ClipboardJS('#btnCopy')
     clipboard.on('success', (e) => {
       e.clearSelection()
       this.$store.commit('setSelectEnabled', false)
@@ -291,6 +291,7 @@ export default {
 .poem__main
   flex-grow 1
   max-width 100%
+  user-select text
   will-change transform
   &.select
     user-select: all !important

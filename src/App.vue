@@ -236,13 +236,7 @@ export default {
       return `/static/json/${file}.json`
     },
     logError (msg) {
-      fetch('https://poeziitraiandorz.herokuapp.com', {
-        method: 'post',
-        headers: {
-          'Content-Type': 'text/plain'
-        },
-        body: msg
-      })
+      console.log(msg)
     },
     loadFolderList () {
       idbKeyval.get('folderList')

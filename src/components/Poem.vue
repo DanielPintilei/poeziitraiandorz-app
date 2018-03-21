@@ -16,7 +16,8 @@
           <h1 class="poem__title">
             {{ selectedPoem.t }}
           </h1>
-          <p class="poem__desc">{{ selectedPoem.d }}</p>
+          <br>
+          <p v-if="selectedPoem.d" class="poem__desc">{{ selectedPoem.d }}</p>
           <pre
             :style="{columnRuleColor: theme.rule}"
             class="poem__blocks">{{ selectedPoem.s }}</pre>
@@ -333,7 +334,7 @@ export default {
     opacity 0
 
 .poem__title
-  margin 0 0 0.8em
+  margin 0
   font-family $font1
   font-size 2em
   font-weight normal
@@ -341,8 +342,6 @@ export default {
   @media (max-width $breakpointMobileSmall)
     font-size 1.65em
     line-height 1.1
-  @media (min-width $breakpointMobile + 1px)
-    margin 0 0 1.2em
 
 .poem__desc
 .poem__blocks

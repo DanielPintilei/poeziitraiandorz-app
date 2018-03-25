@@ -349,8 +349,6 @@ export default {
   font-family $font2
   font-size 1.063em
   line-height 1.4
-  @media (max-width $breakpointMobileSmall)
-    font-size 1em
 
 .poem__desc
   margin-bottom 1.5em

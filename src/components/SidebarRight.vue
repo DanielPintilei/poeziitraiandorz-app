@@ -221,7 +221,7 @@ export default {
     },
     submitSearch () {
       if (this.searchText.length > 2) {
-        if (window.matchMedia('(max-width: 1000px)').matches) document.getElementById('searchInput').blur()
+        // if (window.matchMedia('(max-width: 1000px)').matches) document.getElementById('searchInput').blur()
         document.getElementById('sidebarRightResults').scrollTop = 0
         this.results = []
         const searchInTitle = this.checkedFilters.includes('checkboxTitle')

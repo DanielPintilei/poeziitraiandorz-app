@@ -229,7 +229,6 @@ export default {
         const searchWhole = this.checkedFilters.includes('checkboxWhole')
         const searchIgnoreCase = this.checkedFilters.includes('checkboxCase')
         const searchIgnoreAccents = this.checkedFilters.includes('checkboxAccents')
-        this.resultsInfoShown = true
         this.resultsCounter = 0
         this.resultsPoemsCounter = 0
         let textToSearch = this.searchText
@@ -292,6 +291,7 @@ export default {
             this.resultsPoemsCounter += 1
           }
         }
+        this.resultsInfoShown = true
         this.lastSelectedResult = 0
         this.$store.commit('setSearchText', this.searchText)
       }

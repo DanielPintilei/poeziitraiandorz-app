@@ -53,7 +53,6 @@
               <path d="M0 0h24v24H0z" fill="none"/>
             </svg>
             <span
-              v-if="resultsInfoShown"
               class="results-info">
               {{resultsInfo}}
             </span>
@@ -195,6 +194,7 @@ export default {
   },
   computed: {
     resultsInfo () {
+      if (!this.resultsInfoShown) return
       let inPoems = ' '
       if (this.resultsCounter) inPoems = ` în ${this.resultsPoemsCounter} ${this.resultsPoemsCounter === 1 ? 'poezie' : 'poezii'} `
       return `${this.resultsCounter} ${this.resultsCounter === 1 ? 'rezultat' : 'rezultate'}${inPoems}pentru "${this.searchText}"`

@@ -188,8 +188,16 @@ export default {
       results: [],
       resultsCounter: 0,
       resultsPoemsCounter: 0,
-      resultsInfo: null,
+      resultsInfoShown: false,
       lastSelectedResult: ''
+    }
+  },
+  computed: {
+    resultsInfo () {
+      if (!this.resultsInfoShown) return
+      let inPoems = ' '
+      if (this.resultsCounter) inPoems = ` în ${this.resultsPoemsCounter} ${this.resultsPoemsCounter === 1 ? 'poezie' : 'poezii'} `
+      return `${this.resultsCounter} ${this.resultsCounter === 1 ? 'rezultat' : 'rezultate'}${inPoems}pentru "${this.searchText}"`
     }
   },
   methods: {
@@ -210,14 +218,6 @@ export default {
     },
     handleCheckVerses (e) {
       if (this.checkedFilters.includes('checkboxVerses') && !this.checkedFilters.includes('checkboxTitle')) e.preventDefault()
-    },
-    setResultsInfo (bool) {
-      if (bool) this.resultsInfo = null
-      else {
-        let inPoems = ' '
-        if (this.resultsCounter) inPoems = ` în ${this.resultsPoemsCounter} ${this.resultsPoemsCounter === 1 ? 'poezie' : 'poezii'} `
-        this.resultsInfo = `${this.resultsCounter} ${this.resultsCounter === 1 ? 'rezultat' : 'rezultate'}${inPoems}pentru "${this.searchText}"`
-      }
     },
     submitSearch () {
       if (this.searchText.length > 2) {
@@ -291,9 +291,11 @@ export default {
             this.resultsPoemsCounter += 1
           }
         }
-        this.setResultsInfo()
         this.lastSelectedResult = 0
         this.$store.commit('setSearchText', this.searchText)
+        setTimeout(() => {
+          this.resultsInfoShown = true
+        })
       }
     },
     handleResultClick (event, nr) {
@@ -313,7 +315,7 @@ export default {
       this.$store.commit('setCheckedFilters', this.checkedFilters)
     },
     searchText () {
-      this.setResultsInfo(true)
+      this.resultsInfoShown = false
     }
   }
 }

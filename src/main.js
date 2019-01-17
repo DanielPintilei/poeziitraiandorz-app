@@ -3,12 +3,10 @@ import App from './App'
 import { sync } from 'vuex-router-sync'
 import router from './router'
 import { store } from './store/index'
-import SocialSharing from 'vue-social-sharing'
 
 sync(store, router)
 
 Vue.config.productionTip = false
-Vue.use(SocialSharing)
 
 /* eslint-disable no-new */
 new Vue({

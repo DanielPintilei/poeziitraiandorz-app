@@ -65,10 +65,9 @@
         <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
       </svg>
       <svg
+        v-if="navigatorHasShare"
         @click="toggleShareMenu"
-        :class="{toggled: shareMenuOpen}"
         class="icon icon-share-toggle"
-        :fill="shareMenuOpen ? theme.accent : theme.icon2"
         height="24" viewBox="0 0 24 24" width="24">
         <path d="M0 0h24v24H0z" fill="none"/>
         <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/>
@@ -81,43 +80,6 @@
         class="copy-confirm">
         <span >Copiat</span>
       </div>
-    </transition>
-    <div
-      @click="toggleShareMenu"
-      v-if="shareMenuOpen"
-      class="backdrop backdrop--social">
-    </div>
-    <transition name="pop">
-      <social-sharing
-        v-if="shareMenuOpen"
-        class="social"
-        :url="currentURL"
-        :title="selectedPoem.t"
-        :description="selectedPoem.s"
-        inline-template>
-        <div>
-          <network style="height: 28px; cursor: pointer" network="facebook">
-            <svg width="28" height="28" viewBox="0 0 16 16" fill="#3B5998">
-              <path d="M15.117 0H.883C.395 0 0 .395 0 .883v14.234c0 .488.395.883.883.883h7.663V9.804H6.46V7.39h2.086V5.607c0-2.066 1.262-3.19 3.106-3.19.883 0 1.642.064 1.863.094v2.16h-1.28c-1 0-1.195.48-1.195 1.18v1.54h2.39l-.31 2.42h-2.08V16h4.077c.488 0 .883-.395.883-.883V.883C16 .395 15.605 0 15.117 0" />
-            </svg>
-          </network>
-          <network style="height: 28px; cursor: pointer" network="googleplus">
-            <svg width="28" height="28" viewBox="0 0 16 16" fill="#DC4E41">
-              <path d="M5.09 7.273v1.745h2.89c-.116.75-.873 2.197-2.887 2.197-1.737 0-3.155-1.44-3.155-3.215S3.353 4.785 5.09 4.785c.99 0 1.652.422 2.03.786l1.382-1.33c-.887-.83-2.037-1.33-3.41-1.33C2.275 2.91 0 5.19 0 8s2.276 5.09 5.09 5.09c2.94 0 4.888-2.065 4.888-4.974 0-.334-.036-.59-.08-.843H5.09zm10.91 0h-1.455V5.818H13.09v1.455h-1.454v1.454h1.455v1.455h1.46V8.727H16" />
-            </svg>
-          </network>
-          <network style="height: 28px; cursor: pointer" network="twitter">
-            <svg width="28" height="28" viewBox="0 0 16 16" fill="#1DA1F2">
-              <path d="M16 3.038c-.59.26-1.22.437-1.885.517.677-.407 1.198-1.05 1.443-1.816-.634.37-1.337.64-2.085.79-.598-.64-1.45-1.04-2.396-1.04-1.812 0-3.282 1.47-3.282 3.28 0 .26.03.51.085.75-2.728-.13-5.147-1.44-6.766-3.42C.83 2.58.67 3.14.67 3.75c0 1.14.58 2.143 1.46 2.732-.538-.017-1.045-.165-1.487-.41v.04c0 1.59 1.13 2.918 2.633 3.22-.276.074-.566.114-.865.114-.21 0-.41-.02-.61-.058.42 1.304 1.63 2.253 3.07 2.28-1.12.88-2.54 1.404-4.07 1.404-.26 0-.52-.015-.78-.045 1.46.93 3.18 1.474 5.04 1.474 6.04 0 9.34-5 9.34-9.33 0-.14 0-.28-.01-.42.64-.46 1.2-1.04 1.64-1.7z" />
-            </svg>
-          </network>
-          <network style="height: 28px; cursor: pointer" network="whatsapp">
-            <svg width="28" height="28" viewBox="0 0 16 16" fill="#25D366">
-              <path d="M11.665 9.588c-.2-.1-1.177-.578-1.36-.644-.182-.067-.315-.1-.448.1-.132.197-.514.643-.63.775-.116.13-.232.14-.43.05-.2-.1-.842-.31-1.602-.99-.592-.53-.99-1.18-1.107-1.38-.116-.2-.013-.31.087-.41.09-.09.2-.23.3-.35.098-.12.13-.2.198-.33.066-.14.033-.25-.017-.35-.05-.1-.448-1.08-.614-1.47-.16-.39-.325-.34-.448-.34-.115-.01-.248-.01-.38-.01-.134 0-.35.05-.532.24-.182.2-.696.68-.696 1.65s.713 1.91.812 2.05c.1.13 1.404 2.13 3.4 2.99.476.2.846.32 1.136.42.476.15.91.13 1.253.08.383-.06 1.178-.48 1.344-.95.17-.47.17-.86.12-.95-.05-.09-.18-.14-.38-.23M8.04 14.5h-.01c-1.18 0-2.35-.32-3.37-.92l-.24-.143-2.5.65.67-2.43-.16-.25c-.66-1.05-1.01-2.26-1.01-3.506 0-3.63 2.97-6.59 6.628-6.59 1.77 0 3.43.69 4.68 1.94 1.25 1.24 1.94 2.9 1.94 4.66-.003 3.63-2.973 6.59-6.623 6.59M13.68 2.3C12.16.83 10.16 0 8.03 0 3.642 0 .07 3.556.067 7.928c0 1.397.366 2.76 1.063 3.964L0 16l4.223-1.102c1.164.63 2.474.964 3.807.965h.004c4.39 0 7.964-3.557 7.966-7.93 0-2.117-.827-4.11-2.33-5.608"/>
-            </svg>
-          </network>
-        </div>
-      </social-sharing>
     </transition>
     <div class="poem__zoom" :style="{backgroundColor: theme.background}">
       <transition name="slide-zoom-3">
@@ -180,9 +142,9 @@ export default {
   data () {
     return {
       zoomMenuOpen: false,
-      shareMenuOpen: false,
       poemTransitionName: '',
-      currentURL: ''
+      currentURL: '',
+      navigatorHasShare: typeof navigator !== 'undefined' && navigator.share
     }
   },
   mounted () {
@@ -199,7 +161,6 @@ export default {
   },
   created () {
     window.addEventListener('keyup', this.handlePoemKeyNav)
-    this.$root.$on('social_shares_open', () => { this.shareMenuOpen = false })
   },
   beforeDestroy () {
     window.removeEventListener('keyup', this.handlePoemKeyNav)
@@ -253,7 +214,13 @@ export default {
       this.$store.commit('zoomIn')
     },
     toggleShareMenu () {
-      this.shareMenuOpen = !this.shareMenuOpen
+      navigator
+        .share({
+          title: this.selectedPoem.t,
+          text: this.selectedPoem.s,
+          url: this.currentURL
+        })
+        .catch(error => error)
     },
     enableSelect () {
       this.$store.commit('setSelectEnabled', true)
@@ -400,7 +367,6 @@ $iconPrevNextSide = 20px
     bottom 0
     padding 10px 10px 5px
 
-.icon-share-toggle
 .icon-zoom-toggle
   &.toggled
     opacity 1
@@ -431,27 +397,6 @@ $iconPrevNextSide = 20px
   @media (max-width $breakpointMobileSmall)
     bottom 50px
     left 30px
-
-.backdrop--social
-  position fixed
-
-.social
-  position absolute
-  bottom 40px
-  left 60px
-  display flex
-  align-items center
-  justify-content space-around
-  width 180px
-  height 60px
-  padding 4px
-  background-color #fff
-  box-shadow 4px 2px 6px 0px rgba(0,0,0,0.1)
-  border-radius 4px
-  transform-origin bottom left
-  z-index 10
-  @media (max-width $breakpointMobileSmall)
-    bottom 50px
 
 .pop-enter-active
   transition transform $popDuration $popTiming

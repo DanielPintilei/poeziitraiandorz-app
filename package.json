@@ -15,7 +15,6 @@
     "idb-keyval": "^2.4.2",
     "vue": "^2.5.16",
     "vue-router": "^2.8.1",
-    "vue-social-sharing": "^2.3.3",
     "vuex": "^2.5.0",
     "vuex-router-sync": "^4.3.2"
   },

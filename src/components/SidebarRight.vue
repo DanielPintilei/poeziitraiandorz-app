@@ -10,14 +10,11 @@
           borderLeftColor: theme.border2,
           borderBottomColor: theme.border,
           backgroundColor: theme.navbar
-        }"
-      >
+        }">
         <svg
           :fill="$store.state.searchFocused ? theme.accent : theme.icon"
           class="search-box__icon"
-          height="24"
-          width="24"
-        >
+          height="24" width="24">
           <use xlink:href="#iconSearch"></use>
         </svg>
         <input
@@ -32,52 +29,50 @@
           autocorrect="off"
           autocapitalize="off"
           spellcheck="false"
-          placeholder="Caută"
-        >
+          placeholder="Caută">
       </form>
       <div
         class="sidebar-right__main"
         :style="{
           backgroundColor: theme.background,
           borderColor: theme.border3
-        }"
-      >
+        }">
         <div v-if="poemsSnap" class="sidebar-right__filters">
           <div
             :style="{
               backgroundColor: theme.background,
               borderColor: !$store.state.filtersOpen ? '' : 'transparent'
             }"
-            class="sidebar-right__filters-icon-wrapper"
-          >
+            class="sidebar-right__filters-icon-wrapper">
             <svg
               @click="toggleFilters"
               :fill="!$store.state.filtersOpen ? theme.icon2 : theme.accent"
               class="icon icon-filters"
-              height="24"
-              viewBox="0 0 24 24"
-              width="24"
-            >
-              <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"></path>
-              <path d="M0 0h24v24H0z" fill="none"></path>
+              height="24" viewBox="0 0 24 24" width="24">
+              <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"/>
+              <path d="M0 0h24v24H0z" fill="none"/>
             </svg>
-            <span class="results-info">{{resultsInfo}}</span>
+            <span
+              class="results-info">
+              {{resultsInfo}}
+            </span>
           </div>
           <transition name="filters">
             <div
               :style="{color: theme.text2}"
               v-if="$store.state.filtersOpen"
-              class="sidebar-right__filter-wrapper"
-            >
+              class="sidebar-right__filter-wrapper">
               <div class="sidebar-right__filter">
                 <input
                   type="checkbox"
-                  value="checkboxTitle"
-                  id="checkboxTitle"
-                  v-model="checkedFilters"
-                >
-                <label @click="handleCheckTitle" for="checkboxTitle">
-                  <svg class="icon icon-check" :fill="theme.accent" width="24" height="24">
+                  value="checkboxTitle" id="checkboxTitle" v-model="checkedFilters">
+                <label
+                  @click="handleCheckTitle"
+                  for="checkboxTitle">
+                  <svg
+                    class="icon icon-check"
+                    :fill="theme.accent"
+                    width="24" height="24">
                     <use class="off" xlink:href="#iconCheck"></use>
                     <use class="on" xlink:href="#iconCheckOn"></use>
                   </svg>
@@ -87,12 +82,14 @@
               <div class="sidebar-right__filter">
                 <input
                   type="checkbox"
-                  value="checkboxVerses"
-                  id="checkboxVerses"
-                  v-model="checkedFilters"
-                >
-                <label @click="handleCheckVerses" for="checkboxVerses">
-                  <svg class="icon icon-check" :fill="theme.accent" width="24" height="24">
+                  value="checkboxVerses" id="checkboxVerses" v-model="checkedFilters">
+                <label
+                  @click="handleCheckVerses"
+                  for="checkboxVerses">
+                  <svg
+                    class="icon icon-check"
+                    :fill="theme.accent"
+                    width="24" height="24">
                     <use class="off" xlink:href="#iconCheck"></use>
                     <use class="on" xlink:href="#iconCheckOn"></use>
                   </svg>
@@ -102,12 +99,12 @@
               <div class="sidebar-right__filter">
                 <input
                   type="checkbox"
-                  value="checkboxWhole"
-                  id="checkboxWhole"
-                  v-model="checkedFilters"
-                >
+                  value="checkboxWhole" id="checkboxWhole" v-model="checkedFilters">
                 <label for="checkboxWhole">
-                  <svg class="icon icon-check" :fill="theme.accent" width="24" height="24">
+                  <svg
+                    class="icon icon-check"
+                    :fill="theme.accent"
+                    width="24" height="24">
                     <use class="off" xlink:href="#iconCheck"></use>
                     <use class="on" xlink:href="#iconCheckOn"></use>
                   </svg>
@@ -117,12 +114,12 @@
               <div class="sidebar-right__filter">
                 <input
                   type="checkbox"
-                  value="checkboxCase"
-                  id="checkboxCase"
-                  v-model="checkedFilters"
-                >
+                  value="checkboxCase" id="checkboxCase" v-model="checkedFilters">
                 <label for="checkboxCase">
-                  <svg class="icon icon-check" :fill="theme.accent" width="24" height="24">
+                  <svg
+                    class="icon icon-check"
+                    :fill="theme.accent"
+                    width="24" height="24">
                     <use class="off" xlink:href="#iconCheck"></use>
                     <use class="on" xlink:href="#iconCheckOn"></use>
                   </svg>
@@ -132,12 +129,12 @@
               <div class="sidebar-right__filter">
                 <input
                   type="checkbox"
-                  value="checkboxAccents"
-                  id="checkboxAccents"
-                  v-model="checkedFilters"
-                >
+                  value="checkboxAccents" id="checkboxAccents" v-model="checkedFilters">
                 <label for="checkboxAccents">
-                  <svg class="icon icon-check" :fill="theme.accent" width="24" height="24">
+                  <svg
+                    class="icon icon-check"
+                    :fill="theme.accent"
+                    width="24" height="24">
                     <use class="off" xlink:href="#iconCheck"></use>
                     <use class="on" xlink:href="#iconCheckOn"></use>
                   </svg>
@@ -153,18 +150,17 @@
             :key="index"
             @click="handleResultClick($event, result.nr)"
             :id="`res${result.nr}`"
-            class="result"
-          >
+            class="result">
             <span class="result__nr">{{result.nr}}</span>
-            <div>
+            <div >
               <div class="result__title" v-html="result.title"></div>
               <div class="result__verses">
                 <div
                   v-for="(verse, verseIndex) in result.verses"
                   :key="verseIndex"
                   v-html="verse"
-                  class="result__verse"
-                ></div>
+                  class="result__verse">
+                </div>
               </div>
             </div>
           </div>
@@ -183,7 +179,7 @@ export default {
   name: 'sidebar-right',
   props: ['theme', 'poemsSnap'],
   components: {
-    Loading,
+    Loading
   },
   data () {
     return {
@@ -193,22 +189,16 @@ export default {
       resultsCounter: 0,
       resultsPoemsCounter: 0,
       resultsInfoShown: false,
-      lastSelectedResult: '',
+      lastSelectedResult: ''
     }
   },
   computed: {
     resultsInfo () {
       if (!this.resultsInfoShown) return
       let inPoems = ' '
-      if (this.resultsCounter) {
-        inPoems = ` în ${this.resultsPoemsCounter} ${
-          this.resultsPoemsCounter === 1 ? 'poezie' : 'poezii'
-        } `
-      }
-      return `${this.resultsCounter} ${
-        this.resultsCounter === 1 ? 'rezultat' : 'rezultate'
-      }${inPoems}pentru "${this.searchText}"`
-    },
+      if (this.resultsCounter) inPoems = ` în ${this.resultsPoemsCounter} ${this.resultsPoemsCounter === 1 ? 'poezie' : 'poezii'} `
+      return `${this.resultsCounter} ${this.resultsCounter === 1 ? 'rezultat' : 'rezultate'}${inPoems}pentru "${this.searchText}"`
+    }
   },
   methods: {
     toggleSidebarRight () {
@@ -224,20 +214,10 @@ export default {
       this.$store.commit('toggleFilters')
     },
     handleCheckTitle (e) {
-      if (
-        this.checkedFilters.includes('checkboxTitle') &&
-        !this.checkedFilters.includes('checkboxVerses')
-      ) {
-        e.preventDefault()
-      }
+      if (this.checkedFilters.includes('checkboxTitle') && !this.checkedFilters.includes('checkboxVerses')) e.preventDefault()
     },
     handleCheckVerses (e) {
-      if (
-        this.checkedFilters.includes('checkboxVerses') &&
-        !this.checkedFilters.includes('checkboxTitle')
-      ) {
-        e.preventDefault()
-      }
+      if (this.checkedFilters.includes('checkboxVerses') && !this.checkedFilters.includes('checkboxTitle')) e.preventDefault()
     },
     submitSearch () {
       if (this.searchText.length > 2) {
@@ -248,9 +228,7 @@ export default {
         const searchInVerses = this.checkedFilters.includes('checkboxVerses')
         const searchWhole = this.checkedFilters.includes('checkboxWhole')
         const searchIgnoreCase = this.checkedFilters.includes('checkboxCase')
-        const searchIgnoreAccents = this.checkedFilters.includes(
-          'checkboxAccents',
-        )
+        const searchIgnoreAccents = this.checkedFilters.includes('checkboxAccents')
         this.resultsCounter = 0
         this.resultsPoemsCounter = 0
         let textToSearch = this.searchText
@@ -265,26 +243,17 @@ export default {
             .replace(/[tț]/g, '[tț]')
             .replace(/[TȚ]/g, '[TȚ]')
         }
-        textToSearch = textToSearch
-          .trim()
-          .replace(/[!?,.-]/g, '\\$&')
-          .replace(/\s/g, '\\s')
+        textToSearch = textToSearch.trim().replace(/[!?,.-]/g, '\\$&').replace(/\s/g, '\\s')
         let searchRegEx
         let searchFlags = 'g'
         if (searchIgnoreCase) searchFlags = 'ig'
         if (searchWhole) {
           const searchWholeRegExChars = 'a-zA-ZăâîșțĂÂÎȘȚ'
-          searchRegEx = new RegExp(
-            `([^${searchWholeRegExChars}]|^)(${textToSearch})(?![${searchWholeRegExChars}])`,
-            searchFlags,
-          )
+          searchRegEx = new RegExp(`([^${searchWholeRegExChars}]|^)(${textToSearch})(?![${searchWholeRegExChars}])`, searchFlags)
         } else searchRegEx = new RegExp(textToSearch, searchFlags)
-        const incrementResultsCounter = int => {
-          this.resultsCounter += int
-        }
+        const incrementResultsCounter = int => { this.resultsCounter += int }
         const searchForMatches = textToBeSearched => {
-          const matchesCount = (textToBeSearched.match(searchRegEx) || [])
-            .length
+          const matchesCount = (textToBeSearched.match(searchRegEx) || []).length
           if (matchesCount) incrementResultsCounter(matchesCount)
           return matchesCount
         }
@@ -295,20 +264,13 @@ export default {
             firstGroup = '$1'
             secondGroup = '$2'
           }
-          return textToBeHighlighted.replace(
-            searchRegEx,
-            `${firstGroup}<span style="background-color: ${
-              this.theme.highlight
-            }">${secondGroup}</span>`,
-          )
+          return textToBeHighlighted.replace(searchRegEx, `${firstGroup}<span style="background-color: ${this.theme.highlight}">${secondGroup}</span>`)
         }
         const listVersesMatches = results => {
           const matchRegEx = /((?:\S+\s){0,3})\S*<span([^]*?)<\/span>\S*((?:\s\S+){0,3})/g
           let list = []
           let match
-          while ((match = matchRegEx.exec(results)) !== null) {
-            list.push(match[0])
-          }
+          while ((match = matchRegEx.exec(results)) !== null) list.push(match[0])
           return list
         }
         for (const [index, item] of this.poemsSnap.entries()) {
@@ -319,14 +281,12 @@ export default {
           if (searchInTitle) titleResults = searchForMatches(item.t)
           if (searchInVerses) versesResults = searchForMatches(item.s)
           if (titleResults) title = highlightMatches(item.t)
-          if (versesResults) {
-            verses = listVersesMatches(highlightMatches(item.s))
-          }
+          if (versesResults) verses = listVersesMatches(highlightMatches(item.s))
           if (titleResults || versesResults) {
             this.results.push({
               nr: index + 1,
               title,
-              verses,
+              verses
             })
             this.resultsPoemsCounter += 1
           }
@@ -344,15 +304,11 @@ export default {
       if (!routeParent.checked) routeParent.click()
       route.click()
       route.scrollIntoView()
-      if (this.lastSelectedResult.length) {
-        document
-          .getElementById(this.lastSelectedResult)
-          .classList.remove('active')
-      }
+      if (this.lastSelectedResult.length) document.getElementById(this.lastSelectedResult).classList.remove('active')
       event.target.closest('.result').classList.add('active')
       this.lastSelectedResult = `res${nr}`
       mobileTap(1100, this.toggleSidebarRight)
-    },
+    }
   },
   watch: {
     checkedFilters () {
@@ -360,8 +316,8 @@ export default {
     },
     searchText () {
       this.resultsInfoShown = false
-    },
-  },
+    }
+  }
 }
 </script>
 

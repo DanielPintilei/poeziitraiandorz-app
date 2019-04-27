@@ -1,6 +1,8 @@
 <template>
   <div class="out">
-    <pre :style="{ color: theme.accent }" class="out__text">
+    <pre
+      :style="{ color: theme.accent }"
+      class="out__text">
     Tot ce v-am spus aici cu lacrimi
     e adevăr curat şi greu
     mărturisit pe conştiinţă
@@ -11,8 +13,13 @@
     că tot ce nu-nţelegeţi astăzi
     o să-nţelegeţi mai tîrziu.
     </pre>
-    <div @click="goBack" class="out-next">
-      <svg class="icon" :fill="theme.icon2" height="24" width="24">
+    <div
+      @click="goBack"
+      class="out-next">
+      <svg
+        class="icon"
+        :fill="theme.icon2"
+        height="24" width="24">
         <use xlink:href="#iconNext"></use>
       </svg>
     </div>
@@ -37,8 +44,8 @@ export default {
       if (e.key === 'ArrowRight' && !this.$store.state.searchFocused) {
         this.goBack()
       }
-    },
-  },
+    }
+  }
 }
 </script>
 

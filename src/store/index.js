@@ -28,10 +28,10 @@ const checkedFilters = JSON.parse(localStorage.getItem('checkedFilters')) || [
   'checkboxVerses',
   'checkboxWhole',
   'checkboxCase',
-  'checkboxAccents',
+  'checkboxAccents'
 ]
 
-export default new Vuex.Store({
+export const store = new Vuex.Store({
   state: {
     contentVersion,
     sidebarLeftToggled,
@@ -48,7 +48,7 @@ export default new Vuex.Store({
     searchFocused: false,
     searchText,
     filtersOpen,
-    checkedFilters,
+    checkedFilters
   },
   mutations: {
     toggleSidebarLeft (state) {
@@ -146,6 +146,6 @@ export default new Vuex.Store({
     setCheckedFilters (state, array) {
       state.checkedFilters = array
       localStorage.setItem('checkedFilters', JSON.stringify(array))
-    },
-  },
+    }
+  }
 })

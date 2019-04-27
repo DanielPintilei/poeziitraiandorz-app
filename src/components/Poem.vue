@@ -1,18 +1,26 @@
 <template>
-  <div id="poemParent" class="poem">
-    <transition @after-leave="afterLeave" :name="poemTransitionName" mode="out-in">
+  <div
+    id="poemParent"
+    class="poem">
+    <transition
+      @after-leave="afterLeave"
+      :name="poemTransitionName"
+      mode="out-in">
       <article
         :key="nr"
         id="poem"
         :style="{fontSize: fontSizeREM}"
         :class="{select: $store.state.selectEnabled}"
-        class="poem__main"
-      >
+        class="poem__main">
         <template v-if="selectedPoem">
-          <h1 class="poem__title">{{ selectedPoem.t }}</h1>
+          <h1 class="poem__title">
+            {{ selectedPoem.t }}
+          </h1>
           <br>
           <p v-if="selectedPoem.d" class="poem__desc">{{ selectedPoem.d }}</p>
-          <pre :style="{columnRuleColor: theme.rule}" class="poem__blocks">{{ selectedPoem.s }}</pre>
+          <pre
+            :style="{columnRuleColor: theme.rule}"
+            class="poem__blocks">{{ selectedPoem.s }}</pre>
         </template>
         <loading class="loading" :color="theme.accent"></loading>
         <br>
@@ -21,54 +29,57 @@
         <span class="poem__url" id="currentURL">{{ currentURL }}</span>
       </article>
     </transition>
-    <div v-if="$store.state.folderListDownloaded" @click="prevPoem" class="button-prev">
-      <svg class="icon" :fill="theme.icon2" height="24" width="24">
+    <div
+      v-if="$store.state.folderListDownloaded"
+      @click="prevPoem"
+      class="button-prev">
+      <svg
+        class="icon"
+        :fill="theme.icon2"
+        height="24" width="24">
         <use xlink:href="#iconPrev"></use>
       </svg>
     </div>
-    <div v-if="$store.state.folderListDownloaded" @click="nextPoem" class="button-next">
-      <svg class="icon" :fill="theme.icon2" height="24" width="24">
+    <div
+      v-if="$store.state.folderListDownloaded"
+      @click="nextPoem"
+      class="button-next">
+      <svg
+        class="icon"
+        :fill="theme.icon2"
+        height="24" width="24">
         <use xlink:href="#iconNext"></use>
       </svg>
     </div>
-    <div class="poem__share" :style="{backgroundColor: theme.background}">
+    <div
+      class="poem__share"
+      :style="{backgroundColor: theme.background}">
       <svg
         data-clipboard-target="#poem"
         @click="enableSelect"
         class="icon icon-copy"
         id="btnCopy"
         :fill="theme.icon2"
-        height="24"
-        viewBox="0 0 24 24"
-        width="24"
-      >
-        <path d="M0 0h24v24H0z" fill="none"></path>
-        <path
-          d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"
-        ></path>
+        height="24" viewBox="0 0 24 24" width="24">
+        <path d="M0 0h24v24H0z" fill="none"/>
+        <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
       </svg>
       <svg
         v-if="navigatorHasShare"
         @click="toggleShareMenu"
         class="icon icon-share-toggle"
         :fill="theme.icon2"
-        height="24"
-        viewBox="0 0 24 24"
-        width="24"
-      >
-        <path d="M0 0h24v24H0z" fill="none"></path>
-        <path
-          d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"
-        ></path>
+        height="24" viewBox="0 0 24 24" width="24">
+        <path d="M0 0h24v24H0z" fill="none"/>
+        <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/>
       </svg>
     </div>
     <transition name="pop">
       <div
         v-if="$store.state.copyConfirmShown"
         :style="{backgroundColor: theme.confirm, color: theme.confirm2}"
-        class="copy-confirm"
-      >
-        <span>Copiat</span>
+        class="copy-confirm">
+        <span >Copiat</span>
       </div>
     </transition>
     <div class="poem__zoom" :style="{backgroundColor: theme.background}">
@@ -78,14 +89,9 @@
           v-if="zoomMenuOpen"
           class="icon icon-zoom"
           :fill="theme.icon2"
-          height="24"
-          viewBox="0 0 24 24"
-          width="24"
-        >
-          <path
-            d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"
-          ></path>
-          <path d="M0 0h24v24H0z" fill="none"></path>
+          height="24" viewBox="0 0 24 24" width="24">
+          <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
+          <path d="M0 0h24v24H0z" fill="none"/>
         </svg>
       </transition>
       <transition name="slide-zoom-2">
@@ -94,14 +100,9 @@
           v-if="zoomMenuOpen"
           class="icon icon-zoom"
           :fill="theme.icon2"
-          height="24"
-          viewBox="0 0 24 24"
-          width="24"
-        >
-          <path d="M0 0h24v24H0V0z" fill="none"></path>
-          <path
-            d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14zM7 9h5v1H7z"
-          ></path>
+          height="24" viewBox="0 0 24 24" width="24">
+          <path d="M0 0h24v24H0V0z" fill="none"/>
+          <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14zM7 9h5v1H7z"/>
         </svg>
       </transition>
       <transition name="slide-zoom-1">
@@ -110,15 +111,10 @@
           v-if="zoomMenuOpen"
           class="icon icon-zoom"
           :fill="theme.icon2"
-          height="24"
-          viewBox="0 0 24 24"
-          width="24"
-        >
-          <path
-            d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
-          ></path>
-          <path d="M0 0h24v24H0V0z" fill="none"></path>
-          <path d="M12 10h-2v2H9v-2H7V9h2V7h1v2h2v1z"></path>
+          height="24" viewBox="0 0 24 24" width="24">
+          <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+          <path d="M0 0h24v24H0V0z" fill="none"/>
+          <path d="M12 10h-2v2H9v-2H7V9h2V7h1v2h2v1z"/>
         </svg>
       </transition>
       <svg
@@ -126,12 +122,9 @@
         :class="{toggled: zoomMenuOpen}"
         class="icon icon-zoom-toggle"
         :fill="zoomMenuOpen ? theme.accent : theme.icon2"
-        height="24"
-        viewBox="0 0 24 24"
-        width="24"
-      >
-        <path d="M0 0h24v24H0z" fill="none"></path>
-        <path d="M9 4v3h5v12h3V7h5V4H9zm-6 8h3v7h3v-7h3V9H3v3z"></path>
+        height="24" viewBox="0 0 24 24" width="24">
+        <path d="M0 0h24v24H0z" fill="none"/>
+        <path d="M9 4v3h5v12h3V7h5V4H9zm-6 8h3v7h3v-7h3V9H3v3z"/>
       </svg>
     </div>
   </div>
@@ -145,25 +138,25 @@ export default {
   name: 'poem',
   props: ['theme', 'nr', 'selectedPoem'],
   components: {
-    Loading,
+    Loading
   },
   data () {
     return {
       zoomMenuOpen: false,
       poemTransitionName: '',
       currentURL: '',
-      navigatorHasShare: typeof navigator !== 'undefined' && navigator.share,
+      navigatorHasShare: typeof navigator !== 'undefined' && navigator.share
     }
   },
   mounted () {
     this.currentURL = location.href
     const clipboard = new ClipboardJS('#btnCopy')
-    clipboard.on('success', e => {
+    clipboard.on('success', (e) => {
       e.clearSelection()
       this.$store.commit('setSelectEnabled', false)
       this.$store.commit('toggleCopyConfirm')
     })
-    clipboard.on('error', e => {
+    clipboard.on('error', (e) => {
       this.$store.commit('setSelectEnabled', false)
     })
   },
@@ -176,7 +169,7 @@ export default {
   computed: {
     fontSizeREM () {
       return `${this.$store.state.selectedFontSize}rem`
-    },
+    }
   },
   methods: {
     checkFolder (poemLink) {
@@ -226,7 +219,7 @@ export default {
         .share({
           title: this.selectedPoem.t,
           text: this.selectedPoem.s,
-          url: this.currentURL,
+          url: this.currentURL
         })
         .catch(error => error)
     },
@@ -235,17 +228,16 @@ export default {
     },
     afterLeave () {
       document.getElementById('poemParent').scrollTop = 0
-    },
+    }
   },
   watch: {
-    $route (to, from) {
+    '$route' (to, from) {
       const toDepth = to.params.nr
       const fromDepth = from.params.nr
-      this.poemTransitionName =
-        toDepth < fromDepth ? 'slide-right-poem' : 'slide-left-poem'
+      this.poemTransitionName = toDepth < fromDepth ? 'slide-right-poem' : 'slide-left-poem'
       this.currentURL = location.href
-    },
-  },
+    }
+  }
 }
 </script>
 

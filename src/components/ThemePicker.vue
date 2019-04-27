@@ -5,15 +5,12 @@
       :key="index"
       @click="setSelectedTheme(index)"
       :style="{ backgroundColor: theme.background }"
-      class="swatch"
-    >
+      class="swatch">
       <svg
         v-if="index === $store.state.selectedTheme"
         :fill="theme.accent"
         class="swatch__check"
-        height="24"
-        width="24"
-      >
+        height="24" width="24">
         <use xlink:href="#iconCheckOn"></use>
       </svg>
     </div>
@@ -28,12 +25,10 @@ export default {
     setSelectedTheme (themeIndex) {
       this.$store.commit('setSelectedTheme', themeIndex)
       const selectedTheme = this.themes[this.$store.state.selectedTheme]
-      document
-        .querySelector('meta[name=theme-color]')
-        .setAttribute('content', selectedTheme.theme)
+      document.querySelector('meta[name=theme-color]').setAttribute('content', selectedTheme.theme)
       document.body.style.setProperty('--themeBG', selectedTheme.background)
-    },
-  },
+    }
+  }
 }
 </script>
 

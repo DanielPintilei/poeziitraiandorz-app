@@ -6,8 +6,7 @@
           :style="{color: theme.accent}"
           class="landing-img"
           src="../assets/traian-dorz.jpg"
-          alt="Traian Dorz"
-        >
+          alt="Traian Dorz">
         <h1 class="landing__header" :style="{color: theme.accent}">
           <div>Slăvit</div>
           <div>să fie</div>
@@ -15,7 +14,9 @@
         </h1>
       </div>
       <div class="landing-info">
-        <p class="landing-text"></p>
+        <p class="landing-text">
+
+        </p>
         <button
           @click="toggleSidebarLeft"
           @mouseenter="listButtonHovered = true"
@@ -26,7 +27,9 @@
             color: listButtonHovered ? theme.background : theme.accent,
             backgroundColor: listButtonHovered ? theme.accent : ''
           }"
-        >Cuprins</button>
+        >
+          Cuprins
+        </button>
         <button
           @click="toggleSidebarRight"
           @mouseenter="searchButtonHovered = true"
@@ -37,7 +40,9 @@
             color: searchButtonHovered ? theme.background : theme.accent,
             backgroundColor: searchButtonHovered ? theme.accent : ''
           }"
-        >Căutare</button>
+        >
+          Căutare
+        </button>
       </div>
     </div>
   </div>
@@ -50,22 +55,20 @@ export default {
   data () {
     return {
       listButtonHovered: false,
-      searchButtonHovered: false,
+      searchButtonHovered: false
     }
   },
   methods: {
     toggleSidebarLeft () {
       this.$store.commit('toggleSidebarLeft')
-      if (!this.$store.state.folderListDownloaded) {
-        this.$emit('downloadFolderList')
-      }
+      if (!this.$store.state.folderListDownloaded) this.$emit('downloadFolderList')
     },
     toggleSidebarRight () {
       this.$store.commit('toggleSidebarRight')
       this.$store.commit('setFullBook')
       if (!this.$store.state.poemsDownloaded) this.$emit('downloadPoems')
-    },
-  },
+    }
+  }
 }
 </script>
 

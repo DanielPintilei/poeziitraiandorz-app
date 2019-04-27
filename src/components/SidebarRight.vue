@@ -144,21 +144,6 @@
                   <span>Ignoră diacriticele</span>
                 </label>
               </div>
-              <div class="sidebar-right__filter">
-                <input
-                  type="checkbox"
-                  value="checkboxPunctuation"
-                  id="checkboxPunctuation"
-                  v-model="checkedFilters"
-                >
-                <label for="checkboxPunctuation">
-                  <svg class="icon icon-check" :fill="theme.accent" width="24" height="24">
-                    <use class="off" xlink:href="#iconCheck"></use>
-                    <use class="on" xlink:href="#iconCheckOn"></use>
-                  </svg>
-                  <span>Ignoră semnele de punctuație</span>
-                </label>
-              </div>
             </div>
           </transition>
         </div>
@@ -266,12 +251,9 @@ export default {
         const searchIgnoreAccents = this.checkedFilters.includes(
           'checkboxAccents',
         )
-        const searchIgnorePunctuation = this.checkedFilters.includes(
-          'checkboxPunctuation',
-        )
         this.resultsCounter = 0
         this.resultsPoemsCounter = 0
-        let textToSearch = this.searchText.replace(/\s\s+/g, ' ').trim()
+        let textToSearch = this.searchText
         if (searchIgnoreAccents) {
           textToSearch = textToSearch
             .replace(/[aăâ]/g, '[aăâ]')
@@ -283,11 +265,10 @@ export default {
             .replace(/[tț]/g, '[tț]')
             .replace(/[TȚ]/g, '[TȚ]')
         }
-        if (searchIgnorePunctuation) {
-          textToSearch = textToSearch
-            .replace(/[!?,.]/g, '')
-            .replace(/\s/g, '[!?,.\\s]+?')
-        }
+        textToSearch = textToSearch
+          .trim()
+          .replace(/[!?,.-]/g, '\\$&')
+          .replace(/\s/g, '\\s')
         let searchRegEx
         let searchFlags = 'g'
         if (searchIgnoreCase) searchFlags = 'ig'

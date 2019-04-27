@@ -17,23 +17,30 @@ const replaceAccents = str => {
 let urls = [
   {
     url: '/',
-    changefreq: 'never'
-  }
+    changefreq: 'never',
+  },
 ]
 
-const list = JSON.parse(fs.readFileSync('static/json/cuprins.json', 'utf8'))
+const list = JSON.parse(fs.readFileSync('./public/json/cuprins.json', 'utf8'))
 list.map(folder => {
   folder.p.map(file => {
     urls.push({
-      url: '/' + file.n + '-' + replaceAccents(file.t).replace(/\s+/g, '-').replace(/[^\w-]+/g, '').replace(/-+/g, '-'),
-      changefreq: 'never'
+      url:
+        '/' +
+        file.n +
+        '-' +
+        replaceAccents(file.t)
+          .replace(/\s+/g, '-')
+          .replace(/[^\w-]+/g, '')
+          .replace(/-+/g, '-'),
+      changefreq: 'never',
     })
   })
 })
 
 const sitemap = sm.createSitemap({
   hostname: 'https://www.poeziitraiandorz.ro',
-  urls
+  urls,
 })
 
-fs.writeFileSync("root/sitemap.xml", sitemap.toString())
+fs.writeFileSync('./public/sitemap.xml', sitemap.toString())

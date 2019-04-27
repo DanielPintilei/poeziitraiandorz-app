@@ -7,12 +7,15 @@
           borderRightColor: theme.border2,
           borderBottomColor: theme.border,
           backgroundColor: theme.navbar
-        }">
+        }"
+      >
         <svg
           @click="toggleSidebarLeft"
           class="icon icon-list"
           :fill="theme.accent"
-          width="24" height="24">
+          width="24"
+          height="24"
+        >
           <use xlink:href="#iconList"></use>
         </svg>
       </div>
@@ -22,30 +25,19 @@
           color: theme.text2,
           backgroundColor: theme.background,
           borderColor: theme.border3
-        }">
-        <div
-          v-for="(folder, index) in folderListSnap"
-          :key="index"
-          class="folder">
-          <input
-            type="radio"
-            :id="`folder${index}`"
-            name="folder"
-            class="folder__radio">
+        }"
+      >
+        <div v-for="(folder, index) in folderListSnap" :key="index" class="folder">
+          <input type="radio" :id="`folder${index}`" name="folder" class="folder__radio">
           <label
             @click="handleFolderClick(`folder${index}`)"
             :for="`folder${index}`"
-            class="folder__title">
-            <svg
-              :fill="theme.icon2"
-              class="icon-caret"
-              width="24" height="24">
+            class="folder__title"
+          >
+            <svg :fill="theme.icon2" class="icon-caret" width="24" height="24">
               <use xlink:href="#iconCaret"></use>
             </svg>
-            <svg
-              class="icon-folder"
-              :fill="theme.accent"
-              width="24" height="24">
+            <svg class="icon-folder" :fill="theme.accent" width="24" height="24">
               <use xlink:href="#iconCaiet"></use>
             </svg>
             {{folder.t}}
@@ -61,10 +53,9 @@
                   nr: +poem.n,
                   title: formatTitle(poem.t)
                 }
-              }">
-              <span
-                @click="tapPoemLink"
-                class="link-span">
+              }"
+            >
+              <span @click="tapPoemLink" class="link-span">
                 <span class="link-span__nr">{{poem.n}}</span>
                 <span>{{poem.t}}</span>
               </span>
@@ -85,24 +76,34 @@ export default {
   name: 'sidebar-left',
   props: ['theme', 'folderListSnap'],
   components: {
-    Loading
+    Loading,
   },
   methods: {
     formatTitle (title) {
-      return replaceAccents(title).replace(/\s+/g, '-').replace(/[^\w-]+/g, '').replace(/-+/g, '-')
+      return replaceAccents(title)
+        .replace(/\s+/g, '-')
+        .replace(/[^\w-]+/g, '')
+        .replace(/-+/g, '-')
     },
     toggleSidebarLeft () {
       this.$store.commit('toggleSidebarLeft')
     },
     handleFolderClick (folder) {
       const folderById = document.getElementById(folder)
-      if (folderById.checked) setTimeout(() => { folderById.checked = false }, 0)
-      else setTimeout(() => { folderById.nextElementSibling.scrollIntoView() }, 0)
+      if (folderById.checked) {
+        setTimeout(() => {
+          folderById.checked = false
+        }, 0)
+      } else {
+        setTimeout(() => {
+          folderById.nextElementSibling.scrollIntoView()
+        }, 0)
+      }
     },
     tapPoemLink () {
       mobileTap(1100, this.toggleSidebarLeft)
-    }
-  }
+    },
+  },
 }
 </script>
 

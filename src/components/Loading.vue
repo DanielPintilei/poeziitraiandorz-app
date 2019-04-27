@@ -1,10 +1,7 @@
 <template>
   <div class="wrapper">
     <svg width="200" height="2" viewBox="0 0 200 2">
-      <line
-        :stroke="color"
-        class="line"
-        x1="0" y1="1" x2="200" y2="1" stroke-width="2" />
+      <line :stroke="color" class="line" x1="0" y1="1" x2="200" y2="1" stroke-width="2"></line>
     </svg>
   </div>
 </template>
@@ -12,7 +9,7 @@
 <script>
 export default {
   name: 'wrapper',
-  props: ['color']
+  props: ['color'],
 }
 </script>
 

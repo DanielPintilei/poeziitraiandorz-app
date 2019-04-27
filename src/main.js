@@ -1,18 +1,16 @@
 import Vue from 'vue'
-import App from './App'
-import { sync } from 'vuex-router-sync'
+import App from './App.vue'
 import router from './router'
-import { store } from './store/index'
+import { sync } from 'vuex-router-sync'
+import store from './store'
+import './registerServiceWorker'
 
 sync(store, router)
 
 Vue.config.productionTip = false
 
-/* eslint-disable no-new */
 new Vue({
-  el: '#app',
   router,
   store,
-  template: '<App/>',
-  components: { App }
-})
+  render: h => h(App),
+}).$mount('#app')

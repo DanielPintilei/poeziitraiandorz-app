@@ -1,37 +1,37 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import Landing from './components/Landing'
+import Beginning from './components/Beginning'
+import End from './components/End'
+import Poem from './components/Poem'
 
 Vue.use(Router)
 
-import Landing from '@/components/Landing'
-import Beginning from '@/components/Beginning'
-import End from '@/components/End'
-import Poem from '@/components/Poem'
-
 export default new Router({
   mode: 'history',
+  base: process.env.BASE_URL,
   routes: [
     {
       path: '/',
-      component: Landing
+      component: Landing,
     },
     {
       path: '/beginning',
-      component: Beginning
+      component: Beginning,
     },
     {
       path: '/end',
-      component: End
+      component: End,
     },
     {
       path: '/:nr-:title',
       name: 'Poem',
       component: Poem,
-      props: true
+      props: true,
     },
     {
       path: '*',
-      component: Landing
-    }
-  ]
+      component: Landing,
+    },
+  ],
 })

@@ -6,101 +6,113 @@
       color: selectedTheme.text,
       backgroundColor: selectedTheme.background,
       borderColor: selectedTheme.border
-    }">
+    }"
+  >
     <svg style="display: none">
       <symbol id="iconList" viewBox="0 0 24 24">
-        <path d="M4 10.5c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5 1.5-.67 1.5-1.5-.67-1.5-1.5-1.5zm0-6c-.83 0-1.5.67-1.5 1.5S3.17 7.5 4 7.5 5.5 6.83 5.5 6 4.83 4.5 4 4.5zm0 12c-.83 0-1.5.68-1.5 1.5s.68 1.5 1.5 1.5 1.5-.68 1.5-1.5-.67-1.5-1.5-1.5zM7 19h14v-2H7v2zm0-6h14v-2H7v2zm0-8v2h14V5H7z"/>
-        <path d="M0 0h24v24H0V0z" fill="none"/>
+        <path
+          d="M4 10.5c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5 1.5-.67 1.5-1.5-.67-1.5-1.5-1.5zm0-6c-.83 0-1.5.67-1.5 1.5S3.17 7.5 4 7.5 5.5 6.83 5.5 6 4.83 4.5 4 4.5zm0 12c-.83 0-1.5.68-1.5 1.5s.68 1.5 1.5 1.5 1.5-.68 1.5-1.5-.67-1.5-1.5-1.5zM7 19h14v-2H7v2zm0-6h14v-2H7v2zm0-8v2h14V5H7z"
+        ></path>
+        <path d="M0 0h24v24H0V0z" fill="none"></path>
       </symbol>
       <symbol id="iconCaiet" viewBox="0 0 24 24">
-        <path d="M0 0h24v24H0z" fill="none"/>
-        <path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/>
+        <path d="M0 0h24v24H0z" fill="none"></path>
+        <path
+          d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"
+        ></path>
       </symbol>
       <symbol id="iconCaret" viewBox="0 0 24 24">
-        <path d="m 9.5,17.5 5,-5 -5,-5 z"/>
-        <path d="M0 0h24v24H0z" fill="none"/>
+        <path d="m 9.5,17.5 5,-5 -5,-5 z"></path>
+        <path d="M0 0h24v24H0z" fill="none"></path>
       </symbol>
       <symbol id="iconSearch" viewBox="0 0 24 24">
-        <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-        <path d="M0 0h24v24H0z" fill="none"/>
+        <path
+          d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+        ></path>
+        <path d="M0 0h24v24H0z" fill="none"></path>
       </symbol>
       <symbol id="iconCheck" viewBox="0 0 24 24">
-        <path d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
-        <path d="M0 0h24v24H0z" fill="none"/>
+        <path
+          d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
+        ></path>
+        <path d="M0 0h24v24H0z" fill="none"></path>
       </symbol>
       <symbol id="iconCheckOn" viewBox="0 0 24 24">
-        <path d="M0 0h24v24H0z" fill="none"/>
-        <path d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+        <path d="M0 0h24v24H0z" fill="none"></path>
+        <path
+          d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+        ></path>
       </symbol>
       <symbol id="iconPrev" viewBox="0 0 24 24">
-        <path d="M0 0h24v24H0z" fill="none"/>
-        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+        <path d="M0 0h24v24H0z" fill="none"></path>
+        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path>
       </symbol>
       <symbol id="iconNext" viewBox="0 0 24 24">
-        <path d="M0 0h24v24H0z" fill="none"/>
-        <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
+        <path d="M0 0h24v24H0z" fill="none"></path>
+        <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"></path>
       </symbol>
     </svg>
     <transition name="backdrop">
       <div
         @click="closeSidebars"
-        v-if="$store.state.sidebarLeftToggled || $store.state.sidebarRightToggled"
+        v-if="
+          $store.state.sidebarLeftToggled || $store.state.sidebarRightToggled
+        "
         :style="{ backgroundColor: selectedTheme.backdrop }"
-        class="backdrop backdrop--sidebar">
-      </div>
+        class="backdrop backdrop--sidebar"
+      ></div>
     </transition>
     <transition name="sidebar-slide-left">
       <sidebar-left
         :folderListSnap="folderListSnap"
         :theme="selectedTheme"
-        v-show="$store.state.sidebarLeftToggled">
-      </sidebar-left>
+        v-show="$store.state.sidebarLeftToggled"
+      ></sidebar-left>
     </transition>
-    <main
-      :style="{ backgroundColor: selectedTheme.background2 }"
-      class="app__main">
+    <main :style="{ backgroundColor: selectedTheme.background2 }" class="app__main">
       <navbar
         @downloadFolderList="getFolderListSnap"
         @downloadPoems="getPoemsSnap"
         :theme="selectedTheme"
-        :themes="themes">
-      </navbar>
+        :themes="themes"
+      ></navbar>
       <transition name="router-view" mode="out-in">
         <router-view
           @downloadFolderList="getFolderListSnap"
           @downloadPoems="getPoemsSnap"
           :selectedPoem="selectedPoem"
           :theme="selectedTheme"
-          class="app__main-view">
-        </router-view>
+          class="app__main-view"
+        ></router-view>
       </transition>
     </main>
     <transition name="sidebar-slide-right">
       <sidebar-right
         :poemsSnap="poemsSnap"
         :theme="selectedTheme"
-        v-show="$store.state.sidebarRightToggled">
-      </sidebar-right>
+        v-show="$store.state.sidebarRightToggled"
+      ></sidebar-right>
     </transition>
     <transition name="backdrop">
       <div
         @click="toggleMore"
         v-if="$store.state.moreOpen"
         :style="{ backgroundColor: selectedTheme.backdrop }"
-        class="backdrop">
-      </div>
+        class="backdrop"
+      ></div>
     </transition>
     <transition name="backdrop">
-      <more
-        :theme="selectedTheme"
-        v-if="$store.state.moreOpen">
-      </more>
+      <more :theme="selectedTheme" v-if="$store.state.moreOpen"></more>
     </transition>
   </div>
 </template>
 
 <script>
-import idbKeyval from 'idb-keyval'
+import {
+  get as idbKeyvalGet,
+  set as idbKeyvalSet,
+  keys as idbKeyvalKeys,
+} from 'idb-keyval'
 import Navbar from './components/Navbar'
 import SidebarLeft from './components/SidebarLeft'
 import SidebarRight from './components/SidebarRight'
@@ -112,7 +124,7 @@ export default {
     Navbar,
     SidebarLeft,
     SidebarRight,
-    More
+    More,
   },
   data () {
     return {
@@ -138,7 +150,7 @@ export default {
           confirm: '#FFFF00',
           confirm2: '#757575',
           rule: '#e6e6e6',
-          highlight: '#f7ebd4'
+          highlight: '#f7ebd4',
         },
         {
           theme: '#ecce93',
@@ -158,7 +170,7 @@ export default {
           confirm: '#C6FF00',
           confirm2: '#212121',
           rule: '#333',
-          highlight: '#675d48'
+          highlight: '#675d48',
         },
         {
           theme: '#393a3e',
@@ -178,9 +190,9 @@ export default {
           confirm: '#18FFFF',
           confirm2: '#757575',
           rule: '#eee0ba',
-          highlight: '#ffc8a6'
-        }
-      ]
+          highlight: '#ffc8a6',
+        },
+      ],
     }
   },
   created () {
@@ -188,12 +200,17 @@ export default {
     const metaThemeColor = document.querySelector('meta[name=theme-color]')
     metaThemeColor.setAttribute('content', selectedTheme.theme)
     document.body.style.setProperty('--themeBG', selectedTheme.background)
-    if (this.$store.state.sidebarRightToggled || this.$store.state.poemsDownloaded) this.getPoemsSnap(this.fetchPoem)
-    else if (this.$store.state.route.params.nr) this.fetchPoem()
+    if (
+      this.$store.state.sidebarRightToggled ||
+      this.$store.state.poemsDownloaded
+    ) {
+      this.getPoemsSnap(this.fetchPoem)
+    } else if (this.$store.state.route.params.nr) this.fetchPoem()
     if (this.$store.state.folderListDownloaded) {
-      idbKeyval.keys().then(keys => {
+      idbKeyvalKeys().then(keys => {
         const folderListDeleted = !keys.includes('folderList')
-        const poemsDeleted = this.$store.state.poemsDownloaded && !keys.includes('poems')
+        const poemsDeleted =
+          this.$store.state.poemsDownloaded && !keys.includes('poems')
         if (folderListDeleted) localStorage.removeItem('folderListDownloaded')
         if (poemsDeleted) localStorage.removeItem('poemsDownloaded')
         if (folderListDeleted || poemsDeleted) window.location.reload()
@@ -201,13 +218,20 @@ export default {
     }
   },
   mounted () {
-    if (this.$store.state.sidebarLeftToggled || this.$store.state.folderListDownloaded) this.getFolderListSnap()
+    if (
+      this.$store.state.sidebarLeftToggled ||
+      this.$store.state.folderListDownloaded
+    ) {
+      this.getFolderListSnap()
+    }
     const lastRoute = localStorage.getItem('lastRoute')
     if (lastRoute && !this.currentNr) {
       this.$router.push(lastRoute)
       if (this.$store.state.sidebarLeftToggled) {
         let waitForLoad = setInterval(() => {
-          const lastRouteById = document.getElementById(`${this.$store.state.route.params.nr}`)
+          const lastRouteById = document.getElementById(
+            `${this.$store.state.route.params.nr}`,
+          )
           if (lastRouteById) {
             clearInterval(waitForLoad)
             lastRouteById.parentElement.parentElement.firstElementChild.click()
@@ -223,7 +247,7 @@ export default {
     },
     currentNr () {
       return this.$store.state.route.params.nr
-    }
+    },
   },
   methods: {
     closeSidebars () {
@@ -233,17 +257,16 @@ export default {
       this.$store.commit('toggleMore')
     },
     DBURL (file) {
-      return `/static/json/${file}.json`
+      return `/json/${file}.json`
     },
     logError (msg) {
       console.log(msg)
     },
     loadFolderList () {
-      idbKeyval.get('folderList')
-        .then(val => {
-          this.folderListSnap = val
-          // console.log('Folder List Loaded From Local')
-        })
+      idbKeyvalGet('folderList').then(val => {
+        this.folderListSnap = val
+        // console.log('Folder List Loaded From Local')
+      })
     },
     getFolderListSnap () {
       if (!this.$store.state.folderListDownloaded) {
@@ -254,7 +277,7 @@ export default {
             // console.log('Downloading Folder List Finished')
             this.folderListSnap = data
             // console.log('Folder List Loaded')
-            idbKeyval.set('folderList', data)
+            idbKeyvalSet('folderList', data)
               .then(() => {
                 this.$store.commit('setFolderListDownloaded')
                 // console.log('Folder List Saving Finished')
@@ -272,8 +295,9 @@ export default {
     },
     fetchPoem () {
       if (this.currentNr) {
-        if (this.poemsSnap) this.selectedPoem = this.poemsSnap[this.currentNr - 1]
-        else {
+        if (this.poemsSnap) {
+          this.selectedPoem = this.poemsSnap[this.currentNr - 1]
+        } else {
           fetch(this.DBURL('poezii/' + this.currentNr))
             .then(response => response.json())
             .then(data => {
@@ -287,15 +311,14 @@ export default {
       }
     },
     loadPoems (cb) {
-      idbKeyval.get('poems')
-        .then(val => {
-          this.poemsSnap = val
-          // console.log('Poems Loaded From Local')
-          if (cb) {
-            cb()
-            // console.log('Fetch Poem Callback From Load Poems')
-          }
-        })
+      idbKeyvalGet('poems').then(val => {
+        this.poemsSnap = val
+        // console.log('Poems Loaded From Local')
+        if (cb) {
+          cb()
+          // console.log('Fetch Poem Callback From Load Poems')
+        }
+      })
     },
     getPoemsSnap (cb) {
       if (!this.$store.state.poemsDownloaded) {
@@ -310,7 +333,7 @@ export default {
               cb()
               // console.log('Fetch Poem Callback From Download Poems')
             }
-            idbKeyval.set('poems', data)
+            idbKeyvalSet('poems', data)
               .then(() => {
                 this.$store.commit('setPoemsDownloaded')
                 // console.log('Poems Saving Finished')
@@ -326,14 +349,14 @@ export default {
           })
       } else this.loadPoems(cb)
       if (!this.$store.state.folderListDownloaded) this.getFolderListSnap()
-    }
+    },
   },
   watch: {
-    '$route' () {
+    $route () {
       this.fetchPoem()
       localStorage.setItem('lastRoute', this.$store.state.route.path)
-    }
-  }
+    },
+  },
 }
 </script>
 

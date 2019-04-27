@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ro">
+  <head>
+    <meta charset="utf-8" />
+    <title>Poezii – Traian Dorz</title>
+    <meta
+      name="description"
+      content="Opera poetică a psalmistului Oastei Domnului, Traian Dorz."
+    />
+    <meta name="author" content="Daniel Pintilei" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Lora:400,400i|Old+Standard+TT&amp;subset=latin-ext"
+    />
+    <meta name="theme-color" content="#ecce93" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="<%= BASE_URL %>favicon-32x32.png"
+      sizes="32x32"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      href="<%= BASE_URL %>favicon-16x16.png"
+      sizes="16x16"
+    />
+    <link rel="shortcut icon" href="<%= BASE_URL %>favicon.ico" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Poezii" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="<%= BASE_URL %>apple-touch-icon.png"
+    />
+    <link rel="manifest" href="<%= BASE_URL %>manifest.json" />
+    <meta
+      property="og:image"
+      content="http://www.poeziitraiandorz.ro/og-image.jpg"
+    />
+    <meta
+      property="og:image:secure_url"
+      content="https://www.poeziitraiandorz.ro/og-image.jpg"
+    />
+    <meta property="og:image:width" content="360" />
+    <meta property="og:image:height" content="360" />
+  </head>
+  <body
+    style="margin: 0; height: 100vh; display: flex; align-items: center; justify-content: center;"
+  >
+    <div id="app">
+      <svg
+        style="display: block; margin: 30px auto;"
+        width="200"
+        height="2"
+        viewBox="0 0 200 2"
+      >
+        <line
+          class="loader"
+          x1="0"
+          y1="1"
+          x2="200"
+          y2="1"
+          stroke-width="2"
+          stroke="#ecce93"
+        />
+        <style>
+          @keyframes loader {
+            to {
+              stroke-dashoffset: -200;
+            }
+          }
+          .loader {
+            stroke-dasharray: 200;
+            stroke-dashoffset: 200;
+            animation: loader 2s infinite ease-in;
+          }
+        </style>
+      </svg>
+      <noscript>
+        You need to enable JavaScript to run this app.
+      </noscript>
+    </div>
+  </body>
+</html>

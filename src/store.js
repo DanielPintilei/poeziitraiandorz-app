@@ -29,6 +29,7 @@ const checkedFilters = JSON.parse(localStorage.getItem('checkedFilters')) || [
   'checkboxWhole',
   'checkboxCase',
   'checkboxAccents',
+  'checkboxPunctuation',
 ]
 
 export default new Vuex.Store({

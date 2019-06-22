@@ -23,12 +23,12 @@
     </transition>
     <div v-if="$store.state.folderListDownloaded" @click="prevPoem" class="button-prev">
       <svg class="icon" :fill="theme.icon2" height="24" width="24">
-        <use xlink:href="#iconPrev"></use>
+        <use href="#iconPrev"></use>
       </svg>
     </div>
     <div v-if="$store.state.folderListDownloaded" @click="nextPoem" class="button-next">
       <svg class="icon" :fill="theme.icon2" height="24" width="24">
-        <use xlink:href="#iconNext"></use>
+        <use href="#iconNext"></use>
       </svg>
     </div>
     <div class="poem__share" :style="{backgroundColor: theme.background}">

@@ -12,7 +12,7 @@
       </div>
       <div class="more__item">
         <svg :fill="theme.icon2" height="24" width="24">
-          <use xlink:href="#iconList"></use>
+          <use href="#iconList"></use>
         </svg>
         <span>by Andrei Roman</span>
       </div>

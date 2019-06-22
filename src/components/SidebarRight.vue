@@ -18,7 +18,7 @@
           height="24"
           width="24"
         >
-          <use xlink:href="#iconSearch"></use>
+          <use href="#iconSearch"></use>
         </svg>
         <input
           v-model="searchText"
@@ -78,8 +78,8 @@
                 >
                 <label @click="handleCheckTitle" for="checkboxTitle">
                   <svg class="icon icon-check" :fill="theme.accent" width="24" height="24">
-                    <use class="off" xlink:href="#iconCheck"></use>
-                    <use class="on" xlink:href="#iconCheckOn"></use>
+                    <use class="off" href="#iconCheck"></use>
+                    <use class="on" href="#iconCheckOn"></use>
                   </svg>
                   <span>În titlu</span>
                 </label>
@@ -93,8 +93,8 @@
                 >
                 <label @click="handleCheckVerses" for="checkboxVerses">
                   <svg class="icon icon-check" :fill="theme.accent" width="24" height="24">
-                    <use class="off" xlink:href="#iconCheck"></use>
-                    <use class="on" xlink:href="#iconCheckOn"></use>
+                    <use class="off" href="#iconCheck"></use>
+                    <use class="on" href="#iconCheckOn"></use>
                   </svg>
                   <span>În versuri</span>
                 </label>
@@ -108,8 +108,8 @@
                 >
                 <label for="checkboxWhole">
                   <svg class="icon icon-check" :fill="theme.accent" width="24" height="24">
-                    <use class="off" xlink:href="#iconCheck"></use>
-                    <use class="on" xlink:href="#iconCheckOn"></use>
+                    <use class="off" href="#iconCheck"></use>
+                    <use class="on" href="#iconCheckOn"></use>
                   </svg>
                   <span>Cuvinte întregi</span>
                 </label>
@@ -123,8 +123,8 @@
                 >
                 <label for="checkboxCase">
                   <svg class="icon icon-check" :fill="theme.accent" width="24" height="24">
-                    <use class="off" xlink:href="#iconCheck"></use>
-                    <use class="on" xlink:href="#iconCheckOn"></use>
+                    <use class="off" href="#iconCheck"></use>
+                    <use class="on" href="#iconCheckOn"></use>
                   </svg>
                   <span>Ignoră majusculele</span>
                 </label>
@@ -138,8 +138,8 @@
                 >
                 <label for="checkboxAccents">
                   <svg class="icon icon-check" :fill="theme.accent" width="24" height="24">
-                    <use class="off" xlink:href="#iconCheck"></use>
-                    <use class="on" xlink:href="#iconCheckOn"></use>
+                    <use class="off" href="#iconCheck"></use>
+                    <use class="on" href="#iconCheckOn"></use>
                   </svg>
                   <span>Ignoră diacriticele</span>
                 </label>
@@ -153,8 +153,8 @@
                 >
                 <label for="checkboxPunctuation">
                   <svg class="icon icon-check" :fill="theme.accent" width="24" height="24">
-                    <use class="off" xlink:href="#iconCheck"></use>
-                    <use class="on" xlink:href="#iconCheckOn"></use>
+                    <use class="off" href="#iconCheck"></use>
+                    <use class="on" href="#iconCheckOn"></use>
                   </svg>
                   <span>Ignoră semnele de punctuație</span>
                 </label>

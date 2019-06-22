@@ -16,7 +16,7 @@
           width="24"
           height="24"
         >
-          <use xlink:href="#iconList"></use>
+          <use href="#iconList"></use>
         </svg>
       </div>
       <div
@@ -35,10 +35,10 @@
             class="folder__title"
           >
             <svg :fill="theme.icon2" class="icon-caret" width="24" height="24">
-              <use xlink:href="#iconCaret"></use>
+              <use href="#iconCaret"></use>
             </svg>
             <svg class="icon-folder" :fill="theme.accent" width="24" height="24">
-              <use xlink:href="#iconCaiet"></use>
+              <use href="#iconCaiet"></use>
             </svg>
             {{folder.t}}
           </label>

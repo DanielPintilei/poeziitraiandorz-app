@@ -31,7 +31,7 @@
           width="24"
           height="24"
         >
-          <use xlink:href="#iconList"></use>
+          <use href="#iconList"></use>
         </svg>
       </div>
       <svg
@@ -107,7 +107,7 @@
           width="24"
           height="24"
         >
-          <use xlink:href="#iconSearch"></use>
+          <use href="#iconSearch"></use>
         </svg>
       </div>
     </div>

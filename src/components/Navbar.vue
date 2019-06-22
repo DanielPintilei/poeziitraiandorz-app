@@ -24,7 +24,7 @@
           :fill="theme.icon"
           class="icon icon-list"
           width="24" height="24">
-          <use xlink:href="#iconList"></use>
+          <use href="#iconList"></use>
         </svg>
       </div>
       <svg
@@ -86,7 +86,7 @@
           :fill="theme.icon"
           class="icon icon-search"
           width="24" height="24">
-          <use xlink:href="#iconSearch"></use>
+          <use href="#iconSearch"></use>
         </svg>
       </div>
     </div>

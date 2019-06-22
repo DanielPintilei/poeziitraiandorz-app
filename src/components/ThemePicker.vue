@@ -11,7 +11,7 @@
         :fill="theme.accent"
         class="swatch__check"
         height="24" width="24">
-        <use xlink:href="#iconCheckOn"></use>
+        <use href="#iconCheckOn"></use>
       </svg>
     </div>
   </div>

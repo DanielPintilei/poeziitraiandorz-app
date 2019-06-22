@@ -20,7 +20,7 @@
         class="icon"
         :fill="theme.icon2"
         height="24" width="24">
-        <use xlink:href="#iconNext"></use>
+        <use href="#iconNext"></use>
       </svg>
     </div>
   </div>

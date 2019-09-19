@@ -100,9 +100,8 @@ imgHeight = imgOriginalHeight + imgBorderWidth * 2
   border imgBorderWidth solid transparent
   box-shadow 0 0 0 1px currentColor
   transition filter 3s
-  filter grayscale(50%)
   &:hover
-    filter none
+    filter grayscale(50%)
   @media (max-width 399px)
     order 1
   @media (max-width $breakpointMobileSmall)

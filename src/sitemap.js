@@ -1,5 +1,5 @@
-const fs = require('fs')
-const sm = require('sitemap')
+const { readFileSync, createWriteStream } = require('fs')
+const { SitemapStream } = require('sitemap')
 
 const replaceAccents = str => {
   const replacedStr = str
@@ -21,7 +21,7 @@ let urls = [
   },
 ]
 
-const list = JSON.parse(fs.readFileSync('./public/json/cuprins.json', 'utf8'))
+const list = JSON.parse(readFileSync('./public/json/cuprins.json', 'utf8'))
 list.map(folder => {
   folder.p.map(file => {
     urls.push({
@@ -38,9 +38,16 @@ list.map(folder => {
   })
 })
 
-const sitemap = sm.createSitemap({
+const sitemap = new SitemapStream({
   hostname: 'https://www.poeziitraiandorz.ro',
-  urls,
 })
 
-fs.writeFileSync('./public/sitemap.xml', sitemap.toString())
+const writeStream = createWriteStream('./public/sitemap.xml')
+
+sitemap.pipe(writeStream)
+
+urls.forEach(url => {
+  sitemap.write(url)
+})
+
+sitemap.end()

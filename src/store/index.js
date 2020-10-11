@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-const contentVersion = 2
+const contentVersion = 3
 if (
   +localStorage.getItem('contentVersion') !== contentVersion &&
   navigator.onLine
